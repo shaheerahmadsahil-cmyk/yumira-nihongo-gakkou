@@ -92,14 +92,14 @@ export default function AdminLoginPage() {
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-navy-900 mb-1.5">
-              Admin Email
+              Admin Email / Username / Phone
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
-                type="email"
+                type="text"
                 required
-                placeholder="admin@rakibsensei.com"
+                placeholder="mdrabdurazzakrakib@gmail.com or admin"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-washi-300 bg-white focus:outline-none focus:ring-2 focus:ring-japanRed-500 transition-all"

@@ -20,7 +20,7 @@ const adminSetupSchema = z.object({
 });
 
 const adminLoginSchema = z.object({
-  email: z.string().email("Valid email is required"),
+  email: z.string().min(1, "Email, Username or Phone is required"),
   password: z.string().min(1, "Password is required"),
 });
 
@@ -72,18 +72,30 @@ export async function initialAdminSetup(formData: {
 export async function loginAdmin(formData: { email: string; password: string }) {
   try {
     const validated = adminLoginSchema.parse(formData);
+    const input = validated.email.toLowerCase().trim();
 
-    const user = await prisma.user.findUnique({
-      where: { email: validated.email.toLowerCase().trim() },
+    // Support finding by exact email, username, phone or generic 'admin' keyword
+    let user = await prisma.user.findFirst({
+      where: {
+        role: "ADMIN",
+        OR: [
+          { email: input },
+          { name: { contains: input } },
+        ],
+      },
     });
 
+    if (!user && (input === "admin" || input.includes("01341017323") || input === "yumira" || input === "rakib")) {
+      user = await prisma.user.findFirst({ where: { role: "ADMIN" } });
+    }
+
     if (!user || user.role !== "ADMIN") {
-      return { success: false, error: "Invalid email or password" };
+      return { success: false, error: "Invalid email/username or password" };
     }
 
     const isValid = await verifyPassword(validated.password, user.passwordHash);
     if (!isValid) {
-      return { success: false, error: "Invalid email or password" };
+      return { success: false, error: "Invalid email/username or password" };
     }
 
     const token = await signToken({
