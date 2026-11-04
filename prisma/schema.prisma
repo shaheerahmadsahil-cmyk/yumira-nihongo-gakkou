@@ -1,0 +1,198 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String    @id @default(cuid())
+  email            String    @unique
+  passwordHash     String
+  name             String
+  role             String    @default("ADMIN")
+  avatarUrl        String?
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model WebsiteSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Course {
+  id           String              @id @default(cuid())
+  slug         String              @unique
+  level        String              // "N5" | "N4" | "N3"
+  baseFee      Float               @default(12000)
+  currency     String              @default("BDT")
+  duration     String              @default("4 Months")
+  schedule     String              @default("3 Days/Week")
+  featured     Boolean             @default(true)
+  published    Boolean             @default(true)
+  badge        String?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  translations CourseTranslation[]
+  modules      CourseModule[]
+}
+
+model CourseTranslation {
+  id          String   @id @default(cuid())
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  locale      String   // "bn" | "en" | "ja"
+  title       String
+  subtitle    String
+  description String
+  curriculum  String   // JSON stringified array of { title, topics: string[] }
+  features    String   // JSON stringified array of string
+  faq         String   // JSON stringified array of { question, answer }
+
+  @@unique([courseId, locale])
+}
+
+model CourseModule {
+  id       String @id @default(cuid())
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  order    Int    @default(0)
+  title    String
+  titleBn  String
+  titleJa  String
+  lessons  String // JSON stringified array of string
+}
+
+model Kanji {
+  id                String   @id @default(cuid())
+  character         String   @unique
+  jlptLevel         String   // "N5" | "N4" | "N3"
+  strokeCount       Int      @default(1)
+  onyomi            String
+  kunyomi           String
+  furigana          String
+  meaningEn         String
+  meaningBn         String
+  meaningJa         String
+  exampleWords      String   // JSON: [{word, furigana, romaji, meaningEn, meaningBn}]
+  exampleSentences  String   // JSON: [{sentence, furigana, translationEn, translationBn}]
+  order             Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([jlptLevel])
+}
+
+model Character {
+  id               String  @id @default(cuid())
+  type             String  // "hiragana" | "katakana"
+  category         String  // "basic" | "dakuten" | "handakuten" | "yoon"
+  kana             String
+  romaji           String
+  meaningEn        String?
+  meaningBn        String?
+  exampleWord      String?
+  exampleWordKana  String?
+  exampleMeaningEn String?
+  exampleMeaningBn String?
+  audioUrl         String?
+  order            Int     @default(0)
+
+  @@index([type, category])
+}
+
+model MockTest {
+  id               String        @id @default(cuid())
+  jlptLevel        String        // "N5" | "N4" | "N3"
+  title            String
+  titleBn          String
+  titleJa          String
+  description      String
+  descriptionBn    String
+  descriptionJa    String
+  timeLimitMinutes Int           @default(30)
+  totalMarks       Int           @default(100)
+  passingScore     Int           @default(60)
+  published        Boolean       @default(true)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  questions        Question[]
+  attempts         TestAttempt[]
+
+  @@index([jlptLevel])
+}
+
+model Question {
+  id                   String           @id @default(cuid())
+  mockTestId           String
+  mockTest             MockTest         @relation(fields: [mockTestId], references: [id], onDelete: Cascade)
+  category             String           // "vocabulary" | "kanji" | "grammar" | "reading" | "listening"
+  questionText         String           // Clean text for exam mode (NO furigana)
+  questionTextFurigana String?          // <ruby> markup text for study/review mode
+  passage              String?
+  audioUrl             String?
+  marks                Int              @default(5)
+  explanation          String?
+  explanationBn        String?
+  order                Int              @default(0)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  options              QuestionOption[]
+
+  @@index([mockTestId, category])
+}
+
+model QuestionOption {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  label      String   // "1", "2", "3", "4"
+  text       String
+  isCorrect  Boolean  @default(false)
+}
+
+model TestAttempt {
+  id               String   @id @default(cuid())
+  mockTestId       String
+  mockTest         MockTest @relation(fields: [mockTestId], references: [id], onDelete: Cascade)
+  studentName      String?
+  studentEmail     String?
+  score            Int
+  totalPossible    Int
+  passed           Boolean
+  timeSpentSeconds Int
+  answersJson      String   // Stores question responses and review details
+  createdAt        DateTime @default(now())
+
+  @@index([mockTestId])
+}
+
+model AdmissionInquiry {
+  id               String   @id @default(cuid())
+  name             String
+  phone            String
+  email            String?
+  interestedCourse String   // "N5" | "N4" | "N3" | "General"
+  message          String?
+  status           String   @default("NEW") // "NEW" | "CONTACTED" | "ENROLLED" | "CANCELLED"
+  source           String   @default("WEBSITE_FORM")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  action      String
+  performedBy String
+  details     String?
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+}

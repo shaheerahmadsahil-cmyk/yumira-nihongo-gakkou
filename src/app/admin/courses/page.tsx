@@ -1,0 +1,23 @@
+import React from "react";
+import { redirect } from "next/navigation";
+import prisma from "@/lib/db";
+import { getCurrentUser } from "@/lib/auth";
+import { CoursesManager } from "@/components/admin/CoursesManager";
+
+export const metadata = {
+  title: "Course Management | Admin",
+};
+
+export default async function AdminCoursesPage() {
+  const user = await getCurrentUser();
+  if (!user || user.role !== "ADMIN") {
+    redirect("/admin/login");
+  }
+
+  const courses = await prisma.course.findMany({
+    include: { translations: true },
+    orderBy: { level: "desc" },
+  });
+
+  return <CoursesManager initialCourses={courses} />;
+}
