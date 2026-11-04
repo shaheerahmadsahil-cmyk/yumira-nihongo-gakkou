@@ -14,9 +14,14 @@ export default async function AdminAdmissionsPage() {
     redirect("/admin/login");
   }
 
-  const inquiries = await prisma.admissionInquiry.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  let inquiries: any[] = [];
+  try {
+    inquiries = await prisma.admissionInquiry.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.warn("Could not fetch admission inquiries:", error);
+  }
 
   return <AdmissionsManager initialInquiries={inquiries} />;
 }
