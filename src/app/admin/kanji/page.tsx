@@ -15,9 +15,14 @@ export default async function AdminKanjiPage() {
     redirect("/admin/login");
   }
 
-  const kanjiList = await prisma.kanji.findMany({
-    orderBy: [{ jlptLevel: "desc" }, { order: "asc" }],
-  });
+  let kanjiList: any[] = [];
+  try {
+    kanjiList = await prisma.kanji.findMany({
+      orderBy: [{ jlptLevel: "desc" }, { order: "asc" }],
+    });
+  } catch (error) {
+    console.warn("Could not fetch kanji list from DB:", error);
+  }
 
   return (
     <div className="space-y-6">

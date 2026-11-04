@@ -15,17 +15,22 @@ export default async function AdminMockTestsPage() {
     redirect("/admin/login");
   }
 
-  const tests = await prisma.mockTest.findMany({
-    include: {
-      _count: {
-        select: {
-          questions: true,
-          attempts: true,
+  let tests: any[] = [];
+  try {
+    tests = await prisma.mockTest.findMany({
+      include: {
+        _count: {
+          select: {
+            questions: true,
+            attempts: true,
+          },
         },
       },
-    },
-    orderBy: { jlptLevel: "desc" },
-  });
+      orderBy: { jlptLevel: "desc" },
+    });
+  } catch (error) {
+    console.warn("Could not fetch mock tests from DB:", error);
+  }
 
   return (
     <div className="space-y-6">

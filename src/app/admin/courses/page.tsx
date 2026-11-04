@@ -14,10 +14,15 @@ export default async function AdminCoursesPage() {
     redirect("/admin/login");
   }
 
-  const courses = await prisma.course.findMany({
-    include: { translations: true },
-    orderBy: { level: "desc" },
-  });
+  let courses: any[] = [];
+  try {
+    courses = await prisma.course.findMany({
+      include: { translations: true },
+      orderBy: { level: "desc" },
+    });
+  } catch (error) {
+    console.warn("Could not fetch courses from DB:", error);
+  }
 
   return <CoursesManager initialCourses={courses} />;
 }
