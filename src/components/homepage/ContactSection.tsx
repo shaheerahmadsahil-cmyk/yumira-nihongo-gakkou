@@ -89,7 +89,7 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="w-4 h-4 text-japanRed-600 shrink-0" />
-                  <span>admissions@rakibsensei.com</span>
+                  <span>admissions@yumira.com</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-japanRed-600 shrink-0 mt-0.5" />
@@ -121,27 +121,42 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
               </h3>
 
               {submitted ? (
-                <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-3 text-center">
+                <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-4 text-center">
                   <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-                  <h4 className="text-lg font-bold">Inquiry Received!</h4>
+                  <h4 className="text-lg font-bold">Inquiry Received / তথ্য সফলভাবে পাওয়া গেছে!</h4>
                   <p className="text-xs sm:text-sm text-emerald-800">
                     {t.contact.successMsg}
                   </p>
-                  <button
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormData({
-                        name: "",
-                        phone: "",
-                        email: "",
-                        interestedCourse: "N5",
-                        message: "",
-                      });
-                    }}
-                    className="mt-4 px-4 py-2 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-lg hover:bg-emerald-200"
-                  >
-                    Submit Another Inquiry
-                  </button>
+
+                  <div className="pt-2">
+                    <a
+                      href={directWhatsApp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-colors"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-white" />
+                      <span>WhatsApp-এ সরাসরি নিশ্চিত করুন (+880 1341-017323)</span>
+                    </a>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => {
+                        setSubmitted(false);
+                        setFormData({
+                          name: "",
+                          phone: "",
+                          email: "",
+                          interestedCourse: "N5",
+                          message: "",
+                        });
+                      }}
+                      className="px-4 py-2 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-lg hover:bg-emerald-200 transition-colors"
+                    >
+                      আরেকটি তথ্য পাঠান
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
