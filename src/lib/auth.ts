@@ -71,8 +71,12 @@ export async function getCurrentUser(): Promise<SessionPayload | null> {
 }
 
 export async function hasAdminAccount(): Promise<boolean> {
-  const count = await prisma.user.count({
-    where: { role: "ADMIN" },
-  });
-  return count > 0;
+  try {
+    const count = await prisma.user.count({
+      where: { role: "ADMIN" },
+    });
+    return count > 0;
+  } catch {
+    return true; // Fail-safe: assume admin account exists
+  }
 }

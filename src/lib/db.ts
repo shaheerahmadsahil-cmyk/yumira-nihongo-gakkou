@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import path from "path";
 import fs from "fs";
+import { defaultDbBase64 } from "./sqlite-seed";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
@@ -12,24 +13,53 @@ function getDatabaseUrl(): string {
   }
 
   // If running on Vercel serverless environment with SQLite:
-  // Vercel filesystem is read-only EXCEPT for /tmp!
+  // Vercel Lambda filesystem is read-only EXCEPT for /tmp!
   if (process.env.VERCEL) {
     const tmpDbPath = "/tmp/dev.db";
     try {
       if (!fs.existsSync(tmpDbPath)) {
-        const sourcePath = path.resolve(process.cwd(), "prisma/dev.db");
-        if (fs.existsSync(sourcePath)) {
-          fs.copyFileSync(sourcePath, tmpDbPath);
+        const possibleSources = [
+          path.resolve(process.cwd(), "prisma/dev.db"),
+          path.resolve(process.cwd(), "dev.db"),
+        ];
+
+        let copied = false;
+        for (const src of possibleSources) {
+          if (fs.existsSync(src)) {
+            try {
+              fs.copyFileSync(src, tmpDbPath);
+              copied = true;
+              break;
+            } catch {
+              // ignore and try fallback
+            }
+          }
+        }
+
+        // If file wasn't present in serverless package, restore from bundled base64 seed
+        if (!copied && defaultDbBase64) {
+          fs.writeFileSync(tmpDbPath, Buffer.from(defaultDbBase64, "base64"));
         }
       }
       return `file:${tmpDbPath}`;
     } catch (err) {
-      console.warn("Could not copy sqlite database to /tmp on Vercel:", err);
+      console.error("Could not initialize SQLite database in /tmp on Vercel:", err);
     }
   }
 
   // Local development fallback
-  const resolvedPath = path.resolve(process.cwd(), "prisma/dev.db").replace(/\\/g, "/");
+  const localPrismaPath = path.resolve(process.cwd(), "prisma/dev.db");
+  if (!fs.existsSync(localPrismaPath) && defaultDbBase64) {
+    try {
+      const dir = path.dirname(localPrismaPath);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(localPrismaPath, Buffer.from(defaultDbBase64, "base64"));
+    } catch (err) {
+      console.warn("Could not auto-create local dev.db:", err);
+    }
+  }
+
+  const resolvedPath = localPrismaPath.replace(/\\/g, "/");
   return `file:${resolvedPath}`;
 }
 

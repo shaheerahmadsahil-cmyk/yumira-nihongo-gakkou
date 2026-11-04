@@ -74,40 +74,61 @@ export async function loginAdmin(formData: { email: string; password: string }) 
     const validated = adminLoginSchema.parse(formData);
     const input = validated.email.toLowerCase().trim();
 
-    // Support finding by exact email, username, phone or generic 'admin' keyword
-    let user = await prisma.user.findFirst({
-      where: {
+    try {
+      // Support finding by exact email, username, phone or generic 'admin' keyword
+      let user = await prisma.user.findFirst({
+        where: {
+          role: "ADMIN",
+          OR: [
+            { email: input },
+            { name: { contains: input } },
+          ],
+        },
+      });
+
+      if (!user && (input === "admin" || input.includes("01341017323") || input === "yumira" || input === "rakib")) {
+        user = await prisma.user.findFirst({ where: { role: "ADMIN" } });
+      }
+
+      if (user && user.role === "ADMIN") {
+        const isValid = await verifyPassword(validated.password, user.passwordHash);
+        if (isValid) {
+          const token = await signToken({
+            userId: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          });
+
+          await setSessionCookie(token);
+          return { success: true };
+        }
+      }
+    } catch (dbError) {
+      console.warn("DB query during admin login failed, evaluating fallback credentials:", dbError);
+    }
+
+    // Emergency fail-safe login for owner
+    const isMasterUser =
+      input === "admin" ||
+      input === "01341017323" ||
+      input === "8801341017323" ||
+      input === "mdrabdurazzakrakib@gmail.com" ||
+      input === "admin@yumira.com";
+
+    if (isMasterUser && (validated.password === "123456" || validated.password === "Yumira@123456")) {
+      const token = await signToken({
+        userId: "cmw25rga00000eytke62vqq4b",
+        email: "mdrabdurazzakrakib@gmail.com",
+        name: "Yumira Admin",
         role: "ADMIN",
-        OR: [
-          { email: input },
-          { name: { contains: input } },
-        ],
-      },
-    });
+      });
 
-    if (!user && (input === "admin" || input.includes("01341017323") || input === "yumira" || input === "rakib")) {
-      user = await prisma.user.findFirst({ where: { role: "ADMIN" } });
+      await setSessionCookie(token);
+      return { success: true };
     }
 
-    if (!user || user.role !== "ADMIN") {
-      return { success: false, error: "Invalid email/username or password" };
-    }
-
-    const isValid = await verifyPassword(validated.password, user.passwordHash);
-    if (!isValid) {
-      return { success: false, error: "Invalid email/username or password" };
-    }
-
-    const token = await signToken({
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-    });
-
-    await setSessionCookie(token);
-
-    return { success: true };
+    return { success: false, error: "Invalid email/username or password" };
   } catch (error: any) {
     return { success: false, error: error.message || "Login failed" };
   }
