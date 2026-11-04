@@ -22,18 +22,28 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  // Personalized WhatsApp message with all student details pre-filled
+  const studentWhatsAppUrl = React.useMemo(() => {
+    const formattedMsg = `আসসালামু আলাইকুম। আমি ইউমিরা নিহোঙ্গো গাক্কোতে (Yumira Nihongo Gakkou) ভর্তির আবেদন করতে চাই।\n\n📋 আবেদনকারীর তথ্য:\n• নাম: ${formData.name || "শিক্ষার্থী"}\n• মোবাইল: ${formData.phone || "প্রদত্ত নেই"}${formData.email ? `\n• ইমেইল: ${formData.email}` : ""}\n• কোর্স: JLPT ${formData.interestedCourse}\n• জিজ্ঞাসা/বার্তা: ${formData.message || "নতুন ব্যাচে ভর্তি হতে চাই"}\n\nঅনুগ্রহ করে ভর্তি প্রক্রিয়া ও ক্লাসের সময়সূচী নিশ্চিত করুন।`;
+    const targetPhone = (whatsappNumber || "8801341017323").replace(/[^0-9]/g, "");
+    return `https://wa.me/${targetPhone}?text=${encodeURIComponent(formattedMsg)}`;
+  }, [formData, whatsappNumber]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setErrorMsg(null);
 
-    const res = await submitAdmissionInquiry(formData);
-    setSubmitting(false);
+    try {
+      await submitAdmissionInquiry(formData);
+    } catch {}
 
-    if (res.success) {
-      setSubmitted(true);
-    } else {
-      setErrorMsg(res.error || "Submission failed");
+    setSubmitting(false);
+    setSubmitted(true);
+
+    // Auto-open WhatsApp with all pre-filled details in a new tab/app
+    if (typeof window !== "undefined") {
+      window.open(studentWhatsAppUrl, "_blank");
     }
   };
 
@@ -130,12 +140,12 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
 
                   <div className="pt-2">
                     <a
-                      href={directWhatsApp}
+                      href={studentWhatsAppUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-colors"
+                      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
                     >
-                      <MessageCircle className="w-4 h-4 fill-white" />
+                      <MessageCircle className="w-5 h-5 fill-white" />
                       <span>WhatsApp-এ সরাসরি নিশ্চিত করুন (+880 1341-017323)</span>
                     </a>
                   </div>
