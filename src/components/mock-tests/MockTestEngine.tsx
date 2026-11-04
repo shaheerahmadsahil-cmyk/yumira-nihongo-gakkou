@@ -14,11 +14,13 @@ import {
   RefreshCw,
   Home,
   BookOpen,
+  Volume2,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { submitMockTestAttempt } from "@/app/actions/mock-test";
 import { FuriganaParser } from "@/components/shared/FuriganaText";
+import { playJapaneseSpeech } from "@/lib/audio";
 
 export interface CleanQuestion {
   id: string;
@@ -26,6 +28,7 @@ export interface CleanQuestion {
   questionText: string; // Clean text for exam mode (NO furigana)
   passage?: string | null;
   audioUrl?: string | null;
+  audioText?: string | null;
   marks: number;
   order: number;
   options: {
@@ -267,8 +270,24 @@ export function MockTestEngine({ test }: { test: TestData }) {
                   </div>
 
                   {item.passage && (
-                    <div className="p-4 rounded-xl bg-white border border-washi-200 text-xs sm:text-sm leading-relaxed text-gray-800 font-japanese">
+                    <div className="p-4 rounded-xl bg-white border border-washi-200 text-xs sm:text-sm leading-relaxed text-gray-800 font-japanese whitespace-pre-line">
                       {item.passage}
+                    </div>
+                  )}
+
+                  {item.audioText && (
+                    <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between gap-3">
+                      <span className="text-xs font-semibold text-slate-700">
+                        🎧 লিসেনিং স্ক্রিপ্ট: &ldquo;{item.audioText}&rdquo;
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => playJapaneseSpeech(item.audioText)}
+                        className="px-3 py-1.5 rounded-lg bg-japanRed-600 hover:bg-japanRed-700 text-white font-bold text-xs flex items-center gap-1.5 shrink-0"
+                      >
+                        <Volume2 className="w-3.5 h-3.5" />
+                        <span>পুনরায় শুনুন</span>
+                      </button>
                     </div>
                   )}
 
@@ -423,7 +442,34 @@ export function MockTestEngine({ test }: { test: TestData }) {
                 <span className="text-[10px] uppercase font-bold text-gray-400 block mb-2">
                   Read the passage carefully:
                 </span>
-                {currentQ.passage}
+                <p className="whitespace-pre-line">{currentQ.passage}</p>
+              </div>
+            )}
+
+            {/* Listening Audio Player if present */}
+            {currentQ.audioText && (
+              <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-japanRed-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <Volume2 className="w-5 h-5 animate-pulse" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-navy-900 block">
+                      🎧 লিসেনিং অডিও টেস্ট (Listening Audio Dialogue)
+                    </span>
+                    <span className="text-[11px] text-slate-500">
+                      জাপানি কথোপকথন শুনতে পাশের বাটনে ক্লিক করুন
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => playJapaneseSpeech(currentQ.audioText!)}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95 shrink-0"
+                >
+                  <Volume2 className="w-4 h-4" />
+                  <span>অডিও শুনুন (Play Audio)</span>
+                </button>
               </div>
             )}
 
