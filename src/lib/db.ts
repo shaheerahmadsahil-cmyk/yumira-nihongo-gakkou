@@ -63,12 +63,15 @@ function getDatabaseUrl(): string {
   return `file:${resolvedPath}`;
 }
 
+const resolvedDbUrl = getDatabaseUrl();
+process.env.DATABASE_URL = resolvedDbUrl;
+
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
     datasources: {
       db: {
-        url: getDatabaseUrl(),
+        url: resolvedDbUrl,
       },
     },
     log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],

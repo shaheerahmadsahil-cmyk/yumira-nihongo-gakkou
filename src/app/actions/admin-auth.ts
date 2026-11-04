@@ -25,8 +25,7 @@ const adminLoginSchema = z.object({
 });
 
 export async function checkAdminSetupStatus() {
-  const exists = await hasAdminAccount();
-  return { hasAdmin: exists };
+  return { hasAdmin: true };
 }
 
 export async function initialAdminSetup(formData: {
@@ -74,8 +73,35 @@ export async function loginAdmin(formData: { email: string; password: string }) 
     const validated = adminLoginSchema.parse(formData);
     const input = validated.email.toLowerCase().trim();
 
+    // 1. Direct Instant Master Admin Authentication
+    // Completely bypasses database queries and file lock delays on serverless cold starts
+    const isMasterUser =
+      input === "admin" ||
+      input === "01341017323" ||
+      input === "8801341017323" ||
+      input === "mdrabdurazzakrakib@gmail.com" ||
+      input === "admin@yumira.com" ||
+      input === "yumira" ||
+      input === "rakib";
+
+    if (isMasterUser) {
+      if (validated.password === "123456" || validated.password === "Yumira@123456") {
+        const token = await signToken({
+          userId: "cmw25rga00000eytke62vqq4b",
+          email: "mdrabdurazzakrakib@gmail.com",
+          name: "Muhammad Abdur Razzak (Admin)",
+          role: "ADMIN",
+        });
+
+        await setSessionCookie(token);
+        return { success: true };
+      } else {
+        return { success: false, error: "Incorrect password" };
+      }
+    }
+
+    // 2. Database query for any newly created admin accounts
     try {
-      // Support finding by exact email, username, phone or generic 'admin' keyword
       let user = await prisma.user.findFirst({
         where: {
           role: "ADMIN",
@@ -85,10 +111,6 @@ export async function loginAdmin(formData: { email: string; password: string }) 
           ],
         },
       });
-
-      if (!user && (input === "admin" || input.includes("01341017323") || input === "yumira" || input === "rakib")) {
-        user = await prisma.user.findFirst({ where: { role: "ADMIN" } });
-      }
 
       if (user && user.role === "ADMIN") {
         const isValid = await verifyPassword(validated.password, user.passwordHash);
@@ -105,27 +127,7 @@ export async function loginAdmin(formData: { email: string; password: string }) 
         }
       }
     } catch (dbError) {
-      console.warn("DB query during admin login failed, evaluating fallback credentials:", dbError);
-    }
-
-    // Emergency fail-safe login for owner
-    const isMasterUser =
-      input === "admin" ||
-      input === "01341017323" ||
-      input === "8801341017323" ||
-      input === "mdrabdurazzakrakib@gmail.com" ||
-      input === "admin@yumira.com";
-
-    if (isMasterUser && (validated.password === "123456" || validated.password === "Yumira@123456")) {
-      const token = await signToken({
-        userId: "cmw25rga00000eytke62vqq4b",
-        email: "mdrabdurazzakrakib@gmail.com",
-        name: "Yumira Admin",
-        role: "ADMIN",
-      });
-
-      await setSessionCookie(token);
-      return { success: true };
+      console.warn("DB query during admin login failed:", dbError);
     }
 
     return { success: false, error: "Invalid email/username or password" };
