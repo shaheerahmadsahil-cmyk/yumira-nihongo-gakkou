@@ -11,27 +11,30 @@ export type MessageLocale = "bn" | "en" | "ja";
 export interface WhatsAppMessageOptions {
   courseLevel?: "N5" | "N4" | "N3" | "JFT-Basic" | "JFT-A2" | "General" | string;
   courseTitle?: string;
+  batchMode?: "Online" | "Offline" | string;
   locale?: MessageLocale;
   customMessage?: string;
   whatsappNumber?: string;
 }
 
 export function generateWhatsAppMessage(options: WhatsAppMessageOptions): string {
-  const { courseLevel = "General", locale = "en", customMessage } = options;
+  const { courseLevel = "General", locale = "en", batchMode, customMessage } = options;
 
   if (customMessage) return customMessage;
 
   const isJFT = courseLevel.toUpperCase().includes("JFT");
+  const modeTextBn = batchMode === "Offline" ? "অফলাইন (ক্যাম্পাস)" : batchMode === "Online" ? "অনলাইন" : "";
+  const modeTextEn = batchMode === "Offline" ? "Offline Campus" : batchMode === "Online" ? "Online" : "";
 
   switch (locale) {
     case "bn":
       if (isJFT) {
-        return "আসসালামু আলাইকুম। আমি ইউমিরা নিহোঙ্গো গাক্কোর JFT-Basic (A2) স্পেশাল SSW ওয়ার্কিং ভিসা কোর্সে ভর্তি হতে আগ্রহী। অনুগ্রহ করে আমাকে কোর্স ফি, ব্যাচ রুটিন ও ভর্তি প্রক্রিয়া জানান।";
+        return `আসসালামু আলাইকুম। আমি ইউমিরা নিহোঙ্গো গাক্কোর JFT-Basic (A2) স্পেশাল SSW ওয়ার্কিং ভিসা কোর্সে${modeTextBn ? ` (${modeTextBn} ব্যাচে)` : ""} ভর্তি হতে আগ্রহী। অনুগ্রহ করে আমাকে কোর্স ফি, ব্যাচ রুটিন ও ভর্তি প্রক্রিয়া জানান।`;
       }
       if (courseLevel === "General") {
         return "আসসালামু আলাইকুম। আমি ইউমিরা নিহোঙ্গো গাক্কোর (Yumira Nihongo Gakkou) জাপানি ভাষা শিক্ষা ও স্টুডেন্ট ভিসা সংক্রান্ত তথ্য জানতে আগ্রহী। বিস্তারিত জানাবেন কি?";
       }
-      return `আসসালামু আলাইকুম। আমি ইউমিরা নিহোঙ্গো গাক্কোর জেএলপিটি ${courseLevel} কোর্সে ভর্তি হতে আগ্রহী। অনুগ্রহ করে আমাকে কোর্স ফি, ক্লাসের রুটিন ও ভর্তি সংক্রান্ত তথ্য প্রদান করুন।`;
+      return `আসসালামু আলাইকুম। আমি ইউমিরা নিহোঙ্গো গাক্কোর জেএলপিটি ${courseLevel} কোর্সের${modeTextBn ? ` ${modeTextBn} ব্যাচে` : ""} ভর্তি হতে আগ্রহী। অনুগ্রহ করে আমাকে কোর্স ফি, ক্লাসের রুটিন ও ভর্তি সংক্রান্ত তথ্য প্রদান করুন।`;
 
     case "ja":
       if (isJFT) {
@@ -45,12 +48,12 @@ export function generateWhatsAppMessage(options: WhatsAppMessageOptions): string
     case "en":
     default:
       if (isJFT) {
-        return "Hello, I am interested in enrolling in the JFT-Basic (A2) SSW Working Visa course at Yumira Nihongo Gakkou. Please provide me with course fees, schedules, and admission details.";
+        return `Hello, I am interested in enrolling in the JFT-Basic (A2) SSW Working Visa course${modeTextEn ? ` (${modeTextEn} Batch)` : ""} at Yumira Nihongo Gakkou. Please provide me with course fees, schedules, and admission details.`;
       }
       if (courseLevel === "General") {
         return "Hello! I am interested in learning Japanese and consulting about study visa opportunities at Yumira Nihongo Gakkou. Please provide me with detailed information.";
       }
-      return `Hello, I am interested in enrolling in the JLPT ${courseLevel} course at Yumira Nihongo Gakkou. Please provide me with course details, fees, class schedules, and admission information.`;
+      return `Hello, I am interested in enrolling in the JLPT ${courseLevel} course${modeTextEn ? ` (${modeTextEn} Batch)` : ""} at Yumira Nihongo Gakkou. Please provide me with course details, fees, class schedules, and admission information.`;
   }
 }
 

@@ -8,10 +8,10 @@ export const metadata = {
 };
 
 export default async function KatakanaPage() {
-  const characters = await prisma.character.findMany({
-    where: { type: "katakana" },
-    orderBy: { order: "asc" },
-  });
+  let characters: any[] = [];
+  try {
+    characters = await prisma.character.findMany({ where: { type: "katakana" }, orderBy: { order: "asc" } });
+  } catch {}
 
   return <KatakanaCenter characters={characters} />;
 }

@@ -34,6 +34,8 @@ interface CourseDetailProps {
     slug: string;
     level: string;
     baseFee: number;
+    onlineFee?: number | null;
+    offlineFee?: number | null;
     currency: string;
     duration: string;
     schedule: string;
@@ -60,6 +62,9 @@ export function CourseDetailView({ course, whatsappNumber }: CourseDetailProps) 
     course.translations.find((tr) => tr.locale === "en") ||
     course.translations[0];
 
+  const onlineFeeVal = course.onlineFee ?? course.baseFee;
+  const offlineFeeVal = course.offlineFee ?? (course.baseFee + 2000);
+
   const applyUrl = buildWhatsAppUrl({
     courseLevel: course.level as "N5" | "N4" | "N3",
     courseTitle: trans?.title,
@@ -67,9 +72,19 @@ export function CourseDetailView({ course, whatsappNumber }: CourseDetailProps) 
     whatsappNumber,
   });
 
-  const formattedFee = new Intl.NumberFormat(
-    locale === "bn" ? "bn-BD" : "en-US"
-  ).format(course.baseFee);
+  const onlineApplyUrl = buildWhatsAppUrl({
+    courseLevel: course.level as "N5" | "N4" | "N3",
+    courseTitle: `${trans?.title} (অনলাইন ব্যাচ - ৳${onlineFeeVal})`,
+    locale,
+    whatsappNumber,
+  });
+
+  const offlineApplyUrl = buildWhatsAppUrl({
+    courseLevel: course.level as "N5" | "N4" | "N3",
+    courseTitle: `${trans?.title} (অফলাইন ক্যাম্পাস ব্যাচ - ৳${offlineFeeVal})`,
+    locale,
+    whatsappNumber,
+  });
 
   return (
     <div className="py-12 md:py-20 bg-white">
@@ -136,32 +151,73 @@ export function CourseDetailView({ course, whatsappNumber }: CourseDetailProps) 
           <div className="lg:col-span-4 sticky top-28">
             <div className="p-8 rounded-3xl bg-washi-50 border-2 border-japanRed-200/80 shadow-xl space-y-6">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-japanRed-700 block mb-1">
-                  Published Tuition Fee
+                <span className="text-xs font-bold uppercase tracking-wider text-japanRed-700 block mb-2">
+                  {locale === "bn" ? "কোর্স ফি অপশনসমূহ" : locale === "ja" ? "受講料プラン" : "Tuition Fee Options"}
                 </span>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-navy-900">
-                    {formattedFee}
-                  </span>
-                  <span className="text-base font-bold text-japanRed-600">
-                    {course.currency}
-                  </span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+                  {/* Online Fee Box */}
+                  <div className="p-4 rounded-2xl bg-white border border-blue-200 shadow-sm flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-bold text-blue-700 flex items-center gap-1.5">
+                        🌐 {locale === "bn" ? "অনলাইন ব্যাচ" : "Online Live"}
+                      </span>
+                      <span className="text-[11px] text-gray-500 block mt-0.5">
+                        {locale === "bn" ? "লাইভ জুম ক্লাস + রেকর্ডিং" : "Live interactive classes"}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-2xl font-black text-navy-900">
+                        ৳{new Intl.NumberFormat(locale === "bn" ? "bn-BD" : "en-US").format(onlineFeeVal)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Offline Campus Fee Box */}
+                  <div className="p-4 rounded-2xl bg-white border border-japanRed-200 shadow-sm flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-bold text-japanRed-700 flex items-center gap-1.5">
+                        🏫 {locale === "bn" ? "অফলাইন ক্যাম্পাস" : "Offline Campus"}
+                      </span>
+                      <span className="text-[11px] text-gray-500 block mt-0.5">
+                        {locale === "bn" ? "ইন-পার্সন ক্লাসরুম" : "In-person campus classrooms"}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-2xl font-black text-navy-900">
+                        ৳{new Intl.NumberFormat(locale === "bn" ? "bn-BD" : "en-US").format(offlineFeeVal)}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <span className="text-[11px] text-gray-500 block mt-1">
-                  * Dynamic published fee. Includes workbooks & mock exam access.
+
+                <span className="text-[11px] text-gray-500 block mt-2">
+                  * {locale === "bn" ? "উভয় মোডেই বই, লেকচার শিট ও আনলিমিটেড মক টেস্ট অন্তর্ভুক্ত।" : "Includes textbooks, lecture materials & full mock exams."}
                 </span>
               </div>
 
-              {/* Admission WhatsApp Button */}
-              <a
-                href={applyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2.5 py-4 px-6 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-semibold text-sm shadow-lg shadow-japanRed-600/30 transition-all duration-200 hover:-translate-y-0.5"
-              >
-                <MessageCircle className="w-5 h-5 fill-white" />
-                <span>Enroll in JLPT {course.level} (WhatsApp)</span>
-              </a>
+              {/* Admission WhatsApp Buttons */}
+              <div className="space-y-2.5">
+                <a
+                  href={onlineApplyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  <span>🌐 অনলাইন ব্যাচে ভর্তি (WhatsApp)</span>
+                </a>
+
+                <a
+                  href={offlineApplyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-semibold text-xs sm:text-sm shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  <span>🏫 অফলাইন ক্যাম্পাসে ভর্তি (WhatsApp)</span>
+                </a>
+              </div>
 
               {/* Features List in Card */}
               {trans?.features && trans.features.length > 0 && (

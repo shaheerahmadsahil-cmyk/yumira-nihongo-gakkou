@@ -7,31 +7,48 @@ import { BookOpen, Check, Edit2, Sparkles, DollarSign } from "lucide-react";
 export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
   const [courses, setCourses] = useState(initialCourses);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [feeInput, setFeeInput] = useState<number>(0);
+  const [onlineFeeInput, setOnlineFeeInput] = useState<number>(0);
+  const [offlineFeeInput, setOfflineFeeInput] = useState<number>(0);
   const [saving, setSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const handleStartEdit = (course: any) => {
     setEditingId(course.id);
-    setFeeInput(course.baseFee);
+    setOnlineFeeInput(course.onlineFee ?? course.baseFee);
+    setOfflineFeeInput(course.offlineFee ?? (course.baseFee + 2000));
   };
 
-  const handleSaveFee = async (courseId: string) => {
+  const handleSaveFee = async (courseId: string, currency: string) => {
     setSaving(true);
     setSuccessMsg(null);
 
-    const res = await updateCourseFee(courseId, Number(feeInput));
+    const res = await updateCourseFee(
+      courseId,
+      Number(onlineFeeInput),
+      currency,
+      Number(onlineFeeInput),
+      Number(offlineFeeInput)
+    );
     setSaving(false);
 
     if (res.success) {
       setCourses((prev) =>
-        prev.map((c) => (c.id === courseId ? { ...c, baseFee: Number(feeInput) } : c))
+        prev.map((c) =>
+          c.id === courseId
+            ? {
+                ...c,
+                baseFee: Number(onlineFeeInput),
+                onlineFee: Number(onlineFeeInput),
+                offlineFee: Number(offlineFeeInput),
+              }
+            : c
+        )
       );
       setEditingId(null);
-      setSuccessMsg("Tuition fee updated successfully! Live website updated.");
+      setSuccessMsg("অনলাইন ও অফলাইন ফি সফলভাবে আপডেট করা হয়েছে! লাইভ সাইটে পরিবর্তন কার্যকর হয়েছে।");
       setTimeout(() => setSuccessMsg(null), 3000);
     } else {
-      alert("Failed to update fee");
+      alert("ফি আপডেট করতে সমস্যা হয়েছে");
     }
   };
 
@@ -89,61 +106,96 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
                 </div>
               </div>
 
-              {/* Dynamic Fee Box */}
+              {/* Dynamic Fee Box (Online & Offline) */}
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                <span className="text-[11px] uppercase font-bold text-slate-400 block">
-                  Published Tuition Fee
+                <span className="text-[11px] uppercase font-bold text-slate-500 block">
+                  কোর্স ফি ব্যবস্থাপনা (অনলাইন ও অফলাইন)
                 </span>
 
                 {isEditing ? (
                   <div className="space-y-3">
-                    <div className="flex items-center gap-2">
+                    <div>
+                      <label className="text-[11px] font-bold text-blue-700 block mb-1">
+                        🌐 অনলাইন ব্যাচ ফি ({course.currency}):
+                      </label>
                       <input
                         type="number"
                         min="0"
-                        value={feeInput}
-                        onChange={(e) => setFeeInput(Number(e.target.value))}
-                        className="w-full px-3 py-2 text-sm font-bold rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-japanRed-500"
+                        value={onlineFeeInput}
+                        onChange={(e) => setOnlineFeeInput(Number(e.target.value))}
+                        className="w-full px-3 py-2 text-sm font-bold rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
-                      <span className="text-xs font-bold text-slate-500">
-                        {course.currency}
-                      </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div>
+                      <label className="text-[11px] font-bold text-japanRed-700 block mb-1">
+                        🏫 অফলাইন / ক্যাম্পাস ফি ({course.currency}):
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={offlineFeeInput}
+                        onChange={(e) => setOfflineFeeInput(Number(e.target.value))}
+                        className="w-full px-3 py-2 text-sm font-bold rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-japanRed-500"
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-1">
                       <button
                         disabled={saving}
-                        onClick={() => handleSaveFee(course.id)}
+                        onClick={() => handleSaveFee(course.id, course.currency)}
                         className="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow transition-colors"
                       >
-                        {saving ? "Saving..." : "Save Fee"}
+                        {saving ? "সংরক্ষণ হচ্ছে..." : "ফি আপডেট করুন"}
                       </button>
                       <button
                         onClick={() => setEditingId(null)}
                         className="py-2 px-3 rounded-xl bg-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-300 transition-colors"
                       >
-                        Cancel
+                        বাতিল
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-2xl font-extrabold text-navy-900">
-                        {new Intl.NumberFormat().format(course.baseFee)}
-                      </span>{" "}
-                      <span className="text-xs font-bold text-japanRed-600">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between p-2 rounded-xl bg-blue-50/60 border border-blue-100">
+                      <div>
+                        <span className="text-[10px] font-bold text-blue-700 uppercase block">
+                          🌐 অনলাইন ফি
+                        </span>
+                        <span className="text-base font-extrabold text-navy-900">
+                          ৳{new Intl.NumberFormat().format(course.onlineFee ?? course.baseFee)}
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-semibold text-blue-600">
                         {course.currency}
                       </span>
                     </div>
 
-                    <button
-                      onClick={() => handleStartEdit(course)}
-                      className="p-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-japanRed-600 hover:border-japanRed-300 transition-colors shadow-sm"
-                      title="Edit Course Fee"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </button>
+                    <div className="flex items-center justify-between p-2 rounded-xl bg-japanRed-50/60 border border-japanRed-100">
+                      <div>
+                        <span className="text-[10px] font-bold text-japanRed-700 uppercase block">
+                          🏫 অফলাইন / ক্যাম্পাস
+                        </span>
+                        <span className="text-base font-extrabold text-navy-900">
+                          ৳{new Intl.NumberFormat().format(course.offlineFee ?? (course.baseFee + 2000))}
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-semibold text-japanRed-600">
+                        {course.currency}
+                      </span>
+                    </div>
+
+                    <div className="pt-2 flex justify-end">
+                      <button
+                        onClick={() => handleStartEdit(course)}
+                        className="flex items-center gap-1.5 py-1.5 px-3 rounded-xl bg-white border border-slate-300 text-slate-700 hover:text-japanRed-600 hover:border-japanRed-300 transition-colors text-xs font-bold shadow-sm"
+                        title="Edit Course Fee"
+                      >
+                        <Edit2 className="w-3.5 h-3.5" />
+                        <span>ফি পরিবর্তন করুন</span>
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

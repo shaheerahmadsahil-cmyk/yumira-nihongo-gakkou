@@ -33,6 +33,8 @@ model Course {
   slug         String              @unique
   level        String              // "N5" | "N4" | "N3"
   baseFee      Float               @default(12000)
+  onlineFee    Float?              @default(8000)
+  offlineFee   Float?              @default(10000)
   currency     String              @default("BDT")
   duration     String              @default("4 Months")
   schedule     String              @default("3 Days/Week")

@@ -39,6 +39,8 @@ async function getHomepageData() {
       slug: c.slug,
       level: c.level,
       baseFee: c.baseFee,
+      onlineFee: c.onlineFee ?? c.baseFee,
+      offlineFee: c.offlineFee ?? (c.baseFee + 2000),
       currency: c.currency,
       duration: c.duration,
       schedule: c.schedule,

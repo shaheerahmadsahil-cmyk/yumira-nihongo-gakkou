@@ -8,10 +8,10 @@ export const metadata = {
 };
 
 export default async function HiraganaPage() {
-  const characters = await prisma.character.findMany({
-    where: { type: "hiragana" },
-    orderBy: { order: "asc" },
-  });
+  let characters: any[] = [];
+  try {
+    characters = await prisma.character.findMany({ where: { type: "hiragana" }, orderBy: { order: "asc" } });
+  } catch {}
 
   return <HiraganaCenter characters={characters} />;
 }

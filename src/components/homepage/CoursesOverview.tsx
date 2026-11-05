@@ -10,8 +10,10 @@ import { buildWhatsAppUrl } from "@/lib/whatsapp";
 export interface CourseCardData {
   id: string;
   slug: string;
-  level: string; // N5, N4, N3
+  level: string; // N5, N4, N3, JFT-A2
   baseFee: number;
+  onlineFee?: number | null;
+  offlineFee?: number | null;
   currency: string;
   duration: string;
   schedule: string;
@@ -114,19 +116,37 @@ export function CoursesOverview({ courses, whatsappNumber }: CoursesOverviewProp
                   </div>
                 </div>
 
-                {/* Dynamic Course Fee Section - ALWAYS FROM DATABASE */}
+                {/* Dynamic Course Fee Section - Online & Offline */}
                 <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div className="mb-6">
-                    <span className="text-xs font-medium text-gray-500 block mb-1">
-                      {t.courses.feeLabel}
+                  <div className="mb-6 space-y-3">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">
+                      {locale === "bn" ? "কোর্স ফি (অনলাইন ও ক্যাম্পাস)" : locale === "ja" ? "受講料（オンライン / 通学）" : "Tuition Fee (Online & Offline)"}
                     </span>
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-3xl font-extrabold text-navy-900 tracking-tight">
-                        {formattedFee}
-                      </span>
-                      <span className="text-sm font-semibold text-japanRed-600">
-                        {course.currency}
-                      </span>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      {/* Online Fee */}
+                      <div className="p-2.5 rounded-xl bg-blue-50/70 border border-blue-100 flex flex-col">
+                        <span className="text-[11px] font-bold text-blue-700 flex items-center gap-1">
+                          🌐 {locale === "bn" ? "অনলাইন" : locale === "ja" ? "オンライン" : "Online"}
+                        </span>
+                        <div className="mt-1 flex items-baseline gap-1">
+                          <span className="text-base sm:text-lg font-extrabold text-navy-900 tracking-tight">
+                            ৳{new Intl.NumberFormat(locale === "bn" ? "bn-BD" : "en-US").format(course.onlineFee ?? course.baseFee)}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Offline Fee */}
+                      <div className="p-2.5 rounded-xl bg-japanRed-50/70 border border-japanRed-100 flex flex-col">
+                        <span className="text-[11px] font-bold text-japanRed-700 flex items-center gap-1">
+                          🏫 {locale === "bn" ? "অফলাইন" : locale === "ja" ? "通学" : "Offline"}
+                        </span>
+                        <div className="mt-1 flex items-baseline gap-1">
+                          <span className="text-base sm:text-lg font-extrabold text-navy-900 tracking-tight">
+                            ৳{new Intl.NumberFormat(locale === "bn" ? "bn-BD" : "en-US").format(course.offlineFee ?? (course.baseFee + 2000))}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

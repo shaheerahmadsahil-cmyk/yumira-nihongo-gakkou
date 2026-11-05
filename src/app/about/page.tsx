@@ -6,16 +6,16 @@ import { Target, Compass, Award, CheckCircle2, ShieldCheck, HeartHandshake } fro
 import Link from "next/link";
 
 export const metadata = {
-  title: "About Us | Rakib Sensei Japanese Academy",
+  title: "About Us | Yumira Nihongo Gakkou",
   description: "Learn about Rakib Sensei Japanese Academy, our philosophy, mission, certified teachers, and pathway to Japan.",
 };
 
 export default async function AboutPage() {
-  const settings = await prisma.websiteSetting.findMany();
-  const settingsMap = settings.reduce((acc, curr) => {
-    acc[curr.key] = curr.value;
-    return acc;
-  }, {} as Record<string, string>);
+  let settingsMap: Record<string, string> = {};
+  try {
+    const settings = await prisma.websiteSetting.findMany();
+    settings.forEach((curr) => { settingsMap[curr.key] = curr.value; });
+  } catch {}
 
   const agencyName = settingsMap.agency_name || "Yumira Nihongo Gakkou";
 

@@ -177,7 +177,13 @@ export async function changePassword(formData: {
   }
 }
 
-export async function updateCourseFee(courseId: string, baseFee: number, currency = "BDT") {
+export async function updateCourseFee(
+  courseId: string,
+  baseFee: number,
+  currency = "BDT",
+  onlineFee?: number,
+  offlineFee?: number
+) {
   const session = await getCurrentUser();
   if (!session || session.role !== "ADMIN") {
     return { success: false, error: "Unauthorized" };
@@ -186,7 +192,12 @@ export async function updateCourseFee(courseId: string, baseFee: number, currenc
   try {
     await prisma.course.update({
       where: { id: courseId },
-      data: { baseFee, currency },
+      data: {
+        baseFee,
+        currency,
+        ...(onlineFee !== undefined ? { onlineFee } : {}),
+        ...(offlineFee !== undefined ? { offlineFee } : {}),
+      },
     });
   } catch (err) {
     console.warn("Could not persist course fee update:", err);
@@ -194,6 +205,7 @@ export async function updateCourseFee(courseId: string, baseFee: number, currenc
 
   revalidatePath("/");
   revalidatePath("/courses");
+  revalidatePath("/admin/courses");
   return { success: true };
 }
 

@@ -18,16 +18,19 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
     message: "",
   });
 
+  const [batchMode, setBatchMode] = useState<"Online" | "Offline">("Online");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Personalized WhatsApp message with all student details pre-filled
   const studentWhatsAppUrl = React.useMemo(() => {
-    const formattedMsg = `আসসালামু আলাইকুম। আমি ইউমিরা নিহোঙ্গো গাক্কোতে (Yumira Nihongo Gakkou) ভর্তির আবেদন করতে চাই।\n\n📋 আবেদনকারীর তথ্য:\n• নাম: ${formData.name || "শিক্ষার্থী"}\n• মোবাইল: ${formData.phone || "প্রদত্ত নেই"}${formData.email ? `\n• ইমেইল: ${formData.email}` : ""}\n• কোর্স: JLPT ${formData.interestedCourse}\n• জিজ্ঞাসা/বার্তা: ${formData.message || "নতুন ব্যাচে ভর্তি হতে চাই"}\n\nঅনুগ্রহ করে ভর্তি প্রক্রিয়া ও ক্লাসের সময়সূচী নিশ্চিত করুন।`;
+    const courseName = formData.interestedCourse.startsWith("N") ? `JLPT ${formData.interestedCourse}` : formData.interestedCourse;
+    const modeName = batchMode === "Offline" ? "🏫 ক্যাম্পাস / অফলাইন ব্যাচ" : "🌐 অনলাইন ব্যাচ";
+    const formattedMsg = `আসসালামু আলাইকুম। আমি ইউমিরা নিহোঙ্গো গাক্কোতে (Yumira Nihongo Gakkou) ভর্তির আবেদন করতে চাই।\n\n📋 আবেদনকারীর তথ্য:\n• নাম: ${formData.name || "শিক্ষার্থী"}\n• মোবাইল: ${formData.phone || "প্রদত্ত নেই"}${formData.email ? `\n• ইমেইল: ${formData.email}` : ""}\n• কোর্স: ${courseName}\n• মোড: ${modeName}\n• জিজ্ঞাসা/বার্তা: ${formData.message || "নতুন ব্যাচে ভর্তি হতে চাই"}\n\nঅনুগ্রহ করে ভর্তি প্রক্রিয়া ও ক্লাসের সময়সূচী নিশ্চিত করুন।`;
     const targetPhone = (whatsappNumber || "8801341017323").replace(/[^0-9]/g, "");
     return `https://wa.me/${targetPhone}?text=${encodeURIComponent(formattedMsg)}`;
-  }, [formData, whatsappNumber]);
+  }, [formData, batchMode, whatsappNumber]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +38,10 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
     setErrorMsg(null);
 
     try {
-      await submitAdmissionInquiry(formData);
+      await submitAdmissionInquiry({
+        ...formData,
+        message: `[মোড: ${batchMode === "Offline" ? "Offline Campus" : "Online"}] ${formData.message}`.trim(),
+      });
     } catch {}
 
     setSubmitting(false);
@@ -236,6 +242,36 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                       <option value="JFT-Basic">JFT-Basic (A2) — SSW ওয়ার্কিং ভিসা স্পেশাল</option>
                       <option value="General">Study in Japan & General Consultation</option>
                     </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-navy-900 mb-1.5">
+                      {locale === "bn" ? "পছন্দের ব্যাচ মোড *" : "Preferred Batch Mode *"}
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setBatchMode("Online")}
+                        className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                          batchMode === "Online"
+                            ? "border-blue-600 bg-blue-50 text-blue-700 shadow-sm"
+                            : "border-washi-300 bg-white text-gray-700 hover:bg-washi-50"
+                        }`}
+                      >
+                        <span>🌐 {locale === "bn" ? "অনলাইন ব্যাচ" : "Online Live"}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setBatchMode("Offline")}
+                        className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                          batchMode === "Offline"
+                            ? "border-japanRed-600 bg-japanRed-50 text-japanRed-700 shadow-sm"
+                            : "border-washi-300 bg-white text-gray-700 hover:bg-washi-50"
+                        }`}
+                      >
+                        <span>🏫 {locale === "bn" ? "অফলাইন ক্যাম্পাস" : "Offline Campus"}</span>
+                      </button>
+                    </div>
                   </div>
 
                   <div>
