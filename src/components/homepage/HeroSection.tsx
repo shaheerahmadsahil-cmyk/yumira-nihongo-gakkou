@@ -6,6 +6,7 @@ import { MessageCircle, BookOpen, Sparkles, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { FujiWatermark } from "@/components/shared/FujiWatermark";
+import { JapanStudyHeroVisuals } from "@/components/homepage/JapanStudyHeroVisuals";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export interface HeroStatsProps {
@@ -63,6 +64,9 @@ export function HeroSection({
 
   return (
     <section className="relative pt-8 pb-14 sm:pt-16 sm:pb-24 md:pt-20 md:pb-32 overflow-hidden bg-gradient-to-b from-washi-100 via-washi-50 to-washi-50">
+      {/* Animated Japan Map, Flying Airplane & Floating Japanese Study Elements */}
+      <JapanStudyHeroVisuals />
+
       {/* Mount Fuji Background Watermark */}
       <FujiWatermark className="bottom-0" />
 
