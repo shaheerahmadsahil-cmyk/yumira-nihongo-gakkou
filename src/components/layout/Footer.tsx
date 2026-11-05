@@ -56,7 +56,7 @@ export function Footer({ settings }: FooterProps) {
   });
 
   return (
-    <footer className="relative bg-navy-950 text-gray-300 pt-16 pb-12 overflow-hidden border-t-2 border-japanRed-600">
+    <footer className="relative bg-navy-950 text-gray-300 pt-10 sm:pt-16 pb-8 sm:pb-12 overflow-hidden border-t-2 border-japanRed-600">
       {/* Background Japanese Watermark Pattern */}
       <div
         aria-hidden="true"
@@ -64,7 +64,7 @@ export function Footer({ settings }: FooterProps) {
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-8 sm:mb-12">
           {/* Brand Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">

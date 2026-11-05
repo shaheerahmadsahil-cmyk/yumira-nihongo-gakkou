@@ -65,21 +65,21 @@ export function KatakanaCenter({ characters }: { characters: KanaCharacter[] }) 
         </div>
 
         {/* Tab Selection */}
-        <div className="flex items-center justify-center gap-3 mb-10">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-10">
           <button
             onClick={() => setSelectedTab("basic")}
-            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all ${
               selectedTab === "basic"
                 ? "bg-navy-900 text-white shadow-md"
                 : "bg-washi-100 text-navy-900 hover:bg-washi-200"
             }`}
           >
-            Basic Katakana (46 Characters)
+            Basic Katakana (46)
           </button>
 
           <button
             onClick={() => setSelectedTab("dakuten")}
-            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all ${
               selectedTab === "dakuten"
                 ? "bg-navy-900 text-white shadow-md"
                 : "bg-washi-100 text-navy-900 hover:bg-washi-200"
@@ -93,51 +93,51 @@ export function KatakanaCenter({ characters }: { characters: KanaCharacter[] }) 
               setSelectedTab("practice");
               if (!practiceQuestion) startNewQuestion();
             }}
-            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all ${
               selectedTab === "practice"
                 ? "bg-japanRed-600 text-white shadow-md shadow-japanRed-600/30"
                 : "bg-washi-100 text-navy-900 hover:bg-washi-200"
             }`}
           >
-            Interactive Quiz Mode
+            Quiz Mode
           </button>
         </div>
 
         {/* Basic & Dakuten Character Grids */}
         {(selectedTab === "basic" || selectedTab === "dakuten") && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-4">
             {(selectedTab === "basic" ? basicChars : dakutenChars).map((char) => (
               <div
                 key={char.id}
                 onClick={() => setActiveModalChar(char)}
-                className="cursor-pointer group relative bg-washi-50 rounded-2xl p-4 border border-washi-200 hover:border-navy-400 hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-200 flex flex-col items-center justify-between min-h-[140px]"
+                className="cursor-pointer group relative bg-washi-50 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 border border-washi-200 hover:border-navy-400 hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-200 flex flex-col items-center justify-between min-h-[110px] sm:min-h-[140px]"
               >
                 {/* Audio Button */}
                 <button
                   onClick={(e) => handleAudio(char.kana, e)}
                   title="Listen to Japanese pronunciation"
-                  className={`absolute top-2.5 right-2.5 p-1.5 rounded-full transition-colors ${
+                  className={`absolute top-1.5 right-1.5 sm:top-2.5 sm:right-2.5 p-1 sm:p-1.5 rounded-full transition-colors ${
                     playingKana === char.kana
                       ? "bg-navy-900 text-white"
                       : "text-gray-400 hover:text-navy-900 hover:bg-white"
                   }`}
                 >
-                  <Volume2 className="w-4 h-4" />
+                  <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
 
                 {/* Kana Glyph */}
-                <div className="my-auto text-center pt-2">
-                  <span className="font-japanese text-4xl sm:text-5xl font-bold text-navy-900 group-hover:text-japanRed-600 transition-colors">
+                <div className="my-auto text-center pt-1 sm:pt-2">
+                  <span className="font-japanese text-3xl sm:text-5xl font-bold text-navy-900 group-hover:text-japanRed-600 transition-colors">
                     {char.kana}
                   </span>
-                  <div className="text-xs font-mono font-bold text-gray-500 mt-1">
+                  <div className="text-[11px] sm:text-xs font-mono font-bold text-gray-500 mt-0.5 sm:mt-1">
                     {char.romaji}
                   </div>
                 </div>
 
                 {/* Example Word Pill */}
                 {char.exampleWord && (
-                  <div className="w-full text-center pt-2 border-t border-washi-200/80 text-[11px] text-gray-600 line-clamp-1">
+                  <div className="w-full text-center pt-1.5 sm:pt-2 border-t border-washi-200/80 text-[10px] sm:text-[11px] text-gray-600 line-clamp-1">
                     {char.exampleWord}
                   </div>
                 )}

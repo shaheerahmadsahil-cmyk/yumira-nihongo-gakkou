@@ -28,7 +28,7 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
   const { locale, t } = useLanguage();
 
   return (
-    <section className="py-20 bg-washi-100/60 relative">
+    <section className="py-12 sm:py-20 bg-washi-100/60 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ToriiDivider title="SIMULATED EXAMINATIONS" />
 
@@ -38,7 +38,7 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+          className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3"
         >
           <span className="text-xs font-bold uppercase tracking-wider text-japanRed-600 bg-japanRed-50 px-3 py-1 rounded-full border border-japanRed-100">
             {t.mockTest.badge}
@@ -46,7 +46,7 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
           <h2 className="text-2xl sm:text-4xl font-extrabold text-navy-900 tracking-tight">
             {t.mockTest.title}
           </h2>
-          <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-normal">
+          <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed font-normal">
             {t.mockTest.subtitle}
           </p>
         </motion.div>
@@ -65,7 +65,7 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
               },
             },
           }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
         >
           {tests.map((test) => {
             const displayTitle =
@@ -95,11 +95,11 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
                 }}
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 350, damping: 22 }}
-                className="bg-white rounded-3xl p-8 border border-washi-200 shadow-sm hover:shadow-2xl hover:border-japanRed-300 transition-shadow duration-300 flex flex-col justify-between group"
+                className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200 shadow-sm hover:shadow-2xl hover:border-japanRed-300 transition-shadow duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-navy-900 text-white font-mono">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-navy-900 text-white font-mono">
                       JLPT {test.jlptLevel}
                     </span>
                     <span className="flex items-center gap-1.5 text-xs text-japanRed-600 font-semibold bg-japanRed-50 px-2.5 py-1 rounded-full">
@@ -108,27 +108,27 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-navy-900 mb-2 group-hover:text-japanRed-600 transition-colors">
+                  <h3 className="text-base sm:text-lg font-bold text-navy-900 mb-1.5 sm:mb-2 group-hover:text-japanRed-600 transition-colors">
                     {displayTitle}
                   </h3>
-                  <p className="text-xs text-gray-500 mb-6 leading-relaxed">
+                  <p className="text-xs text-gray-500 mb-4 sm:mb-6 leading-relaxed">
                     {displayDesc}
                   </p>
 
-                  <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-washi-50 border border-washi-100 mb-6 text-xs text-gray-600">
+                  <div className="grid grid-cols-2 gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-washi-50 border border-washi-100 mb-4 sm:mb-6 text-xs text-gray-600">
                     <div>
-                      <span className="block text-gray-400 text-[11px]">
+                      <span className="block text-gray-400 text-[10px] sm:text-[11px]">
                         {t.mockTest.totalMarks}
                       </span>
-                      <strong className="text-navy-900 font-bold text-sm">
+                      <strong className="text-navy-900 font-bold text-xs sm:text-sm">
                         {test.totalMarks} pts
                       </strong>
                     </div>
                     <div>
-                      <span className="block text-gray-400 text-[11px]">
+                      <span className="block text-gray-400 text-[10px] sm:text-[11px]">
                         {t.mockTest.passingScore}
                       </span>
-                      <strong className="text-emerald-600 font-bold text-sm">
+                      <strong className="text-emerald-600 font-bold text-xs sm:text-sm">
                         {test.passingScore} pts
                       </strong>
                     </div>
@@ -137,7 +137,7 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
 
                 <Link
                   href={`/mock-tests/${test.id}`}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-navy-900 hover:bg-japanRed-600 shadow transition-colors"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-navy-900 hover:bg-japanRed-600 shadow transition-colors active:scale-95"
                 >
                   <Play className="w-4 h-4 fill-white" />
                   <span>{t.mockTest.startBtn}</span>

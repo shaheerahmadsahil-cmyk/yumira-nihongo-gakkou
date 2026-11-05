@@ -134,10 +134,10 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
 
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-12 h-12 rounded-2xl overflow-hidden shadow-md shadow-amber-900/10 border-2 border-amber-200/80 bg-white group-hover:scale-105 transition-transform flex items-center justify-center">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
+            <div className="relative w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl overflow-hidden shadow-md shadow-amber-900/10 border-2 border-amber-200/80 bg-white group-hover:scale-105 transition-transform flex items-center justify-center shrink-0">
               <Image
                 src="/images/yumira-logo.jpg"
                 alt="Yumira Nihongo Gakkou Logo"
@@ -147,11 +147,11 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
                 priority
               />
             </div>
-            <div className="flex flex-col">
-              <span className="text-lg sm:text-xl font-bold font-sans text-navy-900 tracking-tight leading-tight group-hover:text-japanRed-600 transition-colors">
+            <div className="flex flex-col min-w-0">
+              <span className="text-sm sm:text-lg font-bold font-sans text-navy-900 tracking-tight leading-tight group-hover:text-japanRed-600 transition-colors truncate max-w-[175px] xs:max-w-[220px] sm:max-w-none">
                 Yumira Nihongo Gakkou
               </span>
-              <span className="text-[11px] font-semibold tracking-wider text-amber-700 uppercase font-sans">
+              <span className="text-[9px] sm:text-[11px] font-semibold tracking-wider text-amber-700 uppercase font-sans truncate max-w-[175px] xs:max-w-[220px] sm:max-w-none">
                 {locale === "bn"
                   ? "জাপানিজ একাডেমি • স্বপ্ন ও ভবিষ্যৎ"
                   : locale === "ja"
@@ -219,8 +219,8 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
             })}
           </nav>
 
-          {/* Right Action Items: Language Switcher & WhatsApp CTA */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Right Action Items: Language Switcher & WhatsApp CTA (Desktop) */}
+          <div className="hidden lg:flex items-center gap-3">
             {/* Language Switcher Dropdown */}
             <div className="relative">
               <button
@@ -275,15 +275,15 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex sm:hidden items-center gap-2">
+          {/* Mobile Menu Button & Quick Actions */}
+          <div className="flex lg:hidden items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Quick Lang Switch on Mobile */}
             <button
               onClick={() => {
                 const next = locale === "bn" ? "en" : locale === "en" ? "ja" : "bn";
                 setLocale(next);
               }}
-              className="px-2 py-1 text-xs font-bold border border-washi-300 rounded bg-white text-navy-900"
+              className="px-2 py-1.5 text-xs font-bold border border-washi-300 rounded-lg bg-white text-navy-900 shadow-sm active:scale-95 transition-transform"
             >
               {currentLang.flag} {currentLang.code.toUpperCase()}
             </button>
@@ -291,9 +291,9 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle navigation menu"
-              className="p-2 rounded-lg text-navy-900 hover:bg-washi-200 focus:outline-none"
+              className="p-2 rounded-xl text-navy-900 bg-white border border-washi-300 hover:bg-washi-100 shadow-sm focus:outline-none active:scale-95 transition-transform"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -301,7 +301,7 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white/98 border-b border-washi-200 px-4 pt-2 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="lg:hidden bg-white/98 border-b border-washi-200 px-4 pt-2 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200 max-h-[85vh] overflow-y-auto">
           {/* Furigana Mode Toggle Mobile */}
           <div className="flex items-center justify-between p-3 rounded-xl bg-washi-100 border border-washi-200">
             <div className="flex flex-col">

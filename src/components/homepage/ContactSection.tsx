@@ -61,7 +61,7 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
   });
 
   return (
-    <section id="contact" className="py-20 bg-white relative">
+    <section id="contact" className="py-12 sm:py-20 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ToriiDivider title="ADMISSION & INQUIRIES" />
 
@@ -71,7 +71,7 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+          className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3"
         >
           <span className="text-xs font-bold uppercase tracking-wider text-japanRed-600 bg-japanRed-50 px-3 py-1 rounded-full border border-japanRed-100">
             {t.contact.badge}
@@ -79,22 +79,22 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
           <h2 className="text-2xl sm:text-4xl font-extrabold text-navy-900 tracking-tight">
             {t.contact.title}
           </h2>
-          <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-normal">
+          <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed font-normal">
             {t.contact.subtitle}
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-12">
           {/* Left Column: Direct Helpline & Details */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="lg:col-span-5 space-y-8"
+            className="lg:col-span-5 space-y-4 sm:space-y-8"
           >
-            <div className="p-8 rounded-3xl bg-washi-50 border border-washi-200 space-y-6">
-              <h3 className="text-xl font-bold text-navy-900">
+            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-washi-50 border border-washi-200 space-y-4 sm:space-y-6">
+              <h3 className="text-lg sm:text-xl font-bold text-navy-900">
                 {t.contact.whatsappDirect}
               </h3>
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
@@ -106,23 +106,23 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                   href={directWhatsApp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0"
+                  className="w-full flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0"
                 >
-                  <MessageCircle className="w-5 h-5 fill-white" />
+                  <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
                   <span>Chat on WhatsApp (+880 1341-017323)</span>
                 </a>
               </div>
 
-              <div className="pt-4 border-t border-washi-200/80 space-y-4 text-xs text-gray-600">
-                <div className="flex items-center gap-3">
+              <div className="pt-3 sm:pt-4 border-t border-washi-200/80 space-y-3 sm:space-y-4 text-xs text-gray-600">
+                <div className="flex items-center gap-2.5 sm:gap-3">
                   <Phone className="w-4 h-4 text-japanRed-600 shrink-0" />
                   <span>+880 1341-017323 (Direct Helpline)</span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5 sm:gap-3">
                   <Mail className="w-4 h-4 text-japanRed-600 shrink-0" />
                   <span>admissions@yumira.com</span>
                 </div>
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-2.5 sm:gap-3">
                   <MapPin className="w-4 h-4 text-japanRed-600 shrink-0 mt-0.5" />
                   <span>Level 4, Tokyo Tower Complex, Banani C/A, Dhaka 1213</span>
                 </div>
@@ -130,12 +130,12 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
             </div>
 
             {/* Visa & Career Advice Card */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-navy-900 to-navy-950 text-white shadow-lg space-y-3">
+            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-navy-900 to-navy-950 text-white shadow-lg space-y-2.5 sm:space-y-3">
               <div className="flex items-center gap-2 text-japanRed-400 text-xs font-bold uppercase tracking-wider">
                 <Sparkles className="w-4 h-4" />
                 <span>Career Pathway to Japan</span>
               </div>
-              <h4 className="text-base font-bold">
+              <h4 className="text-sm sm:text-base font-bold">
                 Student Visa & SSW Technical Internships
               </h4>
               <p className="text-xs text-gray-300 leading-relaxed">
@@ -152,7 +152,7 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
             transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="lg:col-span-7"
           >
-            <div className="p-8 sm:p-10 rounded-3xl bg-washi-50 border border-washi-200 shadow-sm">
+            <div className="p-5 sm:p-8 sm:p-10 rounded-2xl sm:rounded-3xl bg-washi-50 border border-washi-200 shadow-sm">
               <h3 className="text-xl font-bold text-navy-900 mb-6">
                 {t.contact.formTitle}
               </h3>

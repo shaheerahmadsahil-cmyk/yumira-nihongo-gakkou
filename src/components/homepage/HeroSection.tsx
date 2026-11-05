@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { MessageCircle, BookOpen, Sparkles, ChevronRight, CheckCircle2 } from "lucide-react";
+import { MessageCircle, BookOpen, Sparkles, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { FujiWatermark } from "@/components/shared/FujiWatermark";
@@ -62,7 +62,7 @@ export function HeroSection({
   ];
 
   return (
-    <section className="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden bg-gradient-to-b from-washi-100 via-washi-50 to-washi-50">
+    <section className="relative pt-8 pb-14 sm:pt-16 sm:pb-24 md:pt-20 md:pb-32 overflow-hidden bg-gradient-to-b from-washi-100 via-washi-50 to-washi-50">
       {/* Mount Fuji Background Watermark */}
       <FujiWatermark className="bottom-0" />
 
@@ -72,30 +72,30 @@ export function HeroSection({
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-japanRed-500/10 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-10 left-1/2 -translate-x-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-japanRed-500/10 rounded-full blur-3xl pointer-events-none"
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center space-y-6">
+        <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
           {/* Badge Tag with spring bounce */}
           <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-japanRed-50 border border-japanRed-200/80 shadow-sm"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-japanRed-50 border border-japanRed-200/80 shadow-sm max-w-full"
           >
-            <Sparkles className="w-4 h-4 text-japanRed-600 animate-pulse" />
-            <span className="text-xs sm:text-sm font-semibold text-japanRed-700 tracking-wide font-sans">
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-japanRed-600 animate-pulse shrink-0" />
+            <span className="text-[11px] sm:text-xs md:text-sm font-semibold text-japanRed-700 tracking-wide font-sans truncate">
               {t.hero.tag}
             </span>
           </motion.div>
 
-          {/* Main Headline with reveal */}
+          {/* Main Headline with responsive font size & line height */}
           <motion.h1
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-navy-900 tracking-tight leading-[1.15]"
+            className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold text-navy-900 tracking-tight leading-[1.25] sm:leading-[1.15]"
           >
             {t.hero.headlinePrefix}{" "}
             <span className="relative inline-block text-japanRed-600">
@@ -106,7 +106,7 @@ export function HeroSection({
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                className="absolute bottom-1 left-0 w-full h-3 bg-japanRed-100 -rotate-1 -z-0 rounded origin-left"
+                className="absolute bottom-1 left-0 w-full h-2.5 sm:h-3 bg-japanRed-100 -rotate-1 -z-0 rounded origin-left"
               />
             </span>{" "}
             {t.hero.headlineSuffix}
@@ -117,7 +117,7 @@ export function HeroSection({
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
-            className="text-base sm:text-lg text-gray-600 leading-relaxed font-normal max-w-2xl mx-auto"
+            className="text-xs sm:text-base md:text-lg text-gray-600 leading-relaxed font-normal max-w-2xl mx-auto px-1 sm:px-0"
           >
             {t.hero.subheading}
           </motion.p>
@@ -127,7 +127,7 @@ export function HeroSection({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35, ease: "easeOut" }}
-            className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
           >
             <motion.a
               whileHover={{ scale: 1.04, y: -2 }}
@@ -136,9 +136,9 @@ export function HeroSection({
               href={applyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-semibold text-sm sm:text-base shadow-lg shadow-japanRed-600/30 transition-colors animate-pulse-glow"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-2.5 px-6 py-3 sm:px-7 sm:py-3.5 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-semibold text-xs sm:text-sm md:text-base shadow-lg shadow-japanRed-600/30 transition-colors animate-pulse-glow"
             >
-              <MessageCircle className="w-5 h-5 fill-white" />
+              <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
               <span>{t.hero.whatsappApply}</span>
             </motion.a>
 
@@ -150,9 +150,9 @@ export function HeroSection({
             >
               <Link
                 href="/courses"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-white hover:bg-washi-100 text-navy-900 border border-washi-300 font-semibold text-sm sm:text-base shadow-sm transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 px-6 py-3 sm:px-7 sm:py-3.5 rounded-xl bg-white hover:bg-washi-100 text-navy-900 border border-washi-300 font-semibold text-xs sm:text-sm md:text-base shadow-sm transition-colors"
               >
-                <BookOpen className="w-5 h-5 text-japanRed-600" />
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-japanRed-600" />
                 <span>{t.hero.exploreCourses}</span>
                 <ChevronRight className="w-4 h-4 opacity-70" />
               </Link>
@@ -164,23 +164,23 @@ export function HeroSection({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="pt-2 flex flex-wrap items-center justify-center gap-3 text-xs text-gray-500 font-medium"
+            className="pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-xs text-gray-500 font-medium"
           >
-            <span className="font-japanese text-sm text-amber-600 font-bold">
+            <span className="font-japanese text-xs sm:text-sm text-amber-600 font-bold">
               「ユミラ」
             </span>
             <span>•</span>
             <span className="font-semibold text-navy-900">স্বপ্ন ও ভবিষ্যৎ</span>
             <span>•</span>
-            <span className="tracking-wider text-gray-600 uppercase text-[11px]">Dream • Grow • Achieve</span>
+            <span className="tracking-wider text-gray-600 uppercase text-[10px] sm:text-[11px]">Dream • Grow • Achieve</span>
             <span>•</span>
-            <span className="font-japanese text-sm text-japanRed-600 font-semibold">
+            <span className="font-japanese text-xs sm:text-sm text-japanRed-600 font-semibold">
               「初志貫徹」
             </span>
           </motion.div>
         </div>
 
-        {/* Highlight Metrics Cards with staggered scroll animation & hover elevation */}
+        {/* Highlight Metrics Cards with responsive padding & typography */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -193,7 +193,7 @@ export function HeroSection({
               },
             },
           }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto"
+          className="mt-8 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl mx-auto"
         >
           {statItems.map((item, idx) => (
             <motion.div
@@ -209,12 +209,12 @@ export function HeroSection({
               }}
               whileHover={{ y: -6, scale: 1.03 }}
               transition={{ type: "spring", stiffness: 350, damping: 20 }}
-              className={`p-5 bg-white/95 backdrop-blur-sm rounded-2xl border border-washi-200 shadow-sm text-center transition-all cursor-default hover:shadow-lg ${item.accent}`}
+              className={`p-3.5 sm:p-5 bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-washi-200 shadow-sm text-center transition-all cursor-default hover:shadow-lg ${item.accent}`}
             >
-              <div className={`text-2xl sm:text-3xl font-extrabold ${item.color} mb-1 tracking-tight`}>
+              <div className={`text-xl sm:text-2xl md:text-3xl font-extrabold ${item.color} mb-0.5 sm:mb-1 tracking-tight`}>
                 {item.value}
               </div>
-              <div className="text-xs sm:text-sm font-medium text-gray-600">
+              <div className="text-[11px] sm:text-xs md:text-sm font-medium text-gray-600 leading-tight">
                 {item.label}
               </div>
             </motion.div>

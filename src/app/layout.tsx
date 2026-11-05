@@ -62,8 +62,8 @@ export default async function RootLayout({
   const whatsappNumber = settings.whatsapp_number || "8801341017323";
 
   return (
-    <html lang="bn" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col bg-washi-50 text-navy-900 antialiased selection:bg-japanRed-100 selection:text-japanRed-900">
+    <html lang="bn" className="overflow-x-hidden scroll-smooth" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col bg-washi-50 text-navy-900 antialiased overflow-x-hidden selection:bg-japanRed-100 selection:text-japanRed-900">
         <LanguageProvider>
           <FuriganaProvider>
             {/* Soft Floating Sakura Petals */}
@@ -73,7 +73,7 @@ export default async function RootLayout({
             <Navbar whatsappNumber={whatsappNumber} />
 
             {/* Main Page Content */}
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 overflow-x-hidden">{children}</main>
 
             {/* Floating WhatsApp Action Button */}
             <FloatingWhatsApp whatsappNumber={whatsappNumber} />

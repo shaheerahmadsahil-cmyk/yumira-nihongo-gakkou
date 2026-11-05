@@ -23,14 +23,17 @@ export function SakuraPetals() {
       return;
     }
 
-    // Generate a subtle number of petals (10-14 for high performance)
-    const generated: Petal[] = Array.from({ length: 12 }).map((_, i) => ({
+    // Responsive petal count: 6 on mobile, 12 on desktop
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+    const petalCount = isMobile ? 6 : 12;
+
+    const generated: Petal[] = Array.from({ length: petalCount }).map((_, i) => ({
       id: i,
       left: Math.random() * 95,
-      animationDuration: 10 + Math.random() * 8, // 10s - 18s
-      animationDelay: Math.random() * 8,
-      size: 10 + Math.random() * 8, // 10px - 18px
-      opacity: 0.35 + Math.random() * 0.45,
+      animationDuration: (isMobile ? 12 : 10) + Math.random() * 8, // gentle pace
+      animationDelay: Math.random() * 6,
+      size: (isMobile ? 8 : 10) + Math.random() * (isMobile ? 6 : 8),
+      opacity: (isMobile ? 0.25 : 0.35) + Math.random() * 0.35,
     }));
 
     setPetals(generated);
