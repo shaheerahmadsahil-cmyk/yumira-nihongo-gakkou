@@ -55,6 +55,7 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
         { href: "/courses/n5", label: "JLPT N5 (Beginner)" },
         { href: "/courses/n4", label: "JLPT N4 (Intermediate)" },
         { href: "/courses/n3", label: "JLPT N3 (Pre-Advanced)" },
+        { href: "/courses/jft-basic", label: "JFT-Basic (SSW Visa)" },
         { href: "/courses", label: t.nav.coursesAll },
       ],
     },

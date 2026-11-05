@@ -233,6 +233,7 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                       <option value="N5">JLPT N5 (Complete Beginner)</option>
                       <option value="N4">JLPT N4 (Intermediate / SSW Visa)</option>
                       <option value="N3">JLPT N3 (Pre-Advanced / Career)</option>
+                      <option value="JFT-Basic">JFT-Basic (A2) — SSW ওয়ার্কিং ভিসা স্পেশাল</option>
                       <option value="General">Study in Japan & General Consultation</option>
                     </select>
                   </div>

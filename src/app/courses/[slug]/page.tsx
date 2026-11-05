@@ -37,6 +37,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function CoursePage({ params }: PageProps) {
   const { slug } = await params;
+  const targetSlug = slug === "jft" ? "jft-basic" : slug;
 
   let course: any = null;
   let settingsMap: Record<string, string> = fallbackSettings;
@@ -44,7 +45,7 @@ export default async function CoursePage({ params }: PageProps) {
   try {
     const [dbCourse, settings] = await Promise.all([
       prisma.course.findUnique({
-        where: { slug },
+        where: { slug: targetSlug },
         include: {
           translations: true,
           modules: true,
