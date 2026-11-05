@@ -72,6 +72,7 @@ export async function submitMockTestAttempt(data: {
         questionText: question.questionText,
         questionTextFurigana: question.questionTextFurigana,
         passage: question.passage,
+        audioUrl: question.audioUrl,
         audioText: question.audioText,
         marks: question.marks,
         explanation: question.explanation,
