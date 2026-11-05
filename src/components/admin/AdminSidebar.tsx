@@ -40,7 +40,7 @@ export function AdminSidebar({ user }: { user: SessionPayload }) {
     { href: "/admin/kanji", label: "Kanji Library", icon: Languages },
     { href: "/admin/mock-tests", label: "Mock Tests", icon: FileQuestion },
     { href: "/admin/admissions", label: "Inquiries & Leads", icon: Users },
-    { href: "/admin/settings", label: "Website & WhatsApp", icon: Settings },
+    { href: "/admin/settings", label: "Website Settings & Stats", icon: Settings },
     { href: "/admin/change-password", label: "Security & Password", icon: KeyRound },
   ];
 

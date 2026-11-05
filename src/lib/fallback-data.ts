@@ -6,6 +6,14 @@ export const fallbackSettings: Record<string, string> = {
   email: "admissions@yumira.com",
   address: "Dhaka, Bangladesh",
   facebook_url: "https://www.facebook.com/muhammad.abdur.razzak.583568",
+  stat_success_rate: "৯৫%+",
+  stat_success_label: "জেএলপিটি প্রথমবারেই পাস",
+  stat_students: "১,৫০০+",
+  stat_students_label: "সফল শিক্ষার্থী",
+  stat_visas: "৯৮%",
+  stat_visas_label: "ভিসা সহায়তা সাকসেস",
+  stat_native_audio: "১০০%",
+  stat_native_audio_label: "নেটিভ অডিও ও মক টেস্ট",
 };
 
 export const fallbackCourses = [

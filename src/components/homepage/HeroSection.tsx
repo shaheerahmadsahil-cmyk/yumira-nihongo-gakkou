@@ -7,7 +7,24 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { FujiWatermark } from "@/components/shared/FujiWatermark";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
-export function HeroSection({ whatsappNumber }: { whatsappNumber?: string }) {
+export interface HeroStatsProps {
+  successRate?: string;
+  successLabel?: string;
+  students?: string;
+  studentsLabel?: string;
+  visas?: string;
+  visasLabel?: string;
+  nativeAudio?: string;
+  nativeAudioLabel?: string;
+}
+
+export function HeroSection({
+  whatsappNumber,
+  stats,
+}: {
+  whatsappNumber?: string;
+  stats?: HeroStatsProps;
+}) {
   const { locale, t } = useLanguage();
 
   const applyUrl = buildWhatsAppUrl({
@@ -98,37 +115,37 @@ export function HeroSection({ whatsappNumber }: { whatsappNumber?: string }) {
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
           <div className="p-5 bg-white/90 backdrop-blur-sm rounded-2xl border border-washi-200 shadow-sm text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-japanRed-600 mb-1">
-              {t.hero.stats.successRate}
+              {stats?.successRate || t.hero.stats.successRate}
             </div>
             <div className="text-xs sm:text-sm font-medium text-gray-600">
-              {t.hero.stats.successLabel}
+              {stats?.successLabel || t.hero.stats.successLabel}
             </div>
           </div>
 
           <div className="p-5 bg-white/90 backdrop-blur-sm rounded-2xl border border-washi-200 shadow-sm text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-navy-900 mb-1">
-              {t.hero.stats.students}
+              {stats?.students || t.hero.stats.students}
             </div>
             <div className="text-xs sm:text-sm font-medium text-gray-600">
-              {t.hero.stats.studentsLabel}
+              {stats?.studentsLabel || t.hero.stats.studentsLabel}
             </div>
           </div>
 
           <div className="p-5 bg-white/90 backdrop-blur-sm rounded-2xl border border-washi-200 shadow-sm text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-japanRed-600 mb-1">
-              {t.hero.stats.visas}
+              {stats?.visas || t.hero.stats.visas}
             </div>
             <div className="text-xs sm:text-sm font-medium text-gray-600">
-              {t.hero.stats.visasLabel}
+              {stats?.visasLabel || t.hero.stats.visasLabel}
             </div>
           </div>
 
           <div className="p-5 bg-white/90 backdrop-blur-sm rounded-2xl border border-washi-200 shadow-sm text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-navy-900 mb-1">
-              {t.hero.stats.nativeAudio}
+              {stats?.nativeAudio || t.hero.stats.nativeAudio}
             </div>
             <div className="text-xs sm:text-sm font-medium text-gray-600">
-              {t.hero.stats.nativeAudioLabel}
+              {stats?.nativeAudioLabel || t.hero.stats.nativeAudioLabel}
             </div>
           </div>
         </div>

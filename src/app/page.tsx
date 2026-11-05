@@ -93,7 +93,19 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col">
-      <HeroSection whatsappNumber={settings.whatsapp_number} />
+      <HeroSection
+        whatsappNumber={settings.whatsapp_number}
+        stats={{
+          successRate: settings.stat_success_rate,
+          successLabel: settings.stat_success_label,
+          students: settings.stat_students,
+          studentsLabel: settings.stat_students_label,
+          visas: settings.stat_visas,
+          visasLabel: settings.stat_visas_label,
+          nativeAudio: settings.stat_native_audio,
+          nativeAudioLabel: settings.stat_native_audio_label,
+        }}
+      />
       <AboutSection />
       <CoursesOverview courses={courses} whatsappNumber={settings.whatsapp_number} />
       <LearningPreview />
