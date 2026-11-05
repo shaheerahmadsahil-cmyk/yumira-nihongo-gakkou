@@ -5,14 +5,6 @@ import { FujiWatermark } from "@/components/shared/FujiWatermark";
 import { Target, Compass, Award, CheckCircle2, ShieldCheck, HeartHandshake } from "lucide-react";
 import Link from "next/link";
 
-function FacebookIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-    </svg>
-  );
-}
-
 export const metadata = {
   title: "About Us | Yumira Nihongo Gakkou",
   description: "Learn about Rakib Sensei Japanese Academy, our philosophy, mission, certified teachers, and pathway to Japan.",
@@ -89,54 +81,6 @@ export default async function AboutPage() {
             <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
               Transparent consultancy with zero hidden costs, helping students obtain Certificate of Eligibility (COE) and pass embassy visa interviews.
             </p>
-          </div>
-        </div>
-
-        {/* Founder & Lead Sensei Profile */}
-        <div className="bg-gradient-to-br from-navy-900 to-navy-950 rounded-3xl p-8 sm:p-12 text-white border-2 border-japanRed-500/30 shadow-xl mb-16 relative overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-8 space-y-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 inline-block">
-                Leadership & Chief Instructor
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                Muhammad Abdur Razzak
-              </h2>
-              <p className="text-xs sm:text-sm text-japanRed-300 font-medium">
-                Founder, Director & Lead Japanese Language Sensei • ইউমিরা নিহোঙ্গো গাক্কো
-              </p>
-              <p className="text-xs sm:text-sm text-gray-300 leading-relaxed font-light">
-                জাপানি ভাষা শিক্ষা, JLPT/NAT-TEST প্রস্তুতি এবং স্টুডেন্ট ও SSW ওয়ার্কিং ভিসায় জাপানে ক্যারিয়ার গড়ার জন্য সরাসরি মেন্টরশিপ ও দিকনির্দেশনা প্রদান করেন। প্রতিটি শিক্ষার্থীর স্বপ্ন পূরণে ব্যক্তিগত কাউন্সেলিং নিশ্চিত করাই আমাদের লক্ষ্য।
-              </p>
-              <div className="pt-2">
-                <a
-                  href="https://www.facebook.com/muhammad.abdur.razzak.583568"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:-translate-y-0.5"
-                >
-                  <FacebookIcon className="w-4 h-4 fill-white" />
-                  <span>Connect on Facebook (Muhammad Abdur Razzak)</span>
-                </a>
-              </div>
-            </div>
-
-            <div className="md:col-span-4 flex justify-center md:justify-end">
-              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm text-center space-y-3 w-full max-w-xs">
-                <div className="w-16 h-16 rounded-full bg-japanRed-600/20 border-2 border-japanRed-500 text-japanRed-400 flex items-center justify-center mx-auto text-xl font-black">
-                  AR
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white">Muhammad Abdur Razzak</h3>
-                  <span className="text-[11px] text-gray-400 block">Lead Sensei</span>
-                </div>
-                <div className="pt-2 border-t border-white/10 text-[11px] text-gray-300 space-y-1 text-left">
-                  <div>✓ JLPT N5, N4, N3 Mentorship</div>
-                  <div>✓ Japan Visa Documentation</div>
-                  <div>✓ Direct 1-on-1 Consultation</div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
