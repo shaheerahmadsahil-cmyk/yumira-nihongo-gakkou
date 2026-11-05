@@ -334,10 +334,10 @@ export const n5MockTest: MockTestData = {
       explanation: "Correct order:「くだものは (3) どこ (1) に (4)★ あります (2) か。」★ is position 3 = 4 (に).",
       explanationBn: "সঠিক বাক্য: 'くだものは どこに ありますか' (৩ ➔ ১ ➔ ৪ ➔ ২)। ★ চিহ্নের ৩ নম্বর স্থানে বসবে ৪ (に)।",
       options: [
-        { id: "q15-opt-1", label: "1", text: "どこ (1)", isCorrect: false },
-        { id: "q15-opt-2", label: "2", text: "あります (2)", isCorrect: false },
-        { id: "q15-opt-3", label: "3", text: "は (3)", isCorrect: false },
-        { id: "q15-opt-4", label: "4", text: "に (4) ★", isCorrect: true },
+        { id: "q15-opt-1", label: "1", text: "どこ", isCorrect: false },
+        { id: "q15-opt-2", label: "2", text: "あります", isCorrect: false },
+        { id: "q15-opt-3", label: "3", text: "は", isCorrect: false },
+        { id: "q15-opt-4", label: "4", text: "に", isCorrect: true },
       ],
     },
     {
@@ -353,10 +353,10 @@ export const n5MockTest: MockTestData = {
       explanation: "Correct order:「となりの へやで ギター (3) の (2) れんしゅう (1)★ を (4) して います。」★ is position 3 = 1 (れんしゅう).",
       explanationBn: "সঠিক বাক্য: 'ギターの れんしゅうを して います' (৩ ➔ ২ ➔ ১ ➔ ৪)। ★ স্থানে বসবে ১ (れんしゅう)।",
       options: [
-        { id: "q16-opt-1", label: "1", text: "れんしゅう (1) ★", isCorrect: true },
-        { id: "q16-opt-2", label: "2", text: "の (2)", isCorrect: false },
-        { id: "q16-opt-3", label: "3", text: "ギター (3)", isCorrect: false },
-        { id: "q16-opt-4", label: "4", text: "を (4)", isCorrect: false },
+        { id: "q16-opt-1", label: "1", text: "れんしゅう", isCorrect: true },
+        { id: "q16-opt-2", label: "2", text: "の", isCorrect: false },
+        { id: "q16-opt-3", label: "3", text: "ギター", isCorrect: false },
+        { id: "q16-opt-4", label: "4", text: "を", isCorrect: false },
       ],
     },
 
@@ -456,10 +456,10 @@ export const n5MockTest: MockTestData = {
       explanation: "The customer requested:「短いほうで、果物の柄のものをください」(Short socks with fruit pattern).",
       explanationBn: "ক্রেতা বলেছে: 'ছোট মোজা এবং ফলের ছবি ওয়ালাটি দিন' (短いほうで、果物の柄)。",
       options: [
-        { id: "q21-opt-1", label: "1", text: "1: 長い靴下・果物の柄 (লম্বা মোজা, ফল)", isCorrect: false },
-        { id: "q21-opt-2", label: "2", text: "2: 長い靴下・動物の柄 (লম্বা মোজা, পশু)", isCorrect: false },
-        { id: "q21-opt-3", label: "3", text: "3: 短い靴下・果物の柄 (ছোট মোজা, ফল)", isCorrect: true },
-        { id: "q21-opt-4", label: "4", text: "4: 短い靴下・動物の柄 (ছোট মোজা, পশু)", isCorrect: false },
+        { id: "q21-opt-1", label: "1", text: "長い靴下・果物の柄", isCorrect: false },
+        { id: "q21-opt-2", label: "2", text: "長い靴下・動物の柄", isCorrect: false },
+        { id: "q21-opt-3", label: "3", text: "短い靴下・果物の柄", isCorrect: true },
+        { id: "q21-opt-4", label: "4", text: "短い靴下・動物の柄", isCorrect: false },
       ],
     },
     {
@@ -475,10 +475,10 @@ export const n5MockTest: MockTestData = {
       explanation: "The clerk directed him to the 3rd floor:「本屋は3階にございます」(Bookstore is on the 3rd floor).",
       explanationBn: "কর্মচারী জানিয়েছেন বইয়ের দোকান ৩য় তলায় (3階)。",
       options: [
-        { id: "q22-opt-1", label: "1", text: "1階 (১ম তলা)", isCorrect: false },
-        { id: "q22-opt-2", label: "2", text: "2階 (২য় তলা)", isCorrect: false },
-        { id: "q22-opt-3", label: "3", text: "3階 (৩য় তলা)", isCorrect: true },
-        { id: "q22-opt-4", label: "4", text: "4階 (৪র্থ তলা)", isCorrect: false },
+        { id: "q22-opt-1", label: "1", text: "1階", isCorrect: false },
+        { id: "q22-opt-2", label: "2", text: "2階", isCorrect: false },
+        { id: "q22-opt-3", label: "3", text: "3階", isCorrect: true },
+        { id: "q22-opt-4", label: "4", text: "4階", isCorrect: false },
       ],
     },
     {
@@ -513,9 +513,9 @@ export const n5MockTest: MockTestData = {
       explanation: "When offering your seat to an elderly person on a train, the polite expression is「どうぞ、座ってください」(Please, take a seat).",
       explanationBn: "ট্রেনে বা বাসে বয়স্ক কাউকে বসার জন্য আসন ছেড়ে দেওয়ার সময় মার্জিতভাবে বলতে হয়: 'どうぞ、座ってください' (দয়া করে বসুন)।",
       options: [
-        { id: "q24-opt-1", label: "1", text: "どうぞ、座ってください (দয়া করে বসুন)", isCorrect: true },
-        { id: "q24-opt-2", label: "2", text: "すみません、座りません (দুঃখিত, বসব না)", isCorrect: false },
-        { id: "q24-opt-3", label: "3", text: "ありがとう、座ります (ধন্যবাদ, বসব)", isCorrect: false },
+        { id: "q24-opt-1", label: "1", text: "どうぞ、座ってください", isCorrect: true },
+        { id: "q24-opt-2", label: "2", text: "すみません、座りません", isCorrect: false },
+        { id: "q24-opt-3", label: "3", text: "ありがとう、座ります", isCorrect: false },
       ],
     },
     {
@@ -531,9 +531,9 @@ export const n5MockTest: MockTestData = {
       explanation: "To accept an invitation「〜ませんか」(won't you...?), the natural answer is「ええ、行きましょう」(Yes, let's go!).",
       explanationBn: "আমন্ত্রণ গ্রহণ করতে জাপানি ভাষায় স্বাভাবিক উত্তর হলো: 'ええ、行きましょう' (হ্যাঁ, চলুন যাই!)।",
       options: [
-        { id: "q25-opt-1", label: "1", text: "ええ、行きましょう (হ্যাঁ, চলুন যাই)", isCorrect: true },
-        { id: "q25-opt-2", label: "2", text: "はい、映画を見ました (হ্যাঁ, সিনেমা দেখেছি)", isCorrect: false },
-        { id: "q25-opt-3", label: "3", text: "いいえ、行きませんでした (না, যাইনি)", isCorrect: false },
+        { id: "q25-opt-1", label: "1", text: "ええ、行きましょう", isCorrect: true },
+        { id: "q25-opt-2", label: "2", text: "はい、映画を見ました", isCorrect: false },
+        { id: "q25-opt-3", label: "3", text: "いいえ、行きませんでした", isCorrect: false },
       ],
     },
   ],
