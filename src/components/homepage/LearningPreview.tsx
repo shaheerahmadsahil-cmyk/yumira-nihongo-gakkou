@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ToggleLeft, ToggleRight } from "lucide-react";
+import { ArrowRight, ToggleLeft, ToggleRight, Sparkles, Volume2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { useFurigana } from "@/lib/context/FuriganaContext";
@@ -40,12 +40,20 @@ export function LearningPreview() {
     <section className="py-12 sm:py-20 bg-gradient-to-b from-white via-rose-50/20 to-washi-50 relative overflow-hidden">
       {/* Decorative Subtle Japanese Kana Watermark & Ambient Radial Glow */}
       <div aria-hidden="true" className="pointer-events-none select-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-80 sm:w-96 h-80 sm:h-96 bg-japanRed-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 -right-20 w-80 sm:w-96 h-80 sm:h-96 bg-navy-900/5 rounded-full blur-3xl" />
-        <span className="absolute top-14 right-8 lg:right-20 font-japanese text-7xl sm:text-9xl font-bold text-navy-900/[0.035]">
+        <motion.div
+          animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 -left-20 w-80 sm:w-96 h-80 sm:h-96 bg-japanRed-500/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute bottom-10 -right-20 w-80 sm:w-96 h-80 sm:h-96 bg-navy-900/10 rounded-full blur-3xl"
+        />
+        <span className="absolute top-14 right-8 lg:right-20 font-japanese text-8xl sm:text-9xl font-bold text-navy-900/[0.035]">
           あいう
         </span>
-        <span className="absolute bottom-14 left-8 lg:left-20 font-japanese text-7xl sm:text-9xl font-bold text-japanRed-600/[0.035]">
+        <span className="absolute bottom-14 left-8 lg:left-20 font-japanese text-8xl sm:text-9xl font-bold text-japanRed-600/[0.035]">
           漢字
         </span>
       </div>
@@ -61,13 +69,18 @@ export function LearningPreview() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3"
         >
-          <span className="text-xs font-bold uppercase tracking-wider text-japanRed-600 bg-japanRed-50 px-3 py-1 rounded-full border border-japanRed-100">
-            {t.learning.badge}
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-navy-900 tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-japanRed-50 border border-japanRed-200/80 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-japanRed-600 animate-pulse" />
+            <span className="text-xs font-bold uppercase tracking-wider text-japanRed-700">
+              {t.learning.badge}
+            </span>
+          </div>
+
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-navy-900 tracking-tight leading-tight">
             {t.learning.title}
           </h2>
-          <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed font-normal">
+
+          <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed font-normal max-w-2xl mx-auto">
             {t.learning.subtitle}
           </p>
         </motion.div>
@@ -94,18 +107,27 @@ export function LearningPreview() {
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] } },
             }}
-            whileHover={{ y: -6 }}
+            whileHover={{ y: -8 }}
             transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            className="bg-washi-50 rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200 hover:border-japanRed-300 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl"
+            className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200/90 hover:border-japanRed-300 transition-all flex flex-col justify-between group shadow-md hover:shadow-2xl relative overflow-hidden"
           >
+            {/* Top decorative gradient bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-japanRed-500 to-rose-400 group-hover:h-2 transition-all" />
+
+            {/* Hanko Stamp: 平仮 (Hiragana) */}
+            <div className="absolute top-4 right-4 w-10 h-10 rounded-xl border border-japanRed-500/40 bg-japanRed-50/70 flex flex-col items-center justify-center font-japanese text-[10px] font-bold text-japanRed-700 rotate-6 group-hover:rotate-0 transition-transform shadow-xs">
+              <span>平</span>
+              <span>仮</span>
+            </div>
+
             <div>
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-japanRed-100 text-japanRed-600 flex items-center justify-center font-japanese text-xl sm:text-2xl font-bold mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-japanRed-100 text-japanRed-600 flex items-center justify-center font-japanese text-xl sm:text-2xl font-bold mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-sm">
                 あ
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-1.5 sm:mb-2">
+              <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-1.5 sm:mb-2 group-hover:text-japanRed-600 transition-colors">
                 {t.learning.hiraganaCard.title}
               </h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6 pr-6">
                 {t.learning.hiraganaCard.desc}
               </p>
 
@@ -119,8 +141,8 @@ export function LearningPreview() {
                     title={`Click to listen: ${item.romaji}`}
                     className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl border flex flex-col items-center justify-center transition-all ${
                       playingChar === item.sound
-                        ? "bg-japanRed-600 text-white scale-105 border-japanRed-600 shadow-md"
-                        : "bg-white text-navy-900 border-washi-200 hover:border-japanRed-400 hover:bg-japanRed-50 hover:shadow-sm"
+                        ? "bg-japanRed-600 text-white scale-105 border-japanRed-600 shadow-md animate-pulse"
+                        : "bg-washi-50 text-navy-900 border-washi-200 hover:border-japanRed-400 hover:bg-japanRed-50 hover:shadow-sm"
                     }`}
                   >
                     <span className="font-japanese text-sm sm:text-base font-bold">{item.kana}</span>
@@ -132,7 +154,7 @@ export function LearningPreview() {
 
             <Link
               href="/hiragana"
-              className="inline-flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-white border border-washi-200 text-xs font-semibold text-navy-900 hover:text-japanRed-600 hover:border-japanRed-300 transition-all group-hover:shadow-sm"
+              className="inline-flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-washi-50 border border-washi-200 text-xs font-semibold text-navy-900 hover:text-white hover:bg-japanRed-600 hover:border-japanRed-600 transition-all group-hover:shadow-sm"
             >
               <span>{t.learning.hiraganaCard.btn}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -145,22 +167,31 @@ export function LearningPreview() {
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] } },
             }}
-            whileHover={{ y: -6 }}
+            whileHover={{ y: -8 }}
             transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            className="bg-washi-50 rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200 hover:border-japanRed-300 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl"
+            className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200/90 hover:border-navy-400 transition-all flex flex-col justify-between group shadow-md hover:shadow-2xl relative overflow-hidden"
           >
+            {/* Top decorative gradient bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-navy-900 to-japanRed-500 group-hover:h-2 transition-all" />
+
+            {/* Hanko Stamp: 片仮 (Katakana) */}
+            <div className="absolute top-4 right-4 w-10 h-10 rounded-xl border border-navy-500/40 bg-navy-50/70 flex flex-col items-center justify-center font-japanese text-[10px] font-bold text-navy-900 -rotate-6 group-hover:rotate-0 transition-transform shadow-xs">
+              <span>片</span>
+              <span>仮</span>
+            </div>
+
             <div>
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-navy-100 text-navy-900 flex items-center justify-center font-japanese text-xl sm:text-2xl font-bold mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-navy-100 text-navy-900 flex items-center justify-center font-japanese text-xl sm:text-2xl font-bold mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-sm">
                 ア
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-1.5 sm:mb-2">
+              <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-1.5 sm:mb-2 group-hover:text-navy-700 transition-colors">
                 {t.learning.katakanaCard.title}
               </h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6 pr-6">
                 {t.learning.katakanaCard.desc}
               </p>
 
-              <div className="p-3 sm:p-4 rounded-xl bg-white border border-washi-200 space-y-2 mb-4 sm:mb-6 text-xs">
+              <div className="p-3 sm:p-4 rounded-xl bg-washi-50 border border-washi-200 space-y-2 mb-4 sm:mb-6 text-xs">
                 <div className="flex items-center justify-between pb-1.5 border-b border-washi-100">
                   <span className="font-japanese font-bold text-xs sm:text-sm text-japanRed-600">コーヒー</span>
                   <span className="text-gray-500 text-[11px] sm:text-xs">koohii (Coffee)</span>
@@ -178,7 +209,7 @@ export function LearningPreview() {
 
             <Link
               href="/katakana"
-              className="inline-flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-white border border-washi-200 text-xs font-semibold text-navy-900 hover:text-japanRed-600 hover:border-japanRed-300 transition-all group-hover:shadow-sm"
+              className="inline-flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-washi-50 border border-washi-200 text-xs font-semibold text-navy-900 hover:text-white hover:bg-navy-900 hover:border-navy-900 transition-all group-hover:shadow-sm"
             >
               <span>{t.learning.katakanaCard.btn}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -191,13 +222,16 @@ export function LearningPreview() {
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] } },
             }}
-            whileHover={{ y: -6 }}
+            whileHover={{ y: -8 }}
             transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            className="bg-washi-50 rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200 hover:border-japanRed-300 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl"
+            className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200/90 hover:border-amber-300 transition-all flex flex-col justify-between group shadow-md hover:shadow-2xl relative overflow-hidden"
           >
+            {/* Top decorative gradient bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-japanRed-500 to-amber-600 group-hover:h-2 transition-all" />
+
             <div>
               <div className="flex items-center justify-between mb-4 sm:mb-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-japanRed-600 text-white flex items-center justify-center font-japanese text-xl sm:text-2xl font-bold shadow-md group-hover:scale-110 transition-transform">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-japanRed-600 text-white flex items-center justify-center font-japanese text-xl sm:text-2xl font-bold shadow-md group-hover:scale-110 transition-transform">
                   漢
                 </div>
                 {/* Live Furigana Switcher */}
@@ -215,14 +249,14 @@ export function LearningPreview() {
                 </motion.button>
               </div>
 
-              <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-1.5 sm:mb-2">
+              <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-1.5 sm:mb-2 group-hover:text-amber-600 transition-colors">
                 {t.learning.kanjiCard.title}
               </h3>
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-3 sm:mb-4">
                 {t.learning.kanjiCard.desc}
               </p>
 
-              <div className="p-3 sm:p-4 rounded-xl bg-white border border-washi-200 space-y-2 mb-4 sm:mb-6">
+              <div className="p-3 sm:p-4 rounded-xl bg-washi-50 border border-washi-200 space-y-2 mb-4 sm:mb-6">
                 {sampleKanji.map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between text-xs pb-1.5 border-b border-washi-100 last:border-b-0">
                     <span className="font-japanese font-bold text-sm sm:text-base">
@@ -236,7 +270,7 @@ export function LearningPreview() {
 
             <Link
               href="/kanji"
-              className="inline-flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-white border border-washi-200 text-xs font-semibold text-navy-900 hover:text-japanRed-600 hover:border-japanRed-300 transition-all group-hover:shadow-sm"
+              className="inline-flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-washi-50 border border-washi-200 text-xs font-semibold text-navy-900 hover:text-white hover:bg-amber-600 hover:border-amber-600 transition-all group-hover:shadow-sm"
             >
               <span>{t.learning.kanjiCard.btn}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

@@ -106,8 +106,15 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
             className="lg:col-span-5 space-y-4 sm:space-y-8"
           >
             <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-sm border border-washi-200/90 shadow-lg space-y-4 sm:space-y-6 relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
-              <h3 className="text-lg sm:text-xl font-bold text-navy-900">
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500" />
+              
+              {/* Hanko Stamp: 面談 (Consultation) */}
+              <div className="absolute top-4 right-4 w-10 h-10 rounded-xl border border-emerald-500/40 bg-emerald-50/70 flex flex-col items-center justify-center font-japanese text-[10px] font-bold text-emerald-800 rotate-6 shadow-xs select-none">
+                <span>面</span>
+                <span>談</span>
+              </div>
+
+              <h3 className="text-lg sm:text-xl font-bold text-navy-900 pr-12">
                 {t.contact.whatsappDirect}
               </h3>
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
@@ -167,7 +174,14 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
           >
             <div className="p-5 sm:p-8 sm:p-10 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-sm border border-washi-200/90 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-japanRed-600 via-amber-400 to-navy-900" />
-              <h3 className="text-xl font-bold text-navy-900 mb-6">
+              
+              {/* Hanko Stamp: 受付 (Admissions Desk) */}
+              <div className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-japanRed-500/40 bg-japanRed-50/70 flex flex-col items-center justify-center font-japanese text-[10px] font-bold text-japanRed-700 rotate-6 shadow-xs select-none">
+                <span>受</span>
+                <span>付</span>
+              </div>
+
+              <h3 className="text-xl font-bold text-navy-900 mb-6 pr-12">
                 {t.contact.formTitle}
               </h3>
 
