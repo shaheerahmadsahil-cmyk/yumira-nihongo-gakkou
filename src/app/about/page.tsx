@@ -53,7 +53,7 @@ export default async function AboutPage() {
 
         {/* Core Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="p-8 rounded-2xl bg-white border border-washi-200 shadow-sm hover:border-japanRed-300 transition-all">
+          <div className="p-8 rounded-2xl bg-white border border-washi-200 shadow-sm hover:border-japanRed-300 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
             <div className="w-12 h-12 rounded-xl bg-japanRed-100 text-japanRed-600 flex items-center justify-center mb-6">
               <Target className="w-6 h-6" />
             </div>
@@ -63,7 +63,7 @@ export default async function AboutPage() {
             </p>
           </div>
 
-          <div className="p-8 rounded-2xl bg-white border border-washi-200 shadow-sm hover:border-navy-300 transition-all">
+          <div className="p-8 rounded-2xl bg-white border border-washi-200 shadow-sm hover:border-navy-300 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
             <div className="w-12 h-12 rounded-xl bg-navy-100 text-navy-900 flex items-center justify-center mb-6">
               <Compass className="w-6 h-6" />
             </div>
@@ -73,7 +73,7 @@ export default async function AboutPage() {
             </p>
           </div>
 
-          <div className="p-8 rounded-2xl bg-white border border-washi-200 shadow-sm hover:border-emerald-300 transition-all">
+          <div className="p-8 rounded-2xl bg-white border border-washi-200 shadow-sm hover:border-emerald-300 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
             <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-6">
               <ShieldCheck className="w-6 h-6" />
             </div>

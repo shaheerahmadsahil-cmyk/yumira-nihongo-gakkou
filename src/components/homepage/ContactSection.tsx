@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { MessageCircle, Send, CheckCircle2, Phone, Mail, MapPin, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { submitAdmissionInquiry } from "@/app/actions/inquiry";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -65,7 +66,13 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
         <ToriiDivider title="ADMISSION & INQUIRIES" />
 
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+        >
           <span className="text-xs font-bold uppercase tracking-wider text-japanRed-600 bg-japanRed-50 px-3 py-1 rounded-full border border-japanRed-100">
             {t.contact.badge}
           </span>
@@ -75,11 +82,17 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-normal">
             {t.contact.subtitle}
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Direct Helpline & Details */}
-          <div className="lg:col-span-5 space-y-8">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className="lg:col-span-5 space-y-8"
+          >
             <div className="p-8 rounded-3xl bg-washi-50 border border-washi-200 space-y-6">
               <h3 className="text-xl font-bold text-navy-900">
                 {t.contact.whatsappDirect}
@@ -93,7 +106,7 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                   href={directWhatsApp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition-colors"
+                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <MessageCircle className="w-5 h-5 fill-white" />
                   <span>Chat on WhatsApp (+880 1341-017323)</span>
@@ -129,10 +142,16 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                 We provide free guidance on COE application, Japanese language school admission, and embassy interview coaching for registered students.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Online Admission Form */}
-          <div className="lg:col-span-7">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className="lg:col-span-7"
+          >
             <div className="p-8 sm:p-10 rounded-3xl bg-washi-50 border border-washi-200 shadow-sm">
               <h3 className="text-xl font-bold text-navy-900 mb-6">
                 {t.contact.formTitle}
@@ -302,7 +321,7 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                 </form>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

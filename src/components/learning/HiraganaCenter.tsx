@@ -124,7 +124,7 @@ export function HiraganaCenter({ characters }: { characters: KanaCharacter[] }) 
               <div
                 key={char.id}
                 onClick={() => setActiveModalChar(char)}
-                className="cursor-pointer group relative bg-washi-50 rounded-2xl p-4 border border-washi-200 hover:border-japanRed-400 hover:shadow-lg transition-all duration-200 flex flex-col items-center justify-between min-h-[140px]"
+                className="cursor-pointer group relative bg-washi-50 rounded-2xl p-4 border border-washi-200 hover:border-japanRed-400 hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-200 flex flex-col items-center justify-between min-h-[140px]"
               >
                 {/* Audio Button */}
                 <button

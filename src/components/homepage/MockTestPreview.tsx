@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { Timer, CheckCircle, Award, ShieldCheck, ArrowRight, Play } from "lucide-react";
+import { Timer, Play } from "lucide-react";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { ToriiDivider } from "@/components/shared/FujiWatermark";
 
@@ -32,7 +33,13 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
         <ToriiDivider title="SIMULATED EXAMINATIONS" />
 
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+        >
           <span className="text-xs font-bold uppercase tracking-wider text-japanRed-600 bg-japanRed-50 px-3 py-1 rounded-full border border-japanRed-100">
             {t.mockTest.badge}
           </span>
@@ -42,10 +49,24 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-normal">
             {t.mockTest.subtitle}
           </p>
-        </div>
+        </motion.div>
 
-        {/* Test Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Test Cards Grid with Framer Motion Stagger */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.1,
+              },
+            },
+          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
           {tests.map((test) => {
             const displayTitle =
               locale === "bn"
@@ -62,9 +83,19 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
                 : test.description;
 
             return (
-              <div
+              <motion.div
                 key={test.id}
-                className="bg-white rounded-3xl p-8 border border-washi-200 shadow-sm hover:shadow-xl hover:border-japanRed-300 transition-all duration-300 flex flex-col justify-between group"
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] },
+                  },
+                }}
+                whileHover={{ y: -8 }}
+                transition={{ type: "spring", stiffness: 350, damping: 22 }}
+                className="bg-white rounded-3xl p-8 border border-washi-200 shadow-sm hover:shadow-2xl hover:border-japanRed-300 transition-shadow duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -111,10 +142,10 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
                   <Play className="w-4 h-4 fill-white" />
                   <span>{t.mockTest.startBtn}</span>
                 </Link>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

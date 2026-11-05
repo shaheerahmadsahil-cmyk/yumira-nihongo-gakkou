@@ -43,23 +43,25 @@ export function SakuraPetals() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none overflow-hidden z-[1]"
+      className="fixed inset-0 pointer-events-none overflow-hidden z-[30]"
     >
       {petals.map((petal) => (
         <span
           key={petal.id}
           style={{
             position: "absolute",
-            top: "-20px",
+            top: "-30px",
             left: `${petal.left}%`,
             width: `${petal.size}px`,
-            height: `${petal.size * 1.3}px`,
+            height: `${petal.size * 1.35}px`,
             opacity: petal.opacity,
-            animation: `petalFall ${petal.animationDuration}s linear infinite`,
+            animation: `petalFall ${petal.animationDuration}s cubic-bezier(0.4, 0, 0.2, 1) infinite`,
             animationDelay: `${petal.animationDelay}s`,
-            background: "radial-gradient(ellipse at 50% 50%, #ffccd7 0%, #fb7185 80%)",
+            background: "radial-gradient(ellipse at 40% 40%, #ffd1dc 0%, #ff9ebb 55%, #f43f5e 100%)",
             borderRadius: "70% 30% 70% 30% / 80% 30% 70% 20%",
             transform: "rotate(25deg)",
+            willChange: "transform, opacity",
+            filter: "drop-shadow(0 2px 4px rgba(244, 63, 94, 0.15))",
           }}
         />
       ))}

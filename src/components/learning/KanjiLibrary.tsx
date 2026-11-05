@@ -168,7 +168,7 @@ export function KanjiLibrary({ kanjiList }: { kanjiList: KanjiItem[] }) {
               <div
                 key={item.id}
                 onClick={() => setSelectedKanji(item)}
-                className="cursor-pointer group bg-washi-50 rounded-3xl p-6 border border-washi-200 hover:border-japanRed-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                className="cursor-pointer group bg-washi-50 rounded-3xl p-6 border border-washi-200 hover:border-japanRed-400 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
