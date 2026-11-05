@@ -4,9 +4,6 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'res.cloudinary.com'],
   },
-  outputFileTracingIncludes: {
-    '/**': ['./prisma/dev.db', './dev.db'],
-  },
 };
 
 export default nextConfig;
