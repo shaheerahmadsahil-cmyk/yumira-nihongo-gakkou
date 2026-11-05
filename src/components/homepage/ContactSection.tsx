@@ -7,6 +7,14 @@ import { submitAdmissionInquiry } from "@/app/actions/inquiry";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { ToriiDivider } from "@/components/shared/FujiWatermark";
 
+function FacebookIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+    </svg>
+  );
+}
+
 export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) {
   const { locale, t } = useLanguage();
 
@@ -88,15 +96,27 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                 {t.contact.whatsappHelp}
               </p>
 
-              <a
-                href={directWhatsApp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition-colors"
-              >
-                <MessageCircle className="w-5 h-5 fill-white" />
-                <span>Chat on WhatsApp (+880 1341-017323)</span>
-              </a>
+              <div className="space-y-2.5">
+                <a
+                  href={directWhatsApp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition-colors"
+                >
+                  <MessageCircle className="w-5 h-5 fill-white" />
+                  <span>Chat on WhatsApp (+880 1341-017323)</span>
+                </a>
+
+                <a
+                  href="https://www.facebook.com/muhammad.abdur.razzak.583568"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl bg-[#1877F2] hover:bg-[#166fe5] text-white font-semibold text-sm shadow-md transition-colors"
+                >
+                  <FacebookIcon className="w-4 h-4 fill-white" />
+                  <span>Facebook: Muhammad Abdur Razzak</span>
+                </a>
+              </div>
 
               <div className="pt-4 border-t border-washi-200/80 space-y-4 text-xs text-gray-600">
                 <div className="flex items-center gap-3">

@@ -5,6 +5,7 @@ export const fallbackSettings: Record<string, string> = {
   phone: "+880 1341-017323",
   email: "admissions@yumira.com",
   address: "Dhaka, Bangladesh",
+  facebook_url: "https://www.facebook.com/muhammad.abdur.razzak.583568",
 };
 
 export const fallbackCourses = [
