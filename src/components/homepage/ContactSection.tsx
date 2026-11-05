@@ -61,8 +61,20 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
   });
 
   return (
-    <section id="contact" className="py-12 sm:py-20 bg-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-12 sm:py-20 bg-gradient-to-b from-white via-washi-50 to-washi-100/60 relative overflow-hidden">
+      {/* Decorative Subtle Japanese Kanji Watermark & Ambient Radial Glow */}
+      <div aria-hidden="true" className="pointer-events-none select-none absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -right-20 w-80 sm:w-96 h-80 sm:h-96 bg-japanRed-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 -left-20 w-80 sm:w-96 h-80 sm:h-96 bg-navy-900/5 rounded-full blur-3xl" />
+        <span className="absolute top-14 left-6 lg:left-14 font-japanese text-7xl sm:text-9xl font-bold text-navy-900/[0.035]">
+          相談
+        </span>
+        <span className="absolute bottom-14 right-6 lg:right-14 font-japanese text-7xl sm:text-9xl font-bold text-japanRed-600/[0.035]">
+          絆
+        </span>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ToriiDivider title="ADMISSION & INQUIRIES" />
 
         {/* Section Header */}
@@ -93,7 +105,8 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
             transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="lg:col-span-5 space-y-4 sm:space-y-8"
           >
-            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-washi-50 border border-washi-200 space-y-4 sm:space-y-6">
+            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-sm border border-washi-200/90 shadow-lg space-y-4 sm:space-y-6 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
               <h3 className="text-lg sm:text-xl font-bold text-navy-900">
                 {t.contact.whatsappDirect}
               </h3>
@@ -152,7 +165,8 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
             transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="lg:col-span-7"
           >
-            <div className="p-5 sm:p-8 sm:p-10 rounded-2xl sm:rounded-3xl bg-washi-50 border border-washi-200 shadow-sm">
+            <div className="p-5 sm:p-8 sm:p-10 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-sm border border-washi-200/90 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-japanRed-600 via-amber-400 to-navy-900" />
               <h3 className="text-xl font-bold text-navy-900 mb-6">
                 {t.contact.formTitle}
               </h3>

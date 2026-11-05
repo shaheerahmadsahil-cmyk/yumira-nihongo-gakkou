@@ -28,8 +28,20 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
   const { locale, t } = useLanguage();
 
   return (
-    <section className="py-12 sm:py-20 bg-washi-100/60 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 sm:py-20 bg-gradient-to-b from-washi-50 via-washi-100/40 to-white relative overflow-hidden">
+      {/* Decorative Subtle Japanese Kanji Watermark & Ambient Radial Glow */}
+      <div aria-hidden="true" className="pointer-events-none select-none absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/3 -right-20 w-80 sm:w-96 h-80 sm:h-96 bg-japanRed-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 -left-20 w-80 sm:w-96 h-80 sm:h-96 bg-navy-900/5 rounded-full blur-3xl" />
+        <span className="absolute top-12 left-6 lg:left-14 font-japanese text-7xl sm:text-9xl font-bold text-navy-900/[0.035]">
+          試験
+        </span>
+        <span className="absolute bottom-12 right-6 lg:right-14 font-japanese text-7xl sm:text-9xl font-bold text-japanRed-600/[0.035]">
+          満点
+        </span>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ToriiDivider title="SIMULATED EXAMINATIONS" />
 
         {/* Section Header */}
@@ -95,8 +107,11 @@ export function MockTestPreview({ tests }: { tests: MockTestCardData[] }) {
                 }}
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 350, damping: 22 }}
-                className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200 shadow-sm hover:shadow-2xl hover:border-japanRed-300 transition-shadow duration-300 flex flex-col justify-between group"
+                className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-washi-200/90 shadow-sm hover:shadow-2xl hover:border-japanRed-300 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
               >
+                {/* Top decorative gradient bar */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-navy-900 via-japanRed-500 to-amber-400 group-hover:h-1.5 transition-all" />
+
                 <div>
                   <div className="flex items-center justify-between mb-3 sm:mb-4">
                     <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-navy-900 text-white font-mono">

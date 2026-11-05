@@ -37,8 +37,20 @@ export function LearningPreview() {
   };
 
   return (
-    <section className="py-12 sm:py-20 bg-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 sm:py-20 bg-gradient-to-b from-white via-rose-50/20 to-washi-50 relative overflow-hidden">
+      {/* Decorative Subtle Japanese Kana Watermark & Ambient Radial Glow */}
+      <div aria-hidden="true" className="pointer-events-none select-none absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -left-20 w-80 sm:w-96 h-80 sm:h-96 bg-japanRed-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 -right-20 w-80 sm:w-96 h-80 sm:h-96 bg-navy-900/5 rounded-full blur-3xl" />
+        <span className="absolute top-14 right-8 lg:right-20 font-japanese text-7xl sm:text-9xl font-bold text-navy-900/[0.035]">
+          あいう
+        </span>
+        <span className="absolute bottom-14 left-8 lg:left-20 font-japanese text-7xl sm:text-9xl font-bold text-japanRed-600/[0.035]">
+          漢字
+        </span>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ToriiDivider title="JAPANESE LEARNING HUB" />
 
         {/* Section Header */}

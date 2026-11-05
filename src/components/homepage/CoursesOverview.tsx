@@ -37,8 +37,20 @@ export function CoursesOverview({ courses, whatsappNumber }: CoursesOverviewProp
   const { locale, t } = useLanguage();
 
   return (
-    <section id="courses" className="py-12 sm:py-20 bg-washi-100/50 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="courses" className="py-12 sm:py-20 bg-gradient-to-b from-washi-100/50 via-washi-50/70 to-white relative overflow-hidden">
+      {/* Decorative Subtle Japanese Kanji Watermark & Ambient Radial Glow */}
+      <div aria-hidden="true" className="pointer-events-none select-none absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/3 -right-24 w-80 sm:w-96 h-80 sm:h-96 bg-japanRed-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 -left-20 w-80 sm:w-96 h-80 sm:h-96 bg-amber-500/5 rounded-full blur-3xl" />
+        <span className="absolute top-10 left-6 lg:left-14 font-japanese text-7xl sm:text-9xl font-bold text-navy-900/[0.035]">
+          講座
+        </span>
+        <span className="absolute bottom-12 right-6 lg:right-14 font-japanese text-7xl sm:text-9xl font-bold text-japanRed-600/[0.035]">
+          夢
+        </span>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ToriiDivider title="ACADEMY COURSES" />
 
         {/* Section Header */}
@@ -103,8 +115,11 @@ export function CoursesOverview({ courses, whatsappNumber }: CoursesOverviewProp
                 }}
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 350, damping: 22 }}
-                className="flex flex-col bg-white rounded-2xl sm:rounded-3xl border border-washi-200 shadow-sm hover:shadow-2xl hover:border-japanRed-300 transition-shadow duration-300 overflow-hidden group"
+                className="flex flex-col bg-white rounded-2xl sm:rounded-3xl border border-washi-200/90 shadow-sm hover:shadow-2xl hover:border-japanRed-300 transition-all duration-300 overflow-hidden group relative"
               >
+                {/* Top decorative gradient bar */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-japanRed-500 via-amber-400 to-navy-900 group-hover:h-1.5 transition-all" />
+
                 {/* Header Badge */}
                 <div className="p-4 sm:p-6 pb-3 sm:pb-4 border-b border-washi-100 relative">
                   <div className="flex items-center justify-between mb-2.5 sm:mb-3">

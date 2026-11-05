@@ -10,8 +10,20 @@ export function AboutSection() {
   const { t } = useLanguage();
 
   return (
-    <section id="about" className="py-12 sm:py-20 bg-white relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-12 sm:py-20 bg-gradient-to-b from-washi-50 via-white to-washi-100/40 relative overflow-hidden">
+      {/* Decorative Subtle Japanese Kanji Watermark & Ambient Radial Glow */}
+      <div aria-hidden="true" className="pointer-events-none select-none absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -left-20 w-80 sm:w-96 h-80 sm:h-96 bg-japanRed-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 -right-20 w-80 sm:w-96 h-80 sm:h-96 bg-navy-900/5 rounded-full blur-3xl" />
+        <span className="absolute top-12 right-6 lg:right-16 font-japanese text-7xl sm:text-9xl font-bold text-navy-900/[0.035]">
+          学
+        </span>
+        <span className="absolute bottom-16 left-6 lg:left-16 font-japanese text-7xl sm:text-9xl font-bold text-japanRed-600/[0.035]">
+          道
+        </span>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ToriiDivider title="ABOUT OUR ACADEMY" />
 
         {/* Section Header */}
@@ -41,8 +53,9 @@ export function AboutSection() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
             whileHover={{ y: -4 }}
-            className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-washi-50 border border-washi-200 relative group hover:border-japanRed-300 transition-all shadow-sm hover:shadow-md"
+            className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/90 backdrop-blur-sm border border-washi-200/90 relative group hover:border-japanRed-300 transition-all shadow-sm hover:shadow-xl overflow-hidden"
           >
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-japanRed-500 to-amber-500" />
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-japanRed-100 text-japanRed-600 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
               <Target className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
@@ -60,8 +73,9 @@ export function AboutSection() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
             whileHover={{ y: -4 }}
-            className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-washi-50 border border-washi-200 relative group hover:border-navy-400 transition-all shadow-sm hover:shadow-md"
+            className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white/90 backdrop-blur-sm border border-washi-200/90 relative group hover:border-navy-400 transition-all shadow-sm hover:shadow-xl overflow-hidden"
           >
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-navy-800 to-japanRed-500" />
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-navy-100 text-navy-900 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
               <Compass className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
