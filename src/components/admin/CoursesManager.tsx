@@ -18,11 +18,23 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
   const startDatePresets = [
     "নতুন ব্যাচে ভর্তি চলছে",
     "ভর্তি চলছে (সীমিত আসন)",
-    "১৫ নভেম্বর থেকে ক্লাস শুরু",
-    "০১ ডিসেম্বর থেকে ক্লাস শুরু",
-    "১৫ ডিসেম্বর থেকে ক্লাস শুরু",
-    "০১ জানুয়ারি থেকে ক্লাস শুরু",
+    "শীঘ্রই নতুন ব্যাচ শুরু",
     "আগামী শুক্রবার থেকে ওরিয়েন্টেশন",
+  ];
+
+  const allMonths = [
+    "জানুয়ারি",
+    "ফেব্রুয়ারি",
+    "মার্চ",
+    "এপ্রিল",
+    "মে",
+    "জুন",
+    "জুলাই",
+    "আগস্ট",
+    "সেপ্টেম্বর",
+    "অক্টোবর",
+    "নভেম্বর",
+    "ডিসেম্বর",
   ];
 
   const durationPresets = [
@@ -216,6 +228,30 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
                             {preset}
                           </button>
                         ))}
+                      </div>
+
+                      {/* 12 Months Quick Selector */}
+                      <div className="mt-2.5 pt-2 border-t border-dashed border-emerald-200">
+                        <span className="text-[10px] font-bold text-emerald-800 block mb-1">
+                          📅 ১২টি মাসের দ্রুত সিলেক্টর (যেকোনো মাসে ক্লিক করুন):
+                        </span>
+                        <div className="grid grid-cols-4 gap-1">
+                          {allMonths.map((m, mIdx) => (
+                            <button
+                              key={mIdx}
+                              type="button"
+                              onClick={() => setStartDateInput(`০১ ${m} থেকে ক্লাস শুরু`)}
+                              className={`text-[10px] py-1 px-1 rounded-lg border text-center transition-all ${
+                                startDateInput.includes(m)
+                                  ? "bg-emerald-600 text-white border-emerald-600 font-bold shadow-xs"
+                                  : "bg-white text-slate-700 border-slate-200 hover:border-emerald-400 hover:bg-emerald-50"
+                              }`}
+                              title={`০১ ${m} থেকে ক্লাস শুরু`}
+                            >
+                              {m}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
