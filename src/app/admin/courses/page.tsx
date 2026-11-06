@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { CoursesManager } from "@/components/admin/CoursesManager";
+import { fallbackCourses } from "@/lib/fallback-data";
 
 export const metadata = {
   title: "Course Management | Admin",
@@ -22,6 +23,10 @@ export default async function AdminCoursesPage() {
     });
   } catch (error) {
     console.warn("Could not fetch courses from DB:", error);
+  }
+
+  if (!courses || courses.length === 0) {
+    courses = fallbackCourses;
   }
 
   return <CoursesManager initialCourses={courses} />;

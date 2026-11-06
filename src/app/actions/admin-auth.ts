@@ -12,6 +12,7 @@ import {
 } from "@/lib/auth";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { fallbackCourses } from "@/lib/fallback-data";
 
 const adminSetupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -182,7 +183,9 @@ export async function updateCourseFee(
   baseFee: number,
   currency = "BDT",
   onlineFee?: number,
-  offlineFee?: number
+  offlineFee?: number,
+  duration?: string,
+  schedule?: string
 ) {
   const session = await getCurrentUser();
   if (!session || session.role !== "ADMIN") {
@@ -190,17 +193,53 @@ export async function updateCourseFee(
   }
 
   try {
-    await prisma.course.update({
+    const existing = await prisma.course.findUnique({
       where: { id: courseId },
-      data: {
-        baseFee,
-        currency,
-        ...(onlineFee !== undefined ? { onlineFee } : {}),
-        ...(offlineFee !== undefined ? { offlineFee } : {}),
-      },
     });
+
+    if (existing) {
+      await prisma.course.update({
+        where: { id: courseId },
+        data: {
+          baseFee,
+          currency,
+          ...(onlineFee !== undefined ? { onlineFee } : {}),
+          ...(offlineFee !== undefined ? { offlineFee } : {}),
+          ...(duration !== undefined ? { duration } : {}),
+          ...(schedule !== undefined ? { schedule } : {}),
+        },
+      });
+    } else {
+      const fb = fallbackCourses.find((c) => c.id === courseId) || fallbackCourses[0];
+      await prisma.course.create({
+        data: {
+          id: courseId,
+          slug: fb.slug,
+          level: fb.level,
+          baseFee,
+          onlineFee: onlineFee ?? baseFee,
+          offlineFee: offlineFee ?? (baseFee + 2000),
+          currency,
+          duration: duration ?? fb.duration,
+          schedule: schedule ?? fb.schedule,
+          badge: fb.badge,
+          published: true,
+          translations: {
+            create: fb.translations.map((tr) => ({
+              locale: tr.locale,
+              title: tr.title,
+              subtitle: tr.subtitle,
+              description: tr.description,
+              features: JSON.stringify(tr.features),
+              curriculum: "[]",
+              faq: "[]",
+            })),
+          },
+        },
+      });
+    }
   } catch (err) {
-    console.warn("Could not persist course fee update:", err);
+    console.warn("Could not persist course fee/duration update:", err);
   }
 
   revalidatePath("/");
