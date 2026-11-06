@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { updateCourseFee } from "@/app/actions/admin-auth";
-import { BookOpen, Check, Edit2, Sparkles, Clock, Calendar, DollarSign } from "lucide-react";
+import { BookOpen, Check, Edit2, Sparkles, Clock, Calendar, DollarSign, Rocket } from "lucide-react";
 
 export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
   const [courses, setCourses] = useState(initialCourses);
@@ -11,8 +11,19 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
   const [offlineFeeInput, setOfflineFeeInput] = useState<number>(0);
   const [durationInput, setDurationInput] = useState<string>("");
   const [scheduleInput, setScheduleInput] = useState<string>("");
+  const [startDateInput, setStartDateInput] = useState<string>("");
   const [saving, setSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  const startDatePresets = [
+    "নতুন ব্যাচে ভর্তি চলছে",
+    "ভর্তি চলছে (সীমিত আসন)",
+    "১৫ নভেম্বর থেকে ক্লাস শুরু",
+    "০১ ডিসেম্বর থেকে ক্লাস শুরু",
+    "১৫ ডিসেম্বর থেকে ক্লাস শুরু",
+    "০১ জানুয়ারি থেকে ক্লাস শুরু",
+    "আগামী শুক্রবার থেকে ওরিয়েন্টেশন",
+  ];
 
   const durationPresets = [
     "৩ মাস (3 Months)",
@@ -39,6 +50,7 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
     setOfflineFeeInput(course.offlineFee ?? ((course.baseFee ?? 8000) + 2000));
     setDurationInput(course.duration || "4 Months");
     setScheduleInput(course.schedule || "3 Days / Week (Evening)");
+    setStartDateInput(course.startDate || "নতুন ব্যাচে ভর্তি চলছে");
   };
 
   const handleSaveCourse = async (courseId: string, currency: string) => {
@@ -52,7 +64,8 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
       Number(onlineFeeInput),
       Number(offlineFeeInput),
       durationInput.trim() || "4 Months",
-      scheduleInput.trim() || "3 Days / Week"
+      scheduleInput.trim() || "3 Days / Week",
+      startDateInput.trim() || "নতুন ব্যাচে ভর্তি চলছে"
     );
     setSaving(false);
 
@@ -67,12 +80,13 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
                 offlineFee: Number(offlineFeeInput),
                 duration: durationInput.trim() || "4 Months",
                 schedule: scheduleInput.trim() || "3 Days / Week",
+                startDate: startDateInput.trim() || "নতুন ব্যাচে ভর্তি চলছে",
               }
             : c
         )
       );
       setEditingId(null);
-      setSuccessMsg("কোর্সের মেয়াদ (দিন/মাস), সময়কাল ও ফি সফলভাবে আপডেট করা হয়েছে! লাইভ সাইটে পরিবর্তন কার্যকর হয়েছে।");
+      setSuccessMsg("কোর্সের ক্লাস শুরুর তারিখ, মেয়াদ ও ফি সফলভাবে আপডেট করা হয়েছে! লাইভ সাইটে পরিবর্তন কার্যকর হয়েছে।");
       setTimeout(() => setSuccessMsg(null), 4000);
     } else {
       alert("কোর্স আপডেট করতে সমস্যা হয়েছে");
@@ -84,10 +98,10 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-navy-900">
-            Course Management • কোর্সের মেয়াদ ও ফি নিয়ন্ত্রণ
+            Course Management • ক্লাস শুরুর তারিখ, মেয়াদ ও ফি নিয়ন্ত্রণ
           </h1>
           <p className="text-xs text-slate-500">
-            কোর্স কত দিনের/মাসের হবে, শিডিউল এবং অনলাইন/অফলাইন ফি এখান থেকে সরাসরি পরিবর্তন করতে পারবেন। সেভ করার সাথে সাথে মূল ওয়েবসাইটে পরিবর্তন চলে আসবে।
+            কোন কোর্স কবে থেকে শুরু হবে (শুরুর তারিখ), কত দিনের কোর্স এবং ফি অ্যাডমিন প্যানেল থেকে পরিবর্তন করুন। সেভ করার সাথে সাথে মূল ওয়েবসাইটে পরিবর্তন লাইভ হয়ে যাবে।
           </p>
         </div>
       </div>
@@ -130,15 +144,29 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
                   {trans?.subtitle}
                 </p>
 
-                {/* Duration & Schedule Badges (Current values) */}
-                <div className="p-3 rounded-2xl bg-washi-50 border border-washi-200 space-y-2 text-xs">
+                {/* Course Metadata: Start Date, Duration & Schedule */}
+                <div className="p-3.5 rounded-2xl bg-washi-50 border border-washi-200 space-y-2 text-xs">
+                  {/* Start Date */}
                   <div className="flex items-center gap-2 text-navy-900">
+                    <Rocket className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <div>
+                      <span className="text-[11px] text-gray-500 block">কবে থেকে শুরু (শুরুর তারিখ):</span>
+                      <strong className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 inline-block text-xs font-bold mt-0.5">
+                        {course.startDate || "নতুন ব্যাচে ভর্তি চলছে"}
+                      </strong>
+                    </div>
+                  </div>
+
+                  {/* Duration */}
+                  <div className="flex items-center gap-2 text-navy-900 pt-1.5 border-t border-washi-200/80">
                     <Clock className="w-4 h-4 text-japanRed-600 shrink-0" />
                     <div>
                       <span className="text-[11px] text-gray-500 block">কোর্সের মেয়াদ (কত দিন/মাস):</span>
                       <strong className="text-japanRed-600 text-xs sm:text-sm">{course.duration}</strong>
                     </div>
                   </div>
+
+                  {/* Schedule */}
                   <div className="flex items-center gap-2 text-navy-900 pt-1.5 border-t border-washi-200/80">
                     <Calendar className="w-4 h-4 text-navy-700 shrink-0" />
                     <div>
@@ -156,8 +184,39 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
                     <div className="pb-2 border-b border-slate-200">
                       <span className="text-xs font-bold text-navy-900 flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5 text-japanRed-600" />
-                        কোর্সের মেয়াদ ও ফি এডিট করুন
+                        কোর্সের শুরুর তারিখ, মেয়াদ ও ফি এডিট করুন
                       </span>
+                    </div>
+
+                    {/* START DATE INPUT */}
+                    <div>
+                      <label className="text-[11px] font-bold text-emerald-800 block mb-1">
+                        🚀 কোর্স কবে থেকে শুরু (শুরুর তারিখ / ব্যাচ):
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="যেমন: ১৫ নভেম্বর থেকে ক্লাস শুরু"
+                        value={startDateInput}
+                        onChange={(e) => setStartDateInput(e.target.value)}
+                        className="w-full px-3 py-2 text-sm font-bold text-emerald-900 rounded-xl border border-emerald-300 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      />
+                      {/* Start Date Suggestions */}
+                      <div className="flex flex-wrap gap-1 mt-1.5">
+                        {startDatePresets.map((preset, sIdx) => (
+                          <button
+                            key={sIdx}
+                            type="button"
+                            onClick={() => setStartDateInput(preset)}
+                            className={`text-[10px] px-2 py-0.5 rounded-md border transition-colors ${
+                              startDateInput === preset
+                                ? "bg-emerald-600 text-white border-emerald-600 font-bold"
+                                : "bg-white text-emerald-800 border-emerald-200 hover:border-emerald-400 hover:bg-emerald-50"
+                            }`}
+                          >
+                            {preset}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
                     {/* DURATION INPUT */}
@@ -172,7 +231,7 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
                         onChange={(e) => setDurationInput(e.target.value)}
                         className="w-full px-3 py-2 text-sm font-semibold rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-japanRed-500"
                       />
-                      {/* Quick suggestions */}
+                      {/* Duration Suggestions */}
                       <div className="flex flex-wrap gap-1 mt-1.5">
                         {durationPresets.map((preset, pIdx) => (
                           <button
@@ -300,7 +359,7 @@ export function CoursesManager({ initialCourses }: { initialCourses: any[] }) {
                         className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white border border-slate-300 text-slate-700 hover:text-japanRed-600 hover:border-japanRed-300 transition-colors text-xs font-bold shadow-xs hover:shadow-sm"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
-                        <span>মেয়াদ (Duration) ও ফি এডিট করুন</span>
+                        <span>শুরুর তারিখ, মেয়াদ ও ফি এডিট করুন</span>
                       </button>
                     </div>
                   </div>

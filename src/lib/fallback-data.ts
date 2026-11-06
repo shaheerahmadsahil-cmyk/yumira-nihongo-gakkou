@@ -27,6 +27,7 @@ export const fallbackCourses = [
     currency: "BDT",
     duration: "4 Months",
     schedule: "3 Days / Week (Evening)",
+    startDate: "নতুন ব্যাচে ভর্তি চলছে",
     badge: "Most Popular",
     translations: [
       {
@@ -62,6 +63,7 @@ export const fallbackCourses = [
     currency: "BDT",
     duration: "4 Months",
     schedule: "3 Days / Week (Evening)",
+    startDate: "নতুন ব্যাচে ভর্তি চলছে",
     badge: "Intermediate",
     translations: [
       {
@@ -97,6 +99,7 @@ export const fallbackCourses = [
     currency: "BDT",
     duration: "5 Months",
     schedule: "3 Days / Week (Evening)",
+    startDate: "নতুন ব্যাচে ভর্তি চলছে",
     badge: "Bridge to Fluent",
     translations: [
       {
@@ -132,6 +135,7 @@ export const fallbackCourses = [
     currency: "BDT",
     duration: "4 Months",
     schedule: "3 Days / Week (Online & Offline)",
+    startDate: "নতুন ব্যাচে ভর্তি চলছে",
     badge: "SSW Working Visa Special",
     translations: [
       {

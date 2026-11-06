@@ -185,7 +185,8 @@ export async function updateCourseFee(
   onlineFee?: number,
   offlineFee?: number,
   duration?: string,
-  schedule?: string
+  schedule?: string,
+  startDate?: string
 ) {
   const session = await getCurrentUser();
   if (!session || session.role !== "ADMIN") {
@@ -207,6 +208,7 @@ export async function updateCourseFee(
           ...(offlineFee !== undefined ? { offlineFee } : {}),
           ...(duration !== undefined ? { duration } : {}),
           ...(schedule !== undefined ? { schedule } : {}),
+          ...(startDate !== undefined ? { startDate } : {}),
         },
       });
     } else {
@@ -222,6 +224,7 @@ export async function updateCourseFee(
           currency,
           duration: duration ?? fb.duration,
           schedule: schedule ?? fb.schedule,
+          startDate: startDate ?? fb.startDate,
           badge: fb.badge,
           published: true,
           translations: {
@@ -239,7 +242,7 @@ export async function updateCourseFee(
       });
     }
   } catch (err) {
-    console.warn("Could not persist course fee/duration update:", err);
+    console.warn("Could not persist course fee/duration/startDate update:", err);
   }
 
   revalidatePath("/");

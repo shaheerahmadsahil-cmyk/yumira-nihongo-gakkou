@@ -19,6 +19,7 @@ export interface CourseCardData {
   duration: string;
   schedule: string;
   badge?: string | null;
+  startDate?: string | null;
   translations: {
     locale: string;
     title: string;
@@ -187,8 +188,17 @@ export function CoursesOverview({ courses, whatsappNumber }: CoursesOverviewProp
                   </p>
                 </div>
 
-                {/* Course Metadata (Schedule & Duration) */}
+                {/* Course Metadata (Start Date, Duration & Schedule) */}
                 <div className="px-4 sm:px-6 py-3 sm:py-4 bg-washi-50/70 border-b border-washi-100 text-xs text-gray-600 space-y-1.5 sm:space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>
+                      <strong className="text-navy-900">ক্লাস শুরু:</strong>{" "}
+                      <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/80">
+                        {course.startDate || "নতুন ব্যাচে ভর্তি চলছে"}
+                      </span>
+                    </span>
+                  </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-japanRed-600 shrink-0" />
                     <span>
@@ -196,7 +206,7 @@ export function CoursesOverview({ courses, whatsappNumber }: CoursesOverviewProp
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-japanRed-600 shrink-0" />
+                    <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-navy-700 shrink-0" />
                     <span>
                       <strong>{t.courses.scheduleLabel}:</strong> {course.schedule}
                     </span>

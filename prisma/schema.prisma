@@ -38,6 +38,7 @@ model Course {
   currency     String              @default("BDT")
   duration     String              @default("4 Months")
   schedule     String              @default("3 Days/Week")
+  startDate    String?             @default("নতুন ব্যাচে ভর্তি চলছে")
   featured     Boolean             @default(true)
   published    Boolean             @default(true)
   badge        String?

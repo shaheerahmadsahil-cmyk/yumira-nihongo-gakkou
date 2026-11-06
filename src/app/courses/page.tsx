@@ -40,6 +40,7 @@ export default async function CoursesPage() {
         currency: c.currency,
         duration: c.duration,
         schedule: c.schedule,
+        startDate: c.startDate ?? "নতুন ব্যাচে ভর্তি চলছে",
         badge: c.badge,
         translations: c.translations.map((tr) => {
           let features: string[] = [];
