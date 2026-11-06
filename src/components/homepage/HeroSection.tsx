@@ -98,16 +98,8 @@ export function HeroSection({
             className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold text-navy-900 tracking-tight leading-[1.25] sm:leading-[1.15]"
           >
             {t.hero.headlinePrefix}{" "}
-            <span className="relative inline-block text-japanRed-600">
-              <span className="relative z-10">{t.hero.headlineHighlight}</span>
-              {/* Subtle calligraphy stroke underline */}
-              <motion.span
-                aria-hidden="true"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                className="absolute bottom-1 left-0 w-full h-2.5 sm:h-3 bg-japanRed-100 -rotate-1 -z-0 rounded origin-left"
-              />
+            <span className="text-japanRed-600">
+              {t.hero.headlineHighlight}
             </span>{" "}
             {t.hero.headlineSuffix}
           </motion.h1>
