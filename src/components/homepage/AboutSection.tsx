@@ -69,16 +69,6 @@ export function AboutSection() {
           className="absolute bottom-10 -right-20 w-80 sm:w-96 h-80 sm:h-96 bg-navy-900/10 rounded-full blur-3xl"
         />
 
-        {/* Japanese Seigaiha Wave Pattern Overlay (SVG) */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.03] mix-blend-multiply" xmlns="http://www.w3.org/2000/svg">
-          <pattern id="seigaihaAbout" width="60" height="30" patternUnits="userSpaceOnUse">
-            <path d="M 0 30 Q 15 15, 30 30 Q 45 15, 60 30" fill="none" stroke="#DC2626" strokeWidth="1.5" />
-            <path d="M 0 15 Q 15 0, 30 15 Q 45 0, 60 15" fill="none" stroke="#0F172A" strokeWidth="1.5" />
-            <path d="M 30 30 Q 45 15, 60 30" fill="none" stroke="#DC2626" strokeWidth="1.5" />
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#seigaihaAbout)" />
-        </svg>
-
         {/* Faint Traditional Japanese Calligraphy Watermarks */}
         <span className="absolute top-12 right-6 lg:right-16 font-japanese text-8xl sm:text-9xl font-bold text-navy-900/[0.04]">
           志
