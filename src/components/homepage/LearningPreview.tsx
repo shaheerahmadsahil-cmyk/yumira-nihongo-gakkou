@@ -299,9 +299,6 @@ export function LearningPreview() {
             <h3 className="text-lg sm:text-2xl font-extrabold tracking-tight">
               অফিশিয়াল হিরাগানা ও কাতাকানা প্র্যাকটিস শিট (PDF)
             </h3>
-            <p className="text-xs sm:text-sm text-gray-300 max-w-xl">
-              ইউমিরা নিহোঙ্গো গাক্কো-র নাম, লোগো, ওয়েবসাইট ও হেল্পলাইনসহ সকল ৪৬টি মৌলিক বর্ণ ও দাকুতেন চার্টসংবলিত ফুল প্র্যাকটিস শিট ডাউনলোড বা প্রিন্ট করুন।
-            </p>
           </div>
 
           <div className="flex items-center justify-center shrink-0 z-10 w-full md:w-auto">
