@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Volume2, Sparkles, BookOpen, CheckCircle, RefreshCw } from "lucide-react";
+import Link from "next/link";
+import { Volume2, Sparkles, BookOpen, CheckCircle, RefreshCw, FileText } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { playJapaneseSpeech } from "@/lib/audio";
 import { ToriiDivider } from "@/components/shared/FujiWatermark";
@@ -62,6 +63,20 @@ export function KatakanaCenter({ characters }: { characters: KanaCharacter[] }) 
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-normal">
             Master Japanese loanwords, foreign names, and scientific terms. Listen to native Japanese pronunciation and practice character recognition.
           </p>
+
+          {/* Free PDF Practice Sheet Download Banner */}
+          <div className="pt-2">
+            <Link
+              href="/practice-sheets?type=katakana"
+              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-2xl bg-navy-50 hover:bg-navy-100 border border-navy-200 text-navy-900 font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <FileText className="w-4 h-4 text-japanRed-600 animate-pulse" />
+              <span>🎁 ফ্রি কাতাকানা প্র্যাকটিস শিট (PDF) ডাউনলোড করুন</span>
+              <span className="text-[10px] bg-navy-900 text-white px-2 py-0.5 rounded-full font-sans uppercase">
+                Free Printable
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* Tab Selection */}

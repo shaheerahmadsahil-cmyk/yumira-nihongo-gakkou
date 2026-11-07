@@ -15,6 +15,7 @@ import {
   ToggleLeft,
   ToggleRight,
   Shield,
+  FileText,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { useFurigana } from "@/lib/context/FuriganaContext";
@@ -62,6 +63,10 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
     { href: "/hiragana", label: t.nav.hiragana },
     { href: "/katakana", label: t.nav.katakana },
     { href: "/kanji", label: t.nav.kanji },
+    {
+      href: "/practice-sheets",
+      label: locale === "bn" ? "ফ্রি শিট (PDF)" : locale === "ja" ? "無料シート (PDF)" : "Free Sheets (PDF)",
+    },
     { href: "/mock-tests", label: t.nav.mockTests },
     { href: "/contact", label: t.nav.contact },
   ];
@@ -119,6 +124,15 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
                 <ToggleRight className="w-4 h-4 text-emerald-400" />
               )}
             </button>
+
+            {/* Free Sheet Link */}
+            <Link
+              href="/practice-sheets"
+              className="flex items-center gap-1 text-amber-300 hover:text-amber-200 transition-colors font-semibold"
+            >
+              <FileText className="w-3.5 h-3.5 text-amber-400" />
+              <span>{locale === "bn" ? "ফ্রি শিট (PDF)" : "Free PDF Sheets"}</span>
+            </Link>
 
             {/* Admin Link */}
             <Link

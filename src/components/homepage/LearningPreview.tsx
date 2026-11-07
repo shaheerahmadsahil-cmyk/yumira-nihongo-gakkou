@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ToggleLeft, ToggleRight, Sparkles, Volume2 } from "lucide-react";
+import { ArrowRight, ToggleLeft, ToggleRight, Sparkles, Volume2, FileText, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { useFurigana } from "@/lib/context/FuriganaContext";
@@ -276,6 +276,51 @@ export function LearningPreview() {
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </motion.div>
+        </motion.div>
+
+        {/* Free Printable PDF Practice Sheets Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-6 sm:mt-8 p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-navy-900 via-navy-800 to-japanRed-950 text-white shadow-xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-5 relative overflow-hidden"
+        >
+          {/* Decorative Kanji in background */}
+          <span className="absolute -right-4 -bottom-6 font-japanese text-8xl font-black text-white/[0.05] pointer-events-none select-none">
+            手習
+          </span>
+
+          <div className="space-y-1.5 text-center md:text-left z-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-japanRed-600/30 text-japanRed-300 text-[11px] font-bold border border-japanRed-500/30">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>ফ্রি স্টুডেন্ট রিসোর্স • Free Printable Worksheets</span>
+            </div>
+            <h3 className="text-lg sm:text-2xl font-extrabold tracking-tight">
+              অফিশিয়াল হিরাগানা ও কাতাকানা প্র্যাকটিস শিট (PDF)
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-300 max-w-xl">
+              ইউমিরা নিহোঙ্গো গাক্কো-র নাম, লোগো, ওয়েবসাইট ও হেল্পলাইনসহ সকল ৪৬টি মৌলিক বর্ণ ও লেখার প্র্যাকটিস গ্রিড সংবলিত ফ্রি শিট ডাউনলোড বা প্রিন্ট করুন।
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0 z-10 w-full md:w-auto">
+            <Link
+              href="/practice-sheets?type=hiragana"
+              className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 active:scale-95"
+            >
+              <FileText className="w-4 h-4" />
+              <span>হিরাগানা শিট PDF</span>
+            </Link>
+
+            <Link
+              href="/practice-sheets?type=katakana"
+              className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-washi-100 text-navy-900 font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 active:scale-95"
+            >
+              <Download className="w-4 h-4 text-japanRed-600" />
+              <span>কাতাকানা শিট PDF</span>
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>

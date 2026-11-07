@@ -151,6 +151,11 @@ export function Footer({ settings }: FooterProps) {
                 </Link>
               </li>
               <li>
+                <Link href="/practice-sheets" className="text-amber-400 hover:text-amber-300 font-semibold transition-colors flex items-center gap-1">
+                  <span>🎁 ফ্রি প্র্যাকটিস শিট (PDF)</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/contact" className="hover:text-white transition-colors">
                   {t.nav.contact}
                 </Link>

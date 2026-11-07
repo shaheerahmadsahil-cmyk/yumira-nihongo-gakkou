@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Volume2, Sparkles, BookOpen, CheckCircle, RefreshCw, Layers } from "lucide-react";
+import Link from "next/link";
+import { Volume2, Sparkles, BookOpen, CheckCircle, RefreshCw, Layers, Printer, Download, FileText } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { playJapaneseSpeech } from "@/lib/audio";
 import { ToriiDivider } from "@/components/shared/FujiWatermark";
@@ -76,6 +77,20 @@ export function HiraganaCenter({ characters }: { characters: KanaCharacter[] }) 
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-normal">
             Master the foundation of Japanese. Click any character to hear native audio pronunciation, view example vocabulary, and practice romaji recognition.
           </p>
+
+          {/* Free PDF Practice Sheet Download Banner */}
+          <div className="pt-2">
+            <Link
+              href="/practice-sheets?type=hiragana"
+              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-2xl bg-japanRed-50 hover:bg-japanRed-100 border border-japanRed-200/90 text-japanRed-700 font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <FileText className="w-4 h-4 text-japanRed-600 animate-pulse" />
+              <span>🎁 ফ্রি হিরাগানা প্র্যাকটিস শিট (PDF) ডাউনলোড করুন</span>
+              <span className="text-[10px] bg-japanRed-600 text-white px-2 py-0.5 rounded-full font-sans uppercase">
+                Free Printable
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* Tab Selection */}
