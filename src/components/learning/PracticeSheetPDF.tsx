@@ -3,10 +3,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Printer, ArrowLeft, Sparkles, Globe, Phone, MapPin, BookOpen, Check } from "lucide-react";
+import { Printer, ArrowLeft, Globe, Phone, MapPin, BookOpen, Check, Sparkles } from "lucide-react";
 
 interface PracticeSheetPDFProps {
-  initialType?: "hiragana" | "katakana";
   settings?: {
     agency_name?: string;
     agency_phone?: string;
@@ -164,7 +163,7 @@ const KATAKANA_GRID = [
   ]},
 ];
 
-// Hiragana Dakuten
+// Hiragana Dakuten & Handakuten
 const HIRAGANA_DAKUTEN = [
   { line: "G-Line (গ)", chars: [
     { kana: "が", romaji: "ga", bn: "গা" },
@@ -194,7 +193,7 @@ const HIRAGANA_DAKUTEN = [
     { kana: "べ", romaji: "be", bn: "বে" },
     { kana: "ぼ", romaji: "bo", bn: "বো" },
   ]},
-  { line: "P-Line (প - Handakuten)", chars: [
+  { line: "P-Line (প)", chars: [
     { kana: "ぱ", romaji: "pa", bn: "পা" },
     { kana: "ぴ", romaji: "pi", bn: "পি" },
     { kana: "ぷ", romaji: "pu", bn: "পু" },
@@ -203,7 +202,7 @@ const HIRAGANA_DAKUTEN = [
   ]},
 ];
 
-// Katakana Dakuten
+// Katakana Dakuten & Handakuten
 const KATAKANA_DAKUTEN = [
   { line: "G-Line (গ)", chars: [
     { kana: "ガ", romaji: "ga", bn: "গা" },
@@ -233,13 +232,43 @@ const KATAKANA_DAKUTEN = [
     { kana: "ベ", romaji: "be", bn: "বে" },
     { kana: "ボ", romaji: "bo", bn: "বো" },
   ]},
-  { line: "P-Line (প - Handakuten)", chars: [
+  { line: "P-Line (প)", chars: [
     { kana: "パ", romaji: "pa", bn: "পা" },
     { kana: "ピ", romaji: "pi", bn: "পি" },
     { kana: "プ", romaji: "pu", bn: "পু" },
     { kana: "ペ", romaji: "pe", bn: "পে" },
     { kana: "ポ", romaji: "po", bn: "পো" },
   ]},
+];
+
+// Hiragana Yoon (যুক্তবর্ণ - Contracted Sounds)
+const HIRAGANA_YOON = [
+  { group: "K", chars: [{ kana: "きゃ", romaji: "kya", bn: "ক্যা" }, { kana: "きゅ", romaji: "kyu", bn: "কিউ" }, { kana: "きょ", romaji: "kyo", bn: "কিয়ো" }] },
+  { group: "S", chars: [{ kana: "しゃ", romaji: "sha", bn: "শা" }, { kana: "しゅ", romaji: "shu", bn: "শু" }, { kana: "しょ", romaji: "sho", bn: "শো" }] },
+  { group: "T", chars: [{ kana: "ちゃ", romaji: "cha", bn: "চা" }, { kana: "ちゅ", romaji: "chu", bn: "চু" }, { kana: "ちょ", romaji: "cho", bn: "চো" }] },
+  { group: "N", chars: [{ kana: "にゃ", romaji: "nya", bn: "নিয়া" }, { kana: "にゅ", romaji: "nyu", bn: "নিউ" }, { kana: "にょ", romaji: "nyo", bn: "নিয়ো" }] },
+  { group: "H", chars: [{ kana: "ひゃ", romaji: "hya", bn: "হিয়া" }, { kana: "ひゅ", romaji: "hyu", bn: "হিউ" }, { kana: "ひょ", romaji: "hyo", bn: "হিয়ো" }] },
+  { group: "M", chars: [{ kana: "みゃ", romaji: "mya", bn: "মিয়া" }, { kana: "みゅ", romaji: "myu", bn: "মিউ" }, { kana: "みょ", romaji: "myo", bn: "মিয়ো" }] },
+  { group: "R", chars: [{ kana: "りゃ", romaji: "rya", bn: "রিয়া" }, { kana: "りゅ", romaji: "ryu", bn: "রিউ" }, { kana: "りょ", romaji: "ryo", bn: "রিয়ো" }] },
+  { group: "G", chars: [{ kana: "ぎゃ", romaji: "gya", bn: "গিয়া" }, { kana: "ぎゅ", romaji: "gyu", bn: "গিউ" }, { kana: "ぎょ", romaji: "gyo", bn: "গিয়ো" }] },
+  { group: "J", chars: [{ kana: "じゃ", romaji: "ja", bn: "জা" }, { kana: "じゅ", romaji: "ju", bn: "জু" }, { kana: "じょ", romaji: "jo", bn: "জো" }] },
+  { group: "B", chars: [{ kana: "びゃ", romaji: "bya", bn: "বিয়া" }, { kana: "びゅ", romaji: "byu", bn: "বিউ" }, { kana: "びょ", romaji: "byo", bn: "বিয়ো" }] },
+  { group: "P", chars: [{ kana: "ぴゃ", romaji: "pya", bn: "পিয়া" }, { kana: "ぴゅ", romaji: "pyu", bn: "পিউ" }, { kana: "ぴょ", romaji: "pyo", bn: "পিয়ো" }] },
+];
+
+// Katakana Yoon (যুক্তবর্ণ - Contracted Sounds)
+const KATAKANA_YOON = [
+  { group: "K", chars: [{ kana: "キャ", romaji: "kya", bn: "ক্যা" }, { kana: "キュ", romaji: "kyu", bn: "কিউ" }, { kana: "キョ", romaji: "kyo", bn: "কিয়ো" }] },
+  { group: "S", chars: [{ kana: "シャ", romaji: "sha", bn: "শা" }, { kana: "シュ", romaji: "shu", bn: "শু" }, { kana: "ショ", romaji: "sho", bn: "শো" }] },
+  { group: "T", chars: [{ kana: "チャ", romaji: "cha", bn: "চা" }, { kana: "チュ", romaji: "chu", bn: "চু" }, { kana: "チョ", romaji: "cho", bn: "চো" }] },
+  { group: "N", chars: [{ kana: "ニャ", romaji: "nya", bn: "নিয়া" }, { kana: "ニュ", romaji: "nyu", bn: "নিউ" }, { kana: "ニョ", romaji: "nyo", bn: "নিয়ো" }] },
+  { group: "H", chars: [{ kana: "ヒャ", romaji: "hya", bn: "হিয়া" }, { kana: "ヒュ", romaji: "hyu", bn: "হিউ" }, { kana: "ヒョ", romaji: "hyo", bn: "হিয়ো" }] },
+  { group: "M", chars: [{ kana: "ミャ", romaji: "mya", bn: "মিয়া" }, { kana: "ミュ", romaji: "myu", bn: "মিউ" }, { kana: "ミョ", romaji: "myo", bn: "মিয়ো" }] },
+  { group: "R", chars: [{ kana: "リャ", romaji: "rya", bn: "রিয়া" }, { kana: "リュ", romaji: "ryu", bn: "রিউ" }, { kana: "リョ", romaji: "ryo", bn: "রিয়ো" }] },
+  { group: "G", chars: [{ kana: "ギャ", romaji: "gya", bn: "গিয়া" }, { kana: "ギュ", romaji: "gyu", bn: "গিউ" }, { kana: "ギョ", romaji: "gyo", bn: "গিয়ো" }] },
+  { group: "J", chars: [{ kana: "ジャ", romaji: "ja", bn: "জা" }, { kana: "ジュ", romaji: "ju", bn: "জু" }, { kana: "ジョ", romaji: "jo", bn: "জো" }] },
+  { group: "B", chars: [{ kana: "ビャ", romaji: "bya", bn: "বিয়া" }, { kana: "ビュ", romaji: "byu", bn: "বিউ" }, { kana: "ビョ", romaji: "byo", bn: "বিয়ো" }] },
+  { group: "P", chars: [{ kana: "ピャ", romaji: "pya", bn: "পিয়া" }, { kana: "ピュ", romaji: "pyu", bn: "পিউ" }, { kana: "ピョ", romaji: "pyo", bn: "পিয়ো" }] },
 ];
 
 export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
@@ -259,7 +288,7 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
       {/* ============================================================== */}
       {/* 1. TOP TOOLBAR (AUTOMATICALLY HIDDEN DURING PRINT / PDF)       */}
       {/* ============================================================== */}
-      <div className="max-w-4xl mx-auto px-4 mb-6 print:hidden">
+      <div className="max-w-4xl mx-auto px-4 mb-5 print:hidden">
         <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Link
@@ -271,7 +300,7 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
             </Link>
 
             <span className="text-xs font-semibold text-slate-600 hidden sm:inline">
-              এক পিডিএফ-এ ২ পৃষ্ঠা: <strong>পৃষ্ঠা ১ (হিরাগানা)</strong> • <strong>পৃষ্ঠা ২ (কাতাকানা)</strong>
+              ১টি পিডিএফ-এ সম্পূর্ণ চার্ট: <strong>পৃষ্ঠা ১ (হিরাগানা + যুক্তবর্ণ)</strong> • <strong>পৃষ্ঠা ২ (কাতাকানা + যুক্তবর্ণ)</strong>
             </span>
           </div>
 
@@ -293,19 +322,19 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
         {/* ============================================================ */}
         {/* PAGE 1: HIRAGANA (ひらがな)                                   */}
         {/* ============================================================ */}
-        <div className="pdf-sheet-page bg-white shadow-xl print:shadow-none p-5 sm:p-7 print:p-4 rounded-xl print:rounded-none relative border-4 border-japanRed-600 outline outline-2 outline-amber-500 outline-offset-[-6px] print:break-after-page" style={{ pageBreakAfter: "always", breakAfter: "page" }}>
+        <div className="pdf-sheet-page bg-white shadow-xl print:shadow-none p-4 sm:p-6 print:p-3 rounded-xl print:rounded-none relative border-4 border-japanRed-600 outline outline-2 outline-amber-500 outline-offset-[-5px] print:break-after-page" style={{ pageBreakAfter: "always", breakAfter: "page" }}>
           
           {/* Header */}
-          <div className="border-b-2 border-japanRed-600 pb-3 mb-3">
+          <div className="border-b-2 border-japanRed-600 pb-2.5 mb-2.5">
             <div className="flex items-center justify-between gap-3">
               {/* Left: Logo & Names */}
               <div className="flex items-center gap-3">
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-amber-400 bg-white shadow-sm shrink-0">
+                <div className="relative w-12 h-12 sm:w-13 sm:h-13 rounded-xl overflow-hidden border-2 border-amber-400 bg-white shadow-sm shrink-0">
                   <Image
                     src="/images/yumira-logo.jpg"
                     alt="Yumira Nihongo Gakkou"
                     fill
-                    sizes="56px"
+                    sizes="52px"
                     className="object-cover object-center"
                     priority
                   />
@@ -354,10 +383,10 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
             </div>
 
             {/* Page Title Bar */}
-            <div className="mt-2.5 py-1 px-3 bg-japanRed-50 border border-japanRed-200 rounded-md flex items-center justify-between text-[11px]">
+            <div className="mt-2 py-1 px-3 bg-japanRed-50 border border-japanRed-200 rounded-md flex items-center justify-between text-[11px]">
               <span className="font-bold text-japanRed-700 uppercase tracking-wide flex items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5" />
-                <span>পৃষ্ঠা ১: জাপানিজ হিরাগানা (ひらがな) চার্ট ও উচ্চারণ নির্দেশিকা</span>
+                <span>পৃষ্ঠা ১: জাপানিজ হিরাগানা (ひらがな) — মূল বর্ণমালা, পরিবর্তিত ধ্বনি ও যুক্তবর্ণ চার্ট</span>
               </span>
               <span className="text-[9px] font-semibold text-gray-600 bg-white px-2 py-0.5 rounded border border-gray-200">
                 Page 1 of 2 • Hiragana
@@ -366,10 +395,15 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
           </div>
 
           {/* Section 1: 46 Basic Characters Gojuon Table */}
-          <div className="mb-4">
+          <div className="mb-2.5">
+            <div className="text-[10px] font-bold text-navy-900 mb-1 flex items-center gap-1">
+              <span className="w-1.5 h-3 bg-japanRed-600 rounded-sm" />
+              <span>১. মূল ৪৬টি মৌলিক বর্ণমালা (Gojuon - ৫০ ধ্বনি)</span>
+            </div>
+
             <div className="border border-slate-300 rounded-lg overflow-hidden text-center">
-              <div className="grid grid-cols-6 bg-navy-900 text-white text-[10px] font-bold py-1 border-b border-navy-800">
-                <div>ধ্বনি লাইন</div>
+              <div className="grid grid-cols-6 bg-navy-900 text-white text-[9px] font-bold py-0.5 border-b border-navy-800">
+                <div>লাইন</div>
                 <div>- a (আ)</div>
                 <div>- i (ই)</div>
                 <div>- u (উ)</div>
@@ -384,21 +418,21 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
                     rIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
                   }`}
                 >
-                  <div className="py-1 px-1 font-semibold text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
+                  <div className="py-0.5 px-1 font-semibold text-[8px] sm:text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-1.5">
                     {rowItem.row}
                   </div>
 
                   {rowItem.chars.map((c, cIdx) => (
                     <div
                       key={cIdx}
-                      className="py-1 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[40px]"
+                      className="py-0.5 px-0.5 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[32px] sm:min-h-[34px]"
                     >
                       {c.kana ? (
                         <>
-                          <span className="font-japanese text-xl font-bold text-navy-900 leading-none">
+                          <span className="font-japanese text-lg sm:text-xl font-bold text-navy-900 leading-none">
                             {c.kana}
                           </span>
-                          <div className="flex items-center gap-1 mt-0.5 text-[9px] text-gray-600 font-medium">
+                          <div className="flex items-center gap-0.5 mt-0.5 text-[8px] text-gray-600 font-medium">
                             <span className="font-mono font-bold text-japanRed-600">{c.romaji}</span>
                             <span className="text-gray-400">({c.bn})</span>
                           </div>
@@ -413,58 +447,135 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
             </div>
           </div>
 
-          {/* Section 2: Dakuten & Handakuten Table */}
-          <div className="mb-3">
-            <div className="flex items-center justify-between mb-1.5">
-              <h2 className="text-[11px] font-bold text-navy-900 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span>দাকুতেন ও হান্দাকুতেন ভ্যারিয়েশন (Dakuten & Handakuten)</span>
-              </h2>
-              <span className="text-[9px] text-gray-500">
-                তেনতেন ( ゛ ) ও মারু ( ゜ ) যোগে গঠিত নতুন ধ্বনি
-              </span>
-            </div>
-
-            <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
-              <div className="grid grid-cols-6 bg-slate-800 text-white text-[9px] font-bold py-0.5">
-                <div>লাইন</div>
-                <div>- a</div>
-                <div>- i</div>
-                <div>- u</div>
-                <div>- e</div>
-                <div>- o</div>
+          {/* Section 2 & 3: SIDE-BY-SIDE DAKUTEN + YOON (যুক্তবর্ণ) */}
+          <div className="grid grid-cols-1 md:grid-cols-12 print:grid-cols-12 gap-2 mb-2">
+            
+            {/* Left: Dakuten & Handakuten (5 cols on grid) */}
+            <div className="md:col-span-5 print:col-span-5">
+              <div className="text-[10px] font-bold text-navy-900 mb-1 flex items-center gap-1">
+                <Check className="w-3 h-3 text-emerald-600" />
+                <span>২. দাকুতেন ও হান্দাকুতেন</span>
               </div>
 
-              {HIRAGANA_DAKUTEN.map((dRow, dIdx) => (
-                <div
-                  key={dIdx}
-                  className={`grid grid-cols-6 border-b border-slate-200 last:border-b-0 items-center ${
-                    dIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
-                  }`}
-                >
-                  <div className="py-1 px-1 font-semibold text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
-                    {dRow.line}
-                  </div>
-                  {dRow.chars.map((dc, dcIdx) => (
-                    <div
-                      key={dcIdx}
-                      className="py-0.5 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[34px]"
-                    >
-                      <span className="font-japanese text-base font-bold text-navy-900 leading-none">
-                        {dc.kana}
-                      </span>
-                      <span className="text-[8px] text-gray-500 font-mono">
-                        {dc.romaji} ({dc.bn})
-                      </span>
-                    </div>
-                  ))}
+              <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
+                <div className="grid grid-cols-6 bg-slate-800 text-white text-[8px] font-bold py-0.5">
+                  <div>লাইন</div>
+                  <div>- a</div>
+                  <div>- i</div>
+                  <div>- u</div>
+                  <div>- e</div>
+                  <div>- o</div>
                 </div>
-              ))}
+
+                {HIRAGANA_DAKUTEN.map((dRow, dIdx) => (
+                  <div
+                    key={dIdx}
+                    className={`grid grid-cols-6 border-b border-slate-200 last:border-b-0 items-center ${
+                      dIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                    }`}
+                  >
+                    <div className="py-0.5 px-0.5 font-semibold text-[8px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-1">
+                      {dRow.line}
+                    </div>
+                    {dRow.chars.map((dc, dcIdx) => (
+                      <div
+                        key={dcIdx}
+                        className="py-0.5 px-0.5 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[29px]"
+                      >
+                        <span className="font-japanese text-sm font-bold text-navy-900 leading-none">
+                          {dc.kana}
+                        </span>
+                        <span className="text-[7px] text-gray-500 font-mono">
+                          {dc.romaji} ({dc.bn})
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Right: Yoon (যুক্তবর্ণ - Contracted Sounds) (7 cols on grid) */}
+            <div className="md:col-span-7 print:col-span-7">
+              <div className="text-[10px] font-bold text-navy-900 mb-1 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-amber-600" />
+                <span>৩. জাপানিজ যুক্তবর্ণ (Yoon - 拗音)</span>
+              </div>
+
+              <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
+                <div className="grid grid-cols-4 bg-amber-700 text-white text-[8px] font-bold py-0.5">
+                  <div>গ্রুপ</div>
+                  <div>- ya (য়া)</div>
+                  <div>- yu (য়ু)</div>
+                  <div>- yo (য়ো)</div>
+                </div>
+
+                <div className="grid grid-cols-2 divide-x divide-slate-200 bg-white">
+                  {/* Sub-column 1 (K, S, T, N, H, M) */}
+                  <div>
+                    {HIRAGANA_YOON.slice(0, 6).map((yItem, yIdx) => (
+                      <div
+                        key={yIdx}
+                        className={`grid grid-cols-4 border-b border-slate-200 last:border-b-0 items-center ${
+                          yIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                        }`}
+                      >
+                        <div className="py-0.5 px-1 font-bold text-[8px] text-amber-800 bg-amber-50 border-r border-slate-200 text-center">
+                          {yItem.group}
+                        </div>
+                        {yItem.chars.map((yc, ycIdx) => (
+                          <div
+                            key={ycIdx}
+                            className="py-0.5 px-0.5 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[23px]"
+                          >
+                            <span className="font-japanese text-xs font-bold text-navy-900 leading-none">
+                              {yc.kana}
+                            </span>
+                            <span className="text-[7px] text-gray-500 font-mono">
+                              {yc.romaji} ({yc.bn})
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Sub-column 2 (R, G, J, B, P) */}
+                  <div>
+                    {HIRAGANA_YOON.slice(6).map((yItem, yIdx) => (
+                      <div
+                        key={yIdx}
+                        className={`grid grid-cols-4 border-b border-slate-200 last:border-b-0 items-center ${
+                          yIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                        }`}
+                      >
+                        <div className="py-0.5 px-1 font-bold text-[8px] text-amber-800 bg-amber-50 border-r border-slate-200 text-center">
+                          {yItem.group}
+                        </div>
+                        {yItem.chars.map((yc, ycIdx) => (
+                          <div
+                            key={ycIdx}
+                            className="py-0.5 px-0.5 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[23px]"
+                          >
+                            <span className="font-japanese text-xs font-bold text-navy-900 leading-none">
+                              {yc.kana}
+                            </span>
+                            <span className="text-[7px] text-gray-500 font-mono">
+                              {yc.romaji} ({yc.bn})
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           {/* Page 1 Footer */}
-          <div className="pt-2 border-t-2 border-japanRed-600 text-center text-[9px] text-gray-600 space-y-0.5">
+          <div className="pt-1.5 border-t-2 border-japanRed-600 text-center text-[9px] text-gray-600 space-y-0.5">
             <div className="font-bold text-navy-900 flex flex-wrap items-center justify-center gap-2">
               <span>{agencyName} (ইউমিরা নিহোঙ্গো গাক্কো)</span>
               <span>•</span>
@@ -481,19 +592,19 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
         {/* ============================================================ */}
         {/* PAGE 2: KATAKANA (カタカナ)                                   */}
         {/* ============================================================ */}
-        <div className="pdf-sheet-page bg-white shadow-xl print:shadow-none p-5 sm:p-7 print:p-4 rounded-xl print:rounded-none relative border-4 border-japanRed-600 outline outline-2 outline-amber-500 outline-offset-[-6px] print:break-before-page" style={{ pageBreakBefore: "always", breakBefore: "page" }}>
+        <div className="pdf-sheet-page bg-white shadow-xl print:shadow-none p-4 sm:p-6 print:p-3 rounded-xl print:rounded-none relative border-4 border-japanRed-600 outline outline-2 outline-amber-500 outline-offset-[-5px] print:break-before-page" style={{ pageBreakBefore: "always", breakBefore: "page" }}>
           
           {/* Header */}
-          <div className="border-b-2 border-japanRed-600 pb-3 mb-3">
+          <div className="border-b-2 border-japanRed-600 pb-2.5 mb-2.5">
             <div className="flex items-center justify-between gap-3">
               {/* Left: Logo & Names */}
               <div className="flex items-center gap-3">
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-amber-400 bg-white shadow-sm shrink-0">
+                <div className="relative w-12 h-12 sm:w-13 sm:h-13 rounded-xl overflow-hidden border-2 border-amber-400 bg-white shadow-sm shrink-0">
                   <Image
                     src="/images/yumira-logo.jpg"
                     alt="Yumira Nihongo Gakkou"
                     fill
-                    sizes="56px"
+                    sizes="52px"
                     className="object-cover object-center"
                     priority
                   />
@@ -542,10 +653,10 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
             </div>
 
             {/* Page Title Bar */}
-            <div className="mt-2.5 py-1 px-3 bg-navy-50 border border-navy-200 rounded-md flex items-center justify-between text-[11px]">
+            <div className="mt-2 py-1 px-3 bg-navy-50 border border-navy-200 rounded-md flex items-center justify-between text-[11px]">
               <span className="font-bold text-navy-900 uppercase tracking-wide flex items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5 text-japanRed-600" />
-                <span>পৃষ্ঠা ২: জাপানিজ কাতাকানা (カタカナ) চার্ট ও উচ্চারণ নির্দেশিকা</span>
+                <span>পৃষ্ঠা ২: জাপানিজ কাতাকানা (カタカナ) — মূল বর্ণমালা, পরিবর্তিত ধ্বনি ও যুক্তবর্ণ চার্ট</span>
               </span>
               <span className="text-[9px] font-semibold text-gray-600 bg-white px-2 py-0.5 rounded border border-gray-200">
                 Page 2 of 2 • Katakana
@@ -554,10 +665,15 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
           </div>
 
           {/* Section 1: 46 Basic Katakana Gojuon Table */}
-          <div className="mb-4">
+          <div className="mb-2.5">
+            <div className="text-[10px] font-bold text-navy-900 mb-1 flex items-center gap-1">
+              <span className="w-1.5 h-3 bg-navy-900 rounded-sm" />
+              <span>১. মূল ৪৬টি মৌলিক বর্ণমালা (Gojuon - ৫০ ধ্বনি)</span>
+            </div>
+
             <div className="border border-slate-300 rounded-lg overflow-hidden text-center">
-              <div className="grid grid-cols-6 bg-navy-900 text-white text-[10px] font-bold py-1 border-b border-navy-800">
-                <div>ধ্বনি লাইন</div>
+              <div className="grid grid-cols-6 bg-navy-900 text-white text-[9px] font-bold py-0.5 border-b border-navy-800">
+                <div>লাইন</div>
                 <div>- a (আ)</div>
                 <div>- i (ই)</div>
                 <div>- u (উ)</div>
@@ -572,21 +688,21 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
                     rIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
                   }`}
                 >
-                  <div className="py-1 px-1 font-semibold text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
+                  <div className="py-0.5 px-1 font-semibold text-[8px] sm:text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-1.5">
                     {rowItem.row}
                   </div>
 
                   {rowItem.chars.map((c, cIdx) => (
                     <div
                       key={cIdx}
-                      className="py-1 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[40px]"
+                      className="py-0.5 px-0.5 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[32px] sm:min-h-[34px]"
                     >
                       {c.kana ? (
                         <>
-                          <span className="font-japanese text-xl font-bold text-navy-900 leading-none">
+                          <span className="font-japanese text-lg sm:text-xl font-bold text-navy-900 leading-none">
                             {c.kana}
                           </span>
-                          <div className="flex items-center gap-1 mt-0.5 text-[9px] text-gray-600 font-medium">
+                          <div className="flex items-center gap-0.5 mt-0.5 text-[8px] text-gray-600 font-medium">
                             <span className="font-mono font-bold text-japanRed-600">{c.romaji}</span>
                             <span className="text-gray-400">({c.bn})</span>
                           </div>
@@ -601,58 +717,135 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
             </div>
           </div>
 
-          {/* Section 2: Dakuten & Handakuten Table */}
-          <div className="mb-3">
-            <div className="flex items-center justify-between mb-1.5">
-              <h2 className="text-[11px] font-bold text-navy-900 flex items-center gap-1">
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span>দাকুতেন ও হান্দাকুতেন ভ্যারিয়েশন (Dakuten & Handakuten)</span>
-              </h2>
-              <span className="text-[9px] text-gray-500">
-                বিদেশি শব্দ ও ঋণশব্দে ব্যবহৃত পরিবর্তিত ধ্বনি
-              </span>
-            </div>
-
-            <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
-              <div className="grid grid-cols-6 bg-slate-800 text-white text-[9px] font-bold py-0.5">
-                <div>লাইন</div>
-                <div>- a</div>
-                <div>- i</div>
-                <div>- u</div>
-                <div>- e</div>
-                <div>- o</div>
+          {/* Section 2 & 3: SIDE-BY-SIDE DAKUTEN + YOON (যুক্তবর্ণ) */}
+          <div className="grid grid-cols-1 md:grid-cols-12 print:grid-cols-12 gap-2 mb-2">
+            
+            {/* Left: Dakuten & Handakuten (5 cols on grid) */}
+            <div className="md:col-span-5 print:col-span-5">
+              <div className="text-[10px] font-bold text-navy-900 mb-1 flex items-center gap-1">
+                <Check className="w-3 h-3 text-emerald-600" />
+                <span>২. দাকুতেন ও হান্দাকুতেন</span>
               </div>
 
-              {KATAKANA_DAKUTEN.map((dRow, dIdx) => (
-                <div
-                  key={dIdx}
-                  className={`grid grid-cols-6 border-b border-slate-200 last:border-b-0 items-center ${
-                    dIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
-                  }`}
-                >
-                  <div className="py-1 px-1 font-semibold text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
-                    {dRow.line}
-                  </div>
-                  {dRow.chars.map((dc, dcIdx) => (
-                    <div
-                      key={dcIdx}
-                      className="py-0.5 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[34px]"
-                    >
-                      <span className="font-japanese text-base font-bold text-navy-900 leading-none">
-                        {dc.kana}
-                      </span>
-                      <span className="text-[8px] text-gray-500 font-mono">
-                        {dc.romaji} ({dc.bn})
-                      </span>
-                    </div>
-                  ))}
+              <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
+                <div className="grid grid-cols-6 bg-slate-800 text-white text-[8px] font-bold py-0.5">
+                  <div>লাইন</div>
+                  <div>- a</div>
+                  <div>- i</div>
+                  <div>- u</div>
+                  <div>- e</div>
+                  <div>- o</div>
                 </div>
-              ))}
+
+                {KATAKANA_DAKUTEN.map((dRow, dIdx) => (
+                  <div
+                    key={dIdx}
+                    className={`grid grid-cols-6 border-b border-slate-200 last:border-b-0 items-center ${
+                      dIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                    }`}
+                  >
+                    <div className="py-0.5 px-0.5 font-semibold text-[8px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-1">
+                      {dRow.line}
+                    </div>
+                    {dRow.chars.map((dc, dcIdx) => (
+                      <div
+                        key={dcIdx}
+                        className="py-0.5 px-0.5 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[29px]"
+                      >
+                        <span className="font-japanese text-sm font-bold text-navy-900 leading-none">
+                          {dc.kana}
+                        </span>
+                        <span className="text-[7px] text-gray-500 font-mono">
+                          {dc.romaji} ({dc.bn})
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Right: Yoon (যুক্তবর্ণ - Contracted Sounds) (7 cols on grid) */}
+            <div className="md:col-span-7 print:col-span-7">
+              <div className="text-[10px] font-bold text-navy-900 mb-1 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-amber-600" />
+                <span>৩. জাপানিজ যুক্তবর্ণ (Yoon - 拗音)</span>
+              </div>
+
+              <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
+                <div className="grid grid-cols-4 bg-navy-800 text-white text-[8px] font-bold py-0.5">
+                  <div>গ্রুপ</div>
+                  <div>- ya (য়া)</div>
+                  <div>- yu (য়ু)</div>
+                  <div>- yo (য়ো)</div>
+                </div>
+
+                <div className="grid grid-cols-2 divide-x divide-slate-200 bg-white">
+                  {/* Sub-column 1 (K, S, T, N, H, M) */}
+                  <div>
+                    {KATAKANA_YOON.slice(0, 6).map((yItem, yIdx) => (
+                      <div
+                        key={yIdx}
+                        className={`grid grid-cols-4 border-b border-slate-200 last:border-b-0 items-center ${
+                          yIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                        }`}
+                      >
+                        <div className="py-0.5 px-1 font-bold text-[8px] text-navy-800 bg-navy-50 border-r border-slate-200 text-center">
+                          {yItem.group}
+                        </div>
+                        {yItem.chars.map((yc, ycIdx) => (
+                          <div
+                            key={ycIdx}
+                            className="py-0.5 px-0.5 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[23px]"
+                          >
+                            <span className="font-japanese text-xs font-bold text-navy-900 leading-none">
+                              {yc.kana}
+                            </span>
+                            <span className="text-[7px] text-gray-500 font-mono">
+                              {yc.romaji} ({yc.bn})
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Sub-column 2 (R, G, J, B, P) */}
+                  <div>
+                    {KATAKANA_YOON.slice(6).map((yItem, yIdx) => (
+                      <div
+                        key={yIdx}
+                        className={`grid grid-cols-4 border-b border-slate-200 last:border-b-0 items-center ${
+                          yIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                        }`}
+                      >
+                        <div className="py-0.5 px-1 font-bold text-[8px] text-navy-800 bg-navy-50 border-r border-slate-200 text-center">
+                          {yItem.group}
+                        </div>
+                        {yItem.chars.map((yc, ycIdx) => (
+                          <div
+                            key={ycIdx}
+                            className="py-0.5 px-0.5 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[23px]"
+                          >
+                            <span className="font-japanese text-xs font-bold text-navy-900 leading-none">
+                              {yc.kana}
+                            </span>
+                            <span className="text-[7px] text-gray-500 font-mono">
+                              {yc.romaji} ({yc.bn})
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           {/* Page 2 Footer */}
-          <div className="pt-2 border-t-2 border-japanRed-600 text-center text-[9px] text-gray-600 space-y-0.5">
+          <div className="pt-1.5 border-t-2 border-japanRed-600 text-center text-[9px] text-gray-600 space-y-0.5">
             <div className="font-bold text-navy-900 flex flex-wrap items-center justify-center gap-2">
               <span>{agencyName} (ইউমিরা নিহোঙ্গো গাক্কো)</span>
               <span>•</span>
