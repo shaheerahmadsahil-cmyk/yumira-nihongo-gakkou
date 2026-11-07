@@ -3,18 +3,11 @@ import prisma from "@/lib/db";
 import { PracticeSheetPDF } from "@/components/learning/PracticeSheetPDF";
 
 export const metadata = {
-  title: "Free Hiragana & Katakana Practice Sheet (PDF Printable) | Yumira Nihongo Gakkou",
-  description: "Download official free Japanese Hiragana and Katakana writing practice sheets (PDF) with stroke order guide, pronunciation, and writing grids from Yumira Nihongo Gakkou.",
+  title: "Official Hiragana & Katakana Chart (Free Printable PDF) | Yumira Nihongo Gakkou",
+  description: "Download official free Japanese Hiragana and Katakana complete study charts (PDF) with pronunciation and dakuten variations from Yumira Nihongo Gakkou.",
 };
 
-export default async function PracticeSheetsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ type?: string }>;
-}) {
-  const resolvedParams = await searchParams;
-  const initialType = resolvedParams?.type === "katakana" ? "katakana" : "hiragana";
-
+export default async function PracticeSheetsPage() {
   let settings: Record<string, string> = {
     agency_name: "Yumira Nihongo Gakkou",
     agency_phone: "+880 1341-017323",
@@ -32,5 +25,5 @@ export default async function PracticeSheetsPage({
     }
   } catch {}
 
-  return <PracticeSheetPDF initialType={initialType} settings={settings} />;
+  return <PracticeSheetPDF settings={settings} />;
 }

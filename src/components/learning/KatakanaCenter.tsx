@@ -67,11 +67,11 @@ export function KatakanaCenter({ characters }: { characters: KanaCharacter[] }) 
           {/* Free PDF Practice Sheet Download Banner */}
           <div className="pt-2">
             <Link
-              href="/practice-sheets?type=katakana"
+              href="/practice-sheets"
               className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-2xl bg-navy-50 hover:bg-navy-100 border border-navy-200 text-navy-900 font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <FileText className="w-4 h-4 text-japanRed-600 animate-pulse" />
-              <span>🎁 ফ্রি কাতাকানা প্র্যাকটিস শিট (PDF) ডাউনলোড করুন</span>
+              <span>🎁 ফ্রি কাতাকানা ও হিরাগানা শিট (PDF) ডাউনলোড করুন</span>
               <span className="text-[10px] bg-navy-900 text-white px-2 py-0.5 rounded-full font-sans uppercase">
                 Free Printable
               </span>

@@ -300,25 +300,17 @@ export function LearningPreview() {
               অফিশিয়াল হিরাগানা ও কাতাকানা প্র্যাকটিস শিট (PDF)
             </h3>
             <p className="text-xs sm:text-sm text-gray-300 max-w-xl">
-              ইউমিরা নিহোঙ্গো গাক্কো-র নাম, লোগো, ওয়েবসাইট ও হেল্পলাইনসহ সকল ৪৬টি মৌলিক বর্ণ ও লেখার প্র্যাকটিস গ্রিড সংবলিত ফ্রি শিট ডাউনলোড বা প্রিন্ট করুন।
+              ইউমিরা নিহোঙ্গো গাক্কো-র নাম, লোগো, ওয়েবসাইট ও হেল্পলাইনসহ সকল ৪৬টি মৌলিক বর্ণ ও দাকুতেন চার্টসংবলিত ফুল প্র্যাকটিস শিট ডাউনলোড বা প্রিন্ট করুন।
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0 z-10 w-full md:w-auto">
+          <div className="flex items-center justify-center shrink-0 z-10 w-full md:w-auto">
             <Link
-              href="/practice-sheets?type=hiragana"
-              className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 active:scale-95"
+              href="/practice-sheets"
+              className="w-full md:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-bold text-xs sm:text-sm shadow-lg shadow-japanRed-600/40 transition-all hover:scale-105 active:scale-95"
             >
               <FileText className="w-4 h-4" />
-              <span>হিরাগানা শিট PDF</span>
-            </Link>
-
-            <Link
-              href="/practice-sheets?type=katakana"
-              className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-washi-100 text-navy-900 font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 active:scale-95"
-            >
-              <Download className="w-4 h-4 text-japanRed-600" />
-              <span>কাতাকানা শিট PDF</span>
+              <span>ফ্রি সম্পূর্ণ শিট PDF (হিরাগানা ও কাতাকানা একসাথে)</span>
             </Link>
           </div>
         </motion.div>

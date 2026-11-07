@@ -126,6 +126,20 @@ ruby > rt {
     opacity: 0 !important;
   }
 
+  .pdf-sheet-page {
+    page-break-after: always !important;
+    break-after: page !important;
+    border: 4px solid #dc2626 !important;
+    outline: 2px solid #f59e0b !important;
+    outline-offset: -6px !important;
+    box-sizing: border-box !important;
+  }
+
+  .pdf-sheet-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
   ruby rt {
     display: none !important;
   }

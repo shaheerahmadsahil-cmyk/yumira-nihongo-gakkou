@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Printer, Download, ArrowLeft, Check, Sparkles, Globe, Phone, MapPin, BookOpen } from "lucide-react";
+import { Printer, ArrowLeft, Sparkles, Globe, Phone, MapPin, BookOpen, Check } from "lucide-react";
 
 interface PracticeSheetPDFProps {
   initialType?: "hiragana" | "katakana";
@@ -16,7 +16,7 @@ interface PracticeSheetPDFProps {
   };
 }
 
-// 46 Basic Characters Gojuon Chart
+// 46 Basic Hiragana
 const HIRAGANA_GRID = [
   { row: "Vowels (স্বরধ্বনি)", chars: [
     { kana: "あ", romaji: "a", bn: "আ" },
@@ -90,6 +90,7 @@ const HIRAGANA_GRID = [
   ]},
 ];
 
+// 46 Basic Katakana
 const KATAKANA_GRID = [
   { row: "Vowels (স্বরধ্বনি)", chars: [
     { kana: "ア", romaji: "a", bn: "আ" },
@@ -163,7 +164,7 @@ const KATAKANA_GRID = [
   ]},
 ];
 
-// Dakuten & Handakuten (ভ্যারিয়েশন)
+// Hiragana Dakuten
 const HIRAGANA_DAKUTEN = [
   { line: "G-Line (গ)", chars: [
     { kana: "が", romaji: "ga", bn: "গা" },
@@ -202,6 +203,7 @@ const HIRAGANA_DAKUTEN = [
   ]},
 ];
 
+// Katakana Dakuten
 const KATAKANA_DAKUTEN = [
   { line: "G-Line (গ)", chars: [
     { kana: "ガ", romaji: "ga", bn: "গা" },
@@ -240,9 +242,7 @@ const KATAKANA_DAKUTEN = [
   ]},
 ];
 
-export function PracticeSheetPDF({ initialType = "hiragana", settings }: PracticeSheetPDFProps) {
-  const [sheetType, setSheetType] = useState<"hiragana" | "katakana">(initialType);
-
+export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
   const agencyName = settings?.agency_name || "Yumira Nihongo Gakkou";
   const agencyPhone = settings?.agency_phone || "+880 1341-017323";
   const agencyAddress = settings?.agency_address || "Level 4, Tokyo Tower Complex, Banani C/A, Dhaka 1213";
@@ -254,354 +254,424 @@ export function PracticeSheetPDF({ initialType = "hiragana", settings }: Practic
     }
   };
 
-  const isHiragana = sheetType === "hiragana";
-  const gridData = isHiragana ? HIRAGANA_GRID : KATAKANA_GRID;
-  const dakutenData = isHiragana ? HIRAGANA_DAKUTEN : KATAKANA_DAKUTEN;
-
   return (
-    <div className="min-h-screen bg-slate-100 py-6 sm:py-10 text-navy-900 print:p-0 print:m-0 print:bg-white print:min-h-0">
+    <div className="min-h-screen bg-slate-100 py-6 sm:py-8 text-navy-900 print:p-0 print:m-0 print:bg-white print:min-h-0">
       {/* ============================================================== */}
-      {/* 1. TOP SCREEN TOOLBAR (AUTOMATICALLY HIDDEN DURING PRINT/PDF)    */}
+      {/* 1. TOP TOOLBAR (AUTOMATICALLY HIDDEN DURING PRINT / PDF)       */}
       {/* ============================================================== */}
       <div className="max-w-4xl mx-auto px-4 mb-6 print:hidden">
         <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Link
-              href={isHiragana ? "/hiragana" : "/katakana"}
+              href="/hiragana"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>ফিরে যান</span>
+              <span>লার্নিং সেন্টারে ফিরুন</span>
             </Link>
 
-            {/* Type Switcher */}
-            <div className="inline-flex p-1 bg-slate-100 rounded-xl">
-              <button
-                onClick={() => setSheetType("hiragana")}
-                className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${
-                  isHiragana
-                    ? "bg-japanRed-600 text-white shadow-sm"
-                    : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                হিরাগানা শিট (Hiragana)
-              </button>
-              <button
-                onClick={() => setSheetType("katakana")}
-                className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${
-                  !isHiragana
-                    ? "bg-navy-900 text-white shadow-sm"
-                    : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                কাতাকানা শিট (Katakana)
-              </button>
-            </div>
+            <span className="text-xs font-semibold text-slate-600 hidden sm:inline">
+              এক পিডিএফ-এ ২ পৃষ্ঠা: <strong>পৃষ্ঠা ১ (হিরাগানা)</strong> • <strong>পৃষ্ঠা ২ (কাতাকানা)</strong>
+            </span>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <button
-              onClick={handlePrint}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-japanRed-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <Printer className="w-4 h-4" />
-              <span>PDF ডাউনলোড / প্রিন্ট করুন</span>
-            </button>
-          </div>
+          <button
+            onClick={handlePrint}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-japanRed-600 hover:bg-japanRed-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-japanRed-600/30 transition-all hover:scale-105 active:scale-95"
+          >
+            <Printer className="w-4 h-4" />
+            <span>PDF ডাউনলোড / প্রিন্ট করুন (২ পৃষ্ঠা একসাথে)</span>
+          </button>
         </div>
 
-        {/* Helpful Tip for Saving as PDF */}
-        <div className="mt-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-start gap-2 shadow-xs">
-          <Sparkles className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+        {/* Tip */}
+        <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-start gap-2 shadow-xs">
+          <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
           <div>
-            <strong>💡 PDF হিসেবে সেভ করার সহজ নিয়ম:</strong> উপরের <strong>"PDF ডাউনলোড / প্রিন্ট করুন"</strong> বাটনে ক্লিক করলে আপনার ব্রাউজারের প্রিন্ট উইন্ডো খুলবে। সেখানে <em>Destination</em> ড্রপডাউন থেকে <strong>"Save as PDF"</strong> বা <strong>"পিডিএফ হিসেবে সংরক্ষণ"</strong> নির্বাচন করে <em>Save</em> চাপুন। পুরো শিটটি অফিশিয়াল লোগো, নাম, সাইট ও নাম্বারসহ আপনার ফোনে বা কম্পিউটারে সেভ হয়ে যাবে।
+            <strong>💡 নির্দেশিকা:</strong> <strong>"PDF ডাউনলোড / প্রিন্ট করুন"</strong> বাটনে চাপ দিলে ১টি পিডিএফ ডকুমেন্টে <strong>২টি পৃষ্ঠায় হিরাগানা ও কাতাকানা</strong> সুন্দর বর্ডারসহ চলে আসবে। প্রিন্ট পপ-আপে <em>Destination</em> ড্রপডাউন থেকে <strong>"Save as PDF"</strong> সিলেক্ট করে সেভ করুন।
           </div>
         </div>
       </div>
 
       {/* ============================================================== */}
-      {/* 2. THE OFFICIAL PRACTICE SHEET (A4 PRINT & PDF READY)          */}
+      {/* 2. THE COMPLETE TWO-PAGE PDF DOCUMENT                          */}
       {/* ============================================================== */}
-      <div className="max-w-[210mm] mx-auto bg-white shadow-2xl print:shadow-none border border-slate-300 print:border-none rounded-none sm:rounded-2xl print:rounded-none overflow-hidden p-6 sm:p-10 print:p-4 print:max-w-none">
+      <div className="max-w-[210mm] mx-auto space-y-8 print:space-y-0 print:max-w-none">
         
         {/* ============================================================ */}
-        {/* A. HEADER: INSTITUTION NAME, LOGO, SITE ADDRESS & NUMBER     */}
+        {/* PAGE 1: HIRAGANA (ひらがな)                                   */}
         {/* ============================================================ */}
-        <div className="border-b-2 border-japanRed-600 pb-4 mb-4 relative">
-          <div className="flex items-center justify-between gap-4">
-            {/* Left: Logo & Names */}
-            <div className="flex items-center gap-3.5">
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden border-2 border-amber-300 bg-white shadow-sm shrink-0">
-                <Image
-                  src="/images/yumira-logo.jpg"
-                  alt="Yumira Nihongo Gakkou"
-                  fill
-                  sizes="64px"
-                  className="object-cover object-center"
-                  priority
-                />
-              </div>
-
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-xl sm:text-2xl font-extrabold text-navy-900 tracking-tight leading-tight">
-                    {agencyName}
-                  </h1>
-                  <span className="font-japanese text-sm sm:text-base font-bold text-japanRed-600">
-                    ユミラ日本語学校
-                  </span>
-                </div>
-                <p className="text-[11px] sm:text-xs text-amber-700 font-semibold tracking-wide uppercase">
-                  জাপানিজ ল্যাঙ্গুয়েজ একাডেমি • স্বপ্ন ও ভবিষ্যৎ (Dream • Grow • Achieve)
-                </p>
-                <div className="text-[10px] text-gray-500 font-medium">
-                  JLPT N5, N4, N3, JFT-Basic & জাপান স্টুডেন্ট/SSW ভিসা কনসালটেন্সি
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Site Address, Phone & Hanko Seal */}
-            <div className="flex items-center gap-3 text-right">
-              <div className="space-y-1 text-[10px] sm:text-[11px] text-gray-700">
-                <div className="flex items-center justify-end gap-1 font-semibold text-japanRed-700">
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>{siteUrl}</span>
-                </div>
-                <div className="flex items-center justify-end gap-1 font-bold text-navy-900">
-                  <Phone className="w-3.5 h-3.5 text-japanRed-600" />
-                  <span>হেল্পলাইন: {agencyPhone}</span>
-                </div>
-                <div className="flex items-center justify-end gap-1 text-[9px] sm:text-[10px] text-gray-500">
-                  <MapPin className="w-3 h-3 text-gray-400" />
-                  <span className="truncate max-w-[210px]">{agencyAddress}</span>
-                </div>
-              </div>
-
-              {/* Japanese Official Red Hanko Stamp */}
-              <div className="w-12 h-12 rounded-xl border-2 border-japanRed-600 bg-japanRed-50 flex flex-col items-center justify-center font-japanese text-[10px] font-bold text-japanRed-700 rotate-3 shrink-0 shadow-xs">
-                <span>ユミラ</span>
-                <span>認定</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Sub-header Banner */}
-          <div className="mt-3 py-1.5 px-3 bg-japanRed-50 border border-japanRed-200 rounded-lg flex items-center justify-between text-xs">
-            <span className="font-bold text-japanRed-700 uppercase tracking-wide">
-              {isHiragana
-                ? "★ অফিশিয়াল জাপানিজ হিরাগানা (ひらがな) চার্ট ও প্র্যাকটিস শিট"
-                : "★ অফিশিয়াল জাপানিজ কাতাকানা (カタカナ) চার্ট ও প্র্যাকটিস শিট"}
-            </span>
-            <span className="text-[10px] font-semibold text-gray-600 bg-white px-2 py-0.5 rounded border border-gray-200">
-              ফ্রি স্টুডেন্ট এডুকেশন সংস্করণ • Free Printable PDF
-            </span>
-          </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* B. SECTION 1: 46 BASIC CHARACTERS (GOJUON TABLE)             */}
-        {/* ============================================================ */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xs sm:text-sm font-bold text-navy-900 flex items-center gap-1.5">
-              <BookOpen className="w-4 h-4 text-japanRed-600" />
-              <span>১. মূল ৪৬টি বর্ণমালার পূর্ণ ছক (Gojuon - ৫০ ধ্বনি)</span>
-            </h2>
-            <span className="text-[10px] text-gray-500">
-              উচ্চারণ ও রোমাজি সহ মুখস্থ ও পড়ার গাইড
-            </span>
-          </div>
-
-          <div className="border border-slate-300 rounded-lg overflow-hidden text-center">
-            {/* Table Header Columns (A, I, U, E, O) */}
-            <div className="grid grid-cols-6 bg-navy-900 text-white text-[11px] font-bold py-1.5 border-b border-navy-800">
-              <div>লাইন (Line)</div>
-              <div>- a (আ)</div>
-              <div>- i (ই)</div>
-              <div>- u (উ)</div>
-              <div>- e (এ)</div>
-              <div>- o (ও)</div>
-            </div>
-
-            {/* Grid Rows */}
-            {gridData.map((rowItem, rIdx) => (
-              <div
-                key={rIdx}
-                className={`grid grid-cols-6 text-xs border-b border-slate-200 last:border-b-0 items-center ${
-                  rIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
-                }`}
-              >
-                {/* Row Label */}
-                <div className="py-1 px-1 font-semibold text-[10px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
-                  {rowItem.row}
+        <div className="pdf-sheet-page bg-white shadow-xl print:shadow-none p-5 sm:p-7 print:p-4 rounded-xl print:rounded-none relative border-4 border-japanRed-600 outline outline-2 outline-amber-500 outline-offset-[-6px] print:break-after-page" style={{ pageBreakAfter: "always", breakAfter: "page" }}>
+          
+          {/* Header */}
+          <div className="border-b-2 border-japanRed-600 pb-3 mb-3">
+            <div className="flex items-center justify-between gap-3">
+              {/* Left: Logo & Names */}
+              <div className="flex items-center gap-3">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-amber-400 bg-white shadow-sm shrink-0">
+                  <Image
+                    src="/images/yumira-logo.jpg"
+                    alt="Yumira Nihongo Gakkou"
+                    fill
+                    sizes="56px"
+                    className="object-cover object-center"
+                    priority
+                  />
                 </div>
 
-                {/* 5 Character Cells */}
-                {rowItem.chars.map((c, cIdx) => (
-                  <div
-                    key={cIdx}
-                    className="py-1.5 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[46px]"
-                  >
-                    {c.kana ? (
-                      <>
-                        <span className="font-japanese text-xl sm:text-2xl font-bold text-navy-900 leading-none">
-                          {c.kana}
-                        </span>
-                        <div className="flex items-center gap-1 mt-0.5 text-[10px] text-gray-600 font-medium">
-                          <span className="font-mono font-bold text-japanRed-600">{c.romaji}</span>
-                          <span className="text-gray-400">({c.bn})</span>
-                        </div>
-                      </>
-                    ) : (
-                      <span className="text-gray-300">—</span>
-                    )}
+                <div>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <h1 className="text-lg sm:text-xl font-black text-navy-900 tracking-tight leading-tight">
+                      {agencyName}
+                    </h1>
+                    <span className="font-japanese text-xs sm:text-sm font-bold text-japanRed-600">
+                      ユミラ日本語学校
+                    </span>
                   </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* C. SECTION 2: GENKOUYOUSHI PRACTICE GRID (WRITING BOXES)     */}
-        {/* ============================================================ */}
-        <div className="mb-6 print:break-inside-avoid">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xs sm:text-sm font-bold text-navy-900 flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-japanRed-600" />
-              <span>২. বর্ণ লেখার প্র্যাকটিস গ্রিড (Handwriting & Stroke Practice Grid)</span>
-            </h2>
-            <span className="text-[10px] text-gray-500">
-              প্রিন্ট করে পেনসিল দিয়ে প্রতিটি ঘরে লিখে অনুশীলন করুন
-            </span>
-          </div>
-
-          <div className="border border-slate-300 rounded-lg p-2.5 bg-slate-50/50">
-            <div className="grid grid-cols-5 sm:grid-cols-5 gap-2 text-center">
-              {[
-                { label: "あ / ア", sub: "Vowels" },
-                { label: "か / カ", sub: "K-Line" },
-                { label: "さ / サ", sub: "S-Line" },
-                { label: "た / タ", sub: "T-Line" },
-                { label: "な / ナ", sub: "N-Line" },
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white border border-slate-300 rounded p-1.5 flex flex-col items-center">
-                  <div className="text-[11px] font-bold text-navy-900 mb-1">{item.label}</div>
-                  {/* Practice writing boxes with dotted center crosshair */}
-                  <div className="flex gap-1">
-                    {[1, 2, 3].map((box) => (
-                      <div
-                        key={box}
-                        className="w-7 h-7 sm:w-8 sm:h-8 border border-dashed border-slate-400 rounded-sm relative flex items-center justify-center bg-white"
-                      >
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <div className="w-full h-[0.5px] bg-slate-200" />
-                          <div className="h-full w-[0.5px] bg-slate-200 absolute" />
-                        </div>
-                      </div>
-                    ))}
+                  <p className="text-[10px] text-amber-700 font-semibold tracking-wide uppercase">
+                    জাপানিজ ল্যাঙ্গুয়েজ একাডেমি • স্বপ্ন ও ভবিষ্যৎ (Dream • Grow • Achieve)
+                  </p>
+                  <div className="text-[9px] text-gray-500 font-medium">
+                    JLPT N5, N4, N3, JFT-Basic & জাপান স্টুডেন্ট/SSW ভিসা কনসালটেন্সি
                   </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Right: Site, Phone & Hanko Stamp */}
+              <div className="flex items-center gap-2.5 text-right">
+                <div className="space-y-0.5 text-[9px] sm:text-[10px] text-gray-700">
+                  <div className="flex items-center justify-end gap-1 font-semibold text-japanRed-700">
+                    <Globe className="w-3 h-3" />
+                    <span>{siteUrl}</span>
+                  </div>
+                  <div className="flex items-center justify-end gap-1 font-bold text-navy-900">
+                    <Phone className="w-3 h-3 text-japanRed-600" />
+                    <span>হেল্পলাইন: {agencyPhone}</span>
+                  </div>
+                  <div className="flex items-center justify-end gap-1 text-[8px] sm:text-[9px] text-gray-500">
+                    <MapPin className="w-2.5 h-2.5 text-gray-400" />
+                    <span className="truncate max-w-[190px]">{agencyAddress}</span>
+                  </div>
+                </div>
+
+                <div className="w-10 h-10 rounded-lg border-2 border-japanRed-600 bg-japanRed-50 flex flex-col items-center justify-center font-japanese text-[9px] font-bold text-japanRed-700 rotate-2 shrink-0">
+                  <span>ユミラ</span>
+                  <span>認定</span>
+                </div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-5 sm:grid-cols-5 gap-2 text-center mt-2">
-              {[
-                { label: "は / ハ", sub: "H-Line" },
-                { label: "ま / マ", sub: "M-Line" },
-                { label: "や / ヤ", sub: "Y-Line" },
-                { label: "ら / ラ", sub: "R-Line" },
-                { label: "わ / ワ", sub: "W/N-Line" },
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white border border-slate-300 rounded p-1.5 flex flex-col items-center">
-                  <div className="text-[11px] font-bold text-navy-900 mb-1">{item.label}</div>
-                  {/* Practice writing boxes with dotted center crosshair */}
-                  <div className="flex gap-1">
-                    {[1, 2, 3].map((box) => (
-                      <div
-                        key={box}
-                        className="w-7 h-7 sm:w-8 sm:h-8 border border-dashed border-slate-400 rounded-sm relative flex items-center justify-center bg-white"
-                      >
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <div className="w-full h-[0.5px] bg-slate-200" />
-                          <div className="h-full w-[0.5px] bg-slate-200 absolute" />
-                        </div>
-                      </div>
-                    ))}
+            {/* Page Title Bar */}
+            <div className="mt-2.5 py-1 px-3 bg-japanRed-50 border border-japanRed-200 rounded-md flex items-center justify-between text-[11px]">
+              <span className="font-bold text-japanRed-700 uppercase tracking-wide flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>পৃষ্ঠা ১: জাপানিজ হিরাগানা (ひらがな) চার্ট ও উচ্চারণ নির্দেশিকা</span>
+              </span>
+              <span className="text-[9px] font-semibold text-gray-600 bg-white px-2 py-0.5 rounded border border-gray-200">
+                Page 1 of 2 • Hiragana
+              </span>
+            </div>
+          </div>
+
+          {/* Section 1: 46 Basic Characters Gojuon Table */}
+          <div className="mb-4">
+            <div className="border border-slate-300 rounded-lg overflow-hidden text-center">
+              <div className="grid grid-cols-6 bg-navy-900 text-white text-[10px] font-bold py-1 border-b border-navy-800">
+                <div>ধ্বনি লাইন</div>
+                <div>- a (আ)</div>
+                <div>- i (ই)</div>
+                <div>- u (উ)</div>
+                <div>- e (এ)</div>
+                <div>- o (ও)</div>
+              </div>
+
+              {HIRAGANA_GRID.map((rowItem, rIdx) => (
+                <div
+                  key={rIdx}
+                  className={`grid grid-cols-6 text-xs border-b border-slate-200 last:border-b-0 items-center ${
+                    rIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                  }`}
+                >
+                  <div className="py-1 px-1 font-semibold text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
+                    {rowItem.row}
                   </div>
+
+                  {rowItem.chars.map((c, cIdx) => (
+                    <div
+                      key={cIdx}
+                      className="py-1 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[40px]"
+                    >
+                      {c.kana ? (
+                        <>
+                          <span className="font-japanese text-xl font-bold text-navy-900 leading-none">
+                            {c.kana}
+                          </span>
+                          <div className="flex items-center gap-1 mt-0.5 text-[9px] text-gray-600 font-medium">
+                            <span className="font-mono font-bold text-japanRed-600">{c.romaji}</span>
+                            <span className="text-gray-400">({c.bn})</span>
+                          </div>
+                        </>
+                      ) : (
+                        <span className="text-gray-300">—</span>
+                      )}
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* ============================================================ */}
-        {/* D. SECTION 3: DAKUTEN & HANDAKUTEN (VARIATION CHART)         */}
-        {/* ============================================================ */}
-        <div className="mb-6 print:break-inside-avoid">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xs sm:text-sm font-bold text-navy-900 flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-emerald-600" />
-              <span>৩. দাকুতেন ও হান্দাকুতেন ভ্যারিয়েশন (Dakuten & Handakuten)</span>
-            </h2>
-            <span className="text-[10px] text-gray-500">
-              তেনতেন ( ゛ ) ও মারু ( ゜ ) যোগে গঠিত নতুন ধ্বনি
-            </span>
-          </div>
-
-          <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
-            <div className="grid grid-cols-6 bg-slate-800 text-white text-[10px] font-bold py-1">
-              <div>লাইন</div>
-              <div>- a</div>
-              <div>- i</div>
-              <div>- u</div>
-              <div>- e</div>
-              <div>- o</div>
+          {/* Section 2: Dakuten & Handakuten Table */}
+          <div className="mb-3">
+            <div className="flex items-center justify-between mb-1.5">
+              <h2 className="text-[11px] font-bold text-navy-900 flex items-center gap-1">
+                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <span>দাকুতেন ও হান্দাকুতেন ভ্যারিয়েশন (Dakuten & Handakuten)</span>
+              </h2>
+              <span className="text-[9px] text-gray-500">
+                তেনতেন ( ゛ ) ও মারু ( ゜ ) যোগে গঠিত নতুন ধ্বনি
+              </span>
             </div>
 
-            {dakutenData.map((dRow, dIdx) => (
-              <div
-                key={dIdx}
-                className={`grid grid-cols-6 border-b border-slate-200 last:border-b-0 items-center ${
-                  dIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
-                }`}
-              >
-                <div className="py-1 px-1 font-semibold text-[10px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
-                  {dRow.line}
-                </div>
-                {dRow.chars.map((dc, dcIdx) => (
-                  <div
-                    key={dcIdx}
-                    className="py-1 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center"
-                  >
-                    <span className="font-japanese text-lg font-bold text-navy-900 leading-none">
-                      {dc.kana}
-                    </span>
-                    <span className="text-[9px] text-gray-500 font-mono mt-0.5">
-                      {dc.romaji} ({dc.bn})
-                    </span>
-                  </div>
-                ))}
+            <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
+              <div className="grid grid-cols-6 bg-slate-800 text-white text-[9px] font-bold py-0.5">
+                <div>লাইন</div>
+                <div>- a</div>
+                <div>- i</div>
+                <div>- u</div>
+                <div>- e</div>
+                <div>- o</div>
               </div>
-            ))}
+
+              {HIRAGANA_DAKUTEN.map((dRow, dIdx) => (
+                <div
+                  key={dIdx}
+                  className={`grid grid-cols-6 border-b border-slate-200 last:border-b-0 items-center ${
+                    dIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                  }`}
+                >
+                  <div className="py-1 px-1 font-semibold text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
+                    {dRow.line}
+                  </div>
+                  {dRow.chars.map((dc, dcIdx) => (
+                    <div
+                      key={dcIdx}
+                      className="py-0.5 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[34px]"
+                    >
+                      <span className="font-japanese text-base font-bold text-navy-900 leading-none">
+                        {dc.kana}
+                      </span>
+                      <span className="text-[8px] text-gray-500 font-mono">
+                        {dc.romaji} ({dc.bn})
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Page 1 Footer */}
+          <div className="pt-2 border-t-2 border-japanRed-600 text-center text-[9px] text-gray-600 space-y-0.5">
+            <div className="font-bold text-navy-900 flex flex-wrap items-center justify-center gap-2">
+              <span>{agencyName} (ইউমিরা নিহোঙ্গো গাক্কো)</span>
+              <span>•</span>
+              <span className="text-japanRed-600">ভর্তি ও ক্যারিয়ার হটলাইন: {agencyPhone}</span>
+              <span>•</span>
+              <span className="text-slate-700">ওয়েবসাইট: {siteUrl}</span>
+            </div>
+            <p className="text-[8px] text-gray-500">
+              © {new Date().getFullYear()} {agencyName}. সর্বস্বত্ব সংরক্ষিত। শিক্ষার্থীদের পড়ার সুবিধার্থে বিনামূল্যে সরবরাহকৃত।
+            </p>
           </div>
         </div>
 
         {/* ============================================================ */}
-        {/* E. FOOTER: OFFICIAL INSTITUTION CONTACT & SCHOLARSHIP NOTE   */}
+        {/* PAGE 2: KATAKANA (カタカナ)                                   */}
         {/* ============================================================ */}
-        <div className="pt-3 border-t-2 border-japanRed-600 text-center text-[10px] sm:text-[11px] text-gray-600 space-y-1">
-          <div className="font-bold text-navy-900 flex flex-wrap items-center justify-center gap-2">
-            <span>{agencyName} (ইউমিরা নিহোঙ্গো গাক্কো)</span>
-            <span>•</span>
-            <span className="text-japanRed-600">ভর্তি ও ক্যারিয়ার হটলাইন: {agencyPhone}</span>
-            <span>•</span>
-            <span className="text-slate-700">ওয়েবসাইট: {siteUrl}</span>
+        <div className="pdf-sheet-page bg-white shadow-xl print:shadow-none p-5 sm:p-7 print:p-4 rounded-xl print:rounded-none relative border-4 border-japanRed-600 outline outline-2 outline-amber-500 outline-offset-[-6px] print:break-before-page" style={{ pageBreakBefore: "always", breakBefore: "page" }}>
+          
+          {/* Header */}
+          <div className="border-b-2 border-japanRed-600 pb-3 mb-3">
+            <div className="flex items-center justify-between gap-3">
+              {/* Left: Logo & Names */}
+              <div className="flex items-center gap-3">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-amber-400 bg-white shadow-sm shrink-0">
+                  <Image
+                    src="/images/yumira-logo.jpg"
+                    alt="Yumira Nihongo Gakkou"
+                    fill
+                    sizes="56px"
+                    className="object-cover object-center"
+                    priority
+                  />
+                </div>
+
+                <div>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <h1 className="text-lg sm:text-xl font-black text-navy-900 tracking-tight leading-tight">
+                      {agencyName}
+                    </h1>
+                    <span className="font-japanese text-xs sm:text-sm font-bold text-japanRed-600">
+                      ユミラ日本語学校
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-amber-700 font-semibold tracking-wide uppercase">
+                    জাপানিজ ল্যাঙ্গুয়েজ একাডেমি • স্বপ্ন ও ভবিষ্যৎ (Dream • Grow • Achieve)
+                  </p>
+                  <div className="text-[9px] text-gray-500 font-medium">
+                    JLPT N5, N4, N3, JFT-Basic & জাপান স্টুডেন্ট/SSW ভিসা কনসালটেন্সি
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Site, Phone & Hanko Stamp */}
+              <div className="flex items-center gap-2.5 text-right">
+                <div className="space-y-0.5 text-[9px] sm:text-[10px] text-gray-700">
+                  <div className="flex items-center justify-end gap-1 font-semibold text-japanRed-700">
+                    <Globe className="w-3 h-3" />
+                    <span>{siteUrl}</span>
+                  </div>
+                  <div className="flex items-center justify-end gap-1 font-bold text-navy-900">
+                    <Phone className="w-3 h-3 text-japanRed-600" />
+                    <span>হেল্পলাইন: {agencyPhone}</span>
+                  </div>
+                  <div className="flex items-center justify-end gap-1 text-[8px] sm:text-[9px] text-gray-500">
+                    <MapPin className="w-2.5 h-2.5 text-gray-400" />
+                    <span className="truncate max-w-[190px]">{agencyAddress}</span>
+                  </div>
+                </div>
+
+                <div className="w-10 h-10 rounded-lg border-2 border-japanRed-600 bg-japanRed-50 flex flex-col items-center justify-center font-japanese text-[9px] font-bold text-japanRed-700 rotate-2 shrink-0">
+                  <span>ユミラ</span>
+                  <span>認定</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Page Title Bar */}
+            <div className="mt-2.5 py-1 px-3 bg-navy-50 border border-navy-200 rounded-md flex items-center justify-between text-[11px]">
+              <span className="font-bold text-navy-900 uppercase tracking-wide flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-japanRed-600" />
+                <span>পৃষ্ঠা ২: জাপানিজ কাতাকানা (カタカナ) চার্ট ও উচ্চারণ নির্দেশিকা</span>
+              </span>
+              <span className="text-[9px] font-semibold text-gray-600 bg-white px-2 py-0.5 rounded border border-gray-200">
+                Page 2 of 2 • Katakana
+              </span>
+            </div>
           </div>
-          <p className="text-[9px] sm:text-[10px] text-gray-500">
-            © {new Date().getFullYear()} {agencyName}. সর্বস্বত্ব সংরক্ষিত। শিক্ষার্থীদের পড়ার সুবিধার্থে বিনামূল্যে সরবরাহকৃত।
-          </p>
+
+          {/* Section 1: 46 Basic Katakana Gojuon Table */}
+          <div className="mb-4">
+            <div className="border border-slate-300 rounded-lg overflow-hidden text-center">
+              <div className="grid grid-cols-6 bg-navy-900 text-white text-[10px] font-bold py-1 border-b border-navy-800">
+                <div>ধ্বনি লাইন</div>
+                <div>- a (আ)</div>
+                <div>- i (ই)</div>
+                <div>- u (উ)</div>
+                <div>- e (এ)</div>
+                <div>- o (ও)</div>
+              </div>
+
+              {KATAKANA_GRID.map((rowItem, rIdx) => (
+                <div
+                  key={rIdx}
+                  className={`grid grid-cols-6 text-xs border-b border-slate-200 last:border-b-0 items-center ${
+                    rIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                  }`}
+                >
+                  <div className="py-1 px-1 font-semibold text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
+                    {rowItem.row}
+                  </div>
+
+                  {rowItem.chars.map((c, cIdx) => (
+                    <div
+                      key={cIdx}
+                      className="py-1 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[40px]"
+                    >
+                      {c.kana ? (
+                        <>
+                          <span className="font-japanese text-xl font-bold text-navy-900 leading-none">
+                            {c.kana}
+                          </span>
+                          <div className="flex items-center gap-1 mt-0.5 text-[9px] text-gray-600 font-medium">
+                            <span className="font-mono font-bold text-japanRed-600">{c.romaji}</span>
+                            <span className="text-gray-400">({c.bn})</span>
+                          </div>
+                        </>
+                      ) : (
+                        <span className="text-gray-300">—</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 2: Dakuten & Handakuten Table */}
+          <div className="mb-3">
+            <div className="flex items-center justify-between mb-1.5">
+              <h2 className="text-[11px] font-bold text-navy-900 flex items-center gap-1">
+                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <span>দাকুতেন ও হান্দাকুতেন ভ্যারিয়েশন (Dakuten & Handakuten)</span>
+              </h2>
+              <span className="text-[9px] text-gray-500">
+                বিদেশি শব্দ ও ঋণশব্দে ব্যবহৃত পরিবর্তিত ধ্বনি
+              </span>
+            </div>
+
+            <div className="border border-slate-300 rounded-lg overflow-hidden text-center text-xs">
+              <div className="grid grid-cols-6 bg-slate-800 text-white text-[9px] font-bold py-0.5">
+                <div>লাইন</div>
+                <div>- a</div>
+                <div>- i</div>
+                <div>- u</div>
+                <div>- e</div>
+                <div>- o</div>
+              </div>
+
+              {KATAKANA_DAKUTEN.map((dRow, dIdx) => (
+                <div
+                  key={dIdx}
+                  className={`grid grid-cols-6 border-b border-slate-200 last:border-b-0 items-center ${
+                    dIdx % 2 === 0 ? "bg-white" : "bg-slate-50/70"
+                  }`}
+                >
+                  <div className="py-1 px-1 font-semibold text-[9px] text-slate-700 bg-slate-100 border-r border-slate-200 text-left pl-2">
+                    {dRow.line}
+                  </div>
+                  {dRow.chars.map((dc, dcIdx) => (
+                    <div
+                      key={dcIdx}
+                      className="py-0.5 px-1 border-r border-slate-200 last:border-r-0 flex flex-col items-center justify-center min-h-[34px]"
+                    >
+                      <span className="font-japanese text-base font-bold text-navy-900 leading-none">
+                        {dc.kana}
+                      </span>
+                      <span className="text-[8px] text-gray-500 font-mono">
+                        {dc.romaji} ({dc.bn})
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Page 2 Footer */}
+          <div className="pt-2 border-t-2 border-japanRed-600 text-center text-[9px] text-gray-600 space-y-0.5">
+            <div className="font-bold text-navy-900 flex flex-wrap items-center justify-center gap-2">
+              <span>{agencyName} (ইউমিরা নিহোঙ্গো গাক্কো)</span>
+              <span>•</span>
+              <span className="text-japanRed-600">ভর্তি ও ক্যারিয়ার হটলাইন: {agencyPhone}</span>
+              <span>•</span>
+              <span className="text-slate-700">ওয়েবসাইট: {siteUrl}</span>
+            </div>
+            <p className="text-[8px] text-gray-500">
+              © {new Date().getFullYear()} {agencyName}. সর্বস্বত্ব সংরক্ষিত। শিক্ষার্থীদের পড়ার সুবিধার্থে বিনামূল্যে সরবরাহকৃত।
+            </p>
+          </div>
         </div>
 
       </div>
