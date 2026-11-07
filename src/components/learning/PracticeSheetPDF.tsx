@@ -283,14 +283,6 @@ export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
             <span>PDF ডাউনলোড / প্রিন্ট করুন (২ পৃষ্ঠা একসাথে)</span>
           </button>
         </div>
-
-        {/* Tip */}
-        <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-start gap-2 shadow-xs">
-          <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-          <div>
-            <strong>💡 নির্দেশিকা:</strong> <strong>"PDF ডাউনলোড / প্রিন্ট করুন"</strong> বাটনে চাপ দিলে ১টি পিডিএফ ডকুমেন্টে <strong>২টি পৃষ্ঠায় হিরাগানা ও কাতাকানা</strong> সুন্দর বর্ডারসহ চলে আসবে। প্রিন্ট পপ-আপে <em>Destination</em> ড্রপডাউন থেকে <strong>"Save as PDF"</strong> সিলেক্ট করে সেভ করুন।
-          </div>
-        </div>
       </div>
 
       {/* ============================================================== */}
