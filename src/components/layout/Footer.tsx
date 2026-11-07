@@ -56,7 +56,7 @@ export function Footer({ settings }: FooterProps) {
   });
 
   return (
-    <footer className="relative bg-navy-950 text-gray-300 pt-10 sm:pt-16 pb-8 sm:pb-12 overflow-hidden border-t-2 border-japanRed-600">
+    <footer className="relative bg-navy-950 text-gray-300 pt-10 sm:pt-16 pb-8 sm:pb-12 overflow-hidden border-t-2 border-japanRed-600 print:hidden">
       {/* Background Japanese Watermark Pattern */}
       <div
         aria-hidden="true"

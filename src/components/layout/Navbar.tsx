@@ -76,7 +76,7 @@ export function Navbar({ whatsappNumber }: { whatsappNumber?: string }) {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+      className={`sticky top-0 z-40 w-full transition-all duration-300 print:hidden ${
         scrolled
           ? "bg-washi-50/95 backdrop-blur-md shadow-md border-b border-washi-200"
           : "bg-washi-50/80 backdrop-blur-sm border-b border-washi-200/60"

@@ -27,7 +27,7 @@ export function FloatingWhatsApp({ whatsappNumber }: { whatsappNumber?: string }
       initial={{ opacity: 0, scale: 0.8, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ delay: 1, duration: 0.5, type: "spring", stiffness: 300, damping: 20 }}
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-end gap-2.5 sm:gap-3 flex-col sm:flex-row-reverse"
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-end gap-2.5 sm:gap-3 flex-col sm:flex-row-reverse print:hidden"
     >
       {/* Floating Action Button with spring animation */}
       <motion.a
