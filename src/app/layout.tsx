@@ -48,7 +48,7 @@ async function getWebsiteSettings() {
       whatsapp_number: "8801341017323",
       agency_name: "Yumira Nihongo Gakkou",
       agency_phone: "+880 1341-017323",
-      agency_email: "admissions@yumira.com",
+      agency_address: "ঢাকা, বাংলাদেশ",
     };
   }
 }

@@ -42,10 +42,10 @@ export function Footer({ settings }: FooterProps) {
 
   const agencyName = settings?.agency_name || "Yumira Nihongo Gakkou";
   const phone = settings?.agency_phone || "+880 1341-017323";
-  const email = settings?.agency_email || "admissions@yumira.com";
+  const email = settings?.agency_email || "";
   const address =
     settings?.agency_address ||
-    "Level 4, Tokyo Tower Complex, Banani C/A, Dhaka 1213, Bangladesh";
+    "ঢাকা, বাংলাদেশ";
   const officeHours =
     settings?.office_hours || "Saturday – Thursday: 9:00 AM – 8:00 PM (Friday Closed)";
 
@@ -216,10 +216,6 @@ export function Footer({ settings }: FooterProps) {
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-japanRed-500 shrink-0" />
                 <span>{phone}</span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-japanRed-500 shrink-0" />
-                <span>{email}</span>
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock className="w-4 h-4 text-japanRed-500 shrink-0 mt-0.5" />

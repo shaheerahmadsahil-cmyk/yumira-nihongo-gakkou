@@ -11,8 +11,7 @@ export default async function PracticeSheetsPage() {
   let settings: Record<string, string> = {
     agency_name: "Yumira Nihongo Gakkou",
     agency_phone: "+880 1341-017323",
-    agency_email: "admissions@yumira.com",
-    agency_address: "Level 4, Tokyo Tower Complex, Banani C/A, Dhaka 1213",
+    agency_address: "ঢাকা, বাংলাদেশ",
   };
 
   try {

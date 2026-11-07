@@ -274,7 +274,7 @@ const KATAKANA_YOON = [
 export function PracticeSheetPDF({ settings }: PracticeSheetPDFProps) {
   const agencyName = settings?.agency_name || "Yumira Nihongo Gakkou";
   const agencyPhone = settings?.agency_phone || "+880 1341-017323";
-  const agencyAddress = settings?.agency_address || "Level 4, Tokyo Tower Complex, Banani C/A, Dhaka 1213";
+  const agencyAddress = settings?.agency_address || "ঢাকা, বাংলাদেশ";
   const siteUrl = "https://yumiranihongogakkou.vercel.app";
 
   const handlePrint = () => {

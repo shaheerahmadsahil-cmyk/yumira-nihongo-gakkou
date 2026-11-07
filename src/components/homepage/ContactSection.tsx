@@ -138,13 +138,9 @@ export function ContactSection({ whatsappNumber }: { whatsappNumber?: string }) 
                   <Phone className="w-4 h-4 text-japanRed-600 shrink-0" />
                   <span>+880 1341-017323 (Direct Helpline)</span>
                 </div>
-                <div className="flex items-center gap-2.5 sm:gap-3">
-                  <Mail className="w-4 h-4 text-japanRed-600 shrink-0" />
-                  <span>admissions@yumira.com</span>
-                </div>
                 <div className="flex items-start gap-2.5 sm:gap-3">
                   <MapPin className="w-4 h-4 text-japanRed-600 shrink-0 mt-0.5" />
-                  <span>Level 4, Tokyo Tower Complex, Banani C/A, Dhaka 1213</span>
+                  <span>ঢাকা, বাংলাদেশ</span>
                 </div>
               </div>
             </div>
